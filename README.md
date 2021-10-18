@@ -1,2 +1,2 @@
-# Data Science Reposi
+# Data Science Repository
 Data Science Repository
