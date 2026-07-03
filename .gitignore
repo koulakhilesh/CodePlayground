@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+.env
+
+# Jupyter
+profile_default/
+ipython_config.py
+
+# OS / editors
+.DS_Store
+.vscode/
+
+# Note: uv.lock is intentionally committed for reproducible installs.
