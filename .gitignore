@@ -17,3 +17,7 @@ ipython_config.py
 .vscode/
 
 # Note: uv.lock is intentionally committed for reproducible installs.
+data/
+
+# Generated chart exports (canonical copies live in the website repo)
+london-reservoir-levels/exports/
