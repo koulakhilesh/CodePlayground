@@ -1,12 +1,18 @@
 # CodePlayground
 
-A personal playground for data science, machine learning, and coding experiments —
+A personal playground for data science, machine learning, and coding experiments:
 notebooks, small scripts, and things I'm learning along the way.
 
 ## Contents
 
-Experiments live at the top level (Jupyter notebooks, scripts) with any
-supporting data under `data/`.
+Each experiment lives in its own folder, with shared data under `data/`:
+
+- [`london-reservoir-levels/`](london-reservoir-levels/): 37 years of daily London
+  reservoir levels, explored and visualised with Plotly.
+- [`london-blue-plaques/`](london-blue-plaques/): a scraper for every English Heritage
+  London blue plaque, an analysis notebook (who gets remembered, and where), and a
+  geospatial/optimisation notebook (Voronoi, DBSCAN, minimum spanning tree, and a
+  hand-rolled travelling-salesman tour).
 
 ## Getting started
 
