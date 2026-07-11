@@ -7,6 +7,7 @@ requires-python = ">=3.14"
 license = { file = "LICENSE" }
 authors = [{ name = "Akhilesh Koul" }]
 dependencies = [
+    "beautifulsoup4>=4.15.0",
     "contextily>=1.7.0",
     "geopandas>=1.1.4",
     "ipykernel>=7.3.0",
@@ -17,4 +18,9 @@ dependencies = [
     "plotly>=5.24.0",
     "scipy>=1.18.0",
     "shapely>=2.1.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]
