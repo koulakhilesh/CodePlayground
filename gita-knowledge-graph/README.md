@@ -31,7 +31,9 @@ layer (themes / concepts / similarity) can be added later without rework.
 
 ## Prerequisites
 
-- A local Neo4j instance with a database named `TheGitaProject`.
+- A local Neo4j instance. Set `NEO4J_DATABASE` to a database that exists on it —
+  on Community/Desktop that is the default `neo4j`; a named `TheGitaProject`
+  database requires Neo4j Enterprise.
 - Verse source data at `data/TheGitaProject/Verses/ChapterNN/ChapterNNVerseNN.md`.
 - Python deps installed and the spaCy model downloaded:
 
