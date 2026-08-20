@@ -247,3 +247,140 @@ def build_records(verses_dir: Path, nlp) -> list[FullVerse]:
         )
     return records
 
+
+TEXT_NAME = "Bhagavad Gita"
+Op = tuple[str, dict]
+
+
+def constraint_ops() -> list[Op]:
+    specs = [
+        ("Text", "name"), ("Chapter", "number"), ("Verse", "id"),
+        ("Person", "name"), ("Epithet", "name"), ("Place", "name"),
+        ("Term", "lemma"),
+    ]
+    return [
+        (
+            f"CREATE CONSTRAINT {label.lower()}_{prop} IF NOT EXISTS "
+            f"FOR (n:{label}) REQUIRE n.{prop} IS UNIQUE",
+            {},
+        )
+        for label, prop in specs
+    ]
+
+
+def seed_ops() -> list[Op]:
+    ops: list[Op] = [
+        ("MERGE (:Text {name: $name})", {"name": TEXT_NAME}),
+    ]
+    for p in PERSONS:
+        ops.append(
+            (
+                "MERGE (n:Person {name: $name}) "
+                "SET n.role = $role, n.aliases = $aliases",
+                {"name": p["name"], "role": p["role"], "aliases": p["aliases"]},
+            )
+        )
+    for number, cname in CHAPTER_NAMES.items():
+        ops.append(
+            (
+                "MATCH (t:Text {name: $text}) "
+                "MERGE (c:Chapter {number: $number}) "
+                "SET c.name = $cname "
+                "MERGE (t)-[:HAS_CHAPTER]->(c)",
+                {"text": TEXT_NAME, "number": number, "cname": cname},
+            )
+        )
+    for person, epithets in EPITHETS.items():
+        for epithet in epithets:
+            ops.append(
+                (
+                    "MATCH (p:Person {name: $person}) "
+                    "MERGE (e:Epithet {name: $epithet}) "
+                    "MERGE (e)-[:EPITHET_OF]->(p)",
+                    {"person": person, "epithet": epithet},
+                )
+            )
+    ops.append(
+        (
+            "MATCH (t:Text {name: $text}) "
+            "MERGE (pl:Place {name: $place}) "
+            "MERGE (t)-[:SET_IN]->(pl)",
+            {"text": TEXT_NAME, "place": PLACE},
+        )
+    )
+    for src, rel, dst in CAST_EDGES:
+        ops.append(
+            (
+                f"MATCH (a:Person {{name: $src}}), (b:Person {{name: $dst}}) "
+                f"MERGE (a)-[:{rel}]->(b)",
+                {"src": src, "dst": dst},
+            )
+        )
+    return ops
+
+
+def verse_ops(records: list[FullVerse]) -> list[Op]:
+    ops: list[Op] = []
+    for r in records:
+        ops.append(
+            (
+                "MATCH (c:Chapter {number: $chapter}) "
+                "MERGE (v:Verse {id: $id}) "
+                "SET v.chapter = $chapter, v.verse = $verse, "
+                "v.translation = $translation "
+                "MERGE (c)-[:HAS_VERSE]->(v)",
+                {
+                    "chapter": r.chapter, "verse": r.verse, "id": r.id,
+                    "translation": r.translation,
+                },
+            )
+        )
+        ops.append(
+            (
+                "MATCH (v:Verse {id: $id}), (p:Person {name: $speaker}) "
+                "MERGE (v)-[:SPOKEN_BY]->(p)",
+                {"id": r.id, "speaker": r.speaker},
+            )
+        )
+        ops.append(
+            (
+                "MATCH (v:Verse {id: $id}), (p:Person {name: $addressee}) "
+                "MERGE (v)-[:ADDRESSED_TO]->(p)",
+                {"id": r.id, "addressee": r.addressee},
+            )
+        )
+        for epithet, _person in r.epithets:
+            ops.append(
+                (
+                    "MATCH (v:Verse {id: $id}), (e:Epithet {name: $epithet}) "
+                    "MERGE (v)-[:USES_EPITHET]->(e)",
+                    {"id": r.id, "epithet": epithet},
+                )
+            )
+        for lemma, count in r.terms.items():
+            ops.append(
+                (
+                    "MATCH (v:Verse {id: $id}) "
+                    "MERGE (t:Term {lemma: $lemma}) "
+                    "MERGE (v)-[m:MENTIONS_TERM]->(t) "
+                    "SET m.count = $count",
+                    {"id": r.id, "lemma": lemma, "count": count},
+                )
+            )
+    ops.extend(_next_ops(records))
+    return ops
+
+
+def _next_ops(records: list[FullVerse]) -> list[Op]:
+    ops: list[Op] = []
+    for a, b in zip(records, records[1:]):
+        if a.chapter == b.chapter:
+            ops.append(
+                (
+                    "MATCH (x:Verse {id: $from_id}), (y:Verse {id: $to_id}) "
+                    "MERGE (x)-[:NEXT]->(y)",
+                    {"from_id": a.id, "to_id": b.id},
+                )
+            )
+    return ops
+
