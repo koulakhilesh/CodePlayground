@@ -159,3 +159,24 @@ def resolve_speaker(translation: str, previous: str | None) -> str:
 
 def default_addressee(speaker: str) -> str:
     return _ADDRESSEE[speaker]
+
+
+def build_epithet_ruler(nlp):
+    """Attach an EntityRuler that tags EPITHET spans, id = owning person."""
+    ruler = nlp.add_pipe("entity_ruler", config={"overwrite_ents": True})
+    patterns = [
+        {"label": "EPITHET", "pattern": epithet, "id": person}
+        for person, epithets in EPITHETS.items()
+        for epithet in epithets
+    ]
+    ruler.add_patterns(patterns)
+    return nlp
+
+
+def extract_epithets(doc) -> list[tuple[str, str]]:
+    found = {
+        (ent.text, ent.ent_id_)
+        for ent in doc.ents
+        if ent.label_ == "EPITHET"
+    }
+    return sorted(found)
