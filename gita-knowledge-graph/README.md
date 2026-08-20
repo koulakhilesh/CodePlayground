@@ -71,3 +71,54 @@ uv run pytest gita-knowledge-graph -v
 
 Unit tests run against committed fixtures with no Neo4j and no network; the one
 `@pytest.mark.integration` test loads `en_core_web_sm`.
+
+## Exploring in Neo4j Bloom
+
+Open **Neo4j Desktop → your DBMS → Neo4j Bloom** (or the **Explore** tab in
+Neo4j Workspace), connect to the `neo4j` database, and **Generate** a
+perspective. Set captions: `Verse`→`id`, `Person`/`Chapter`/`Epithet`/`Place`→
+`name`, `Term`→`lemma`.
+
+### Saved search phrases (Perspective → Search phrases → Create)
+
+**Verses spoken by $speaker**
+```cypher
+MATCH (v:Verse)-[:SPOKEN_BY]->(p:Person {name: $speaker})
+RETURN v, p
+```
+
+**Epithets used for $person**
+```cypher
+MATCH (v:Verse)-[:USES_EPITHET]->(e:Epithet)-[:EPITHET_OF]->(p:Person {name: $person})
+RETURN v, e, p
+```
+
+**Reading path through chapter $num**
+```cypher
+MATCH path = (:Chapter {number: $num})-[:HAS_VERSE]->(v)-[:NEXT*0..]->()
+RETURN path
+```
+
+### Viewing the whole graph
+
+The full graph (~1900 nodes incl. the `Term` layer) is a hairball. Prefer the
+**structural backbone** — everything except terms — which is legible:
+
+```cypher
+// Backbone: Text, Chapters, Verses, Persons, Epithets, Place
+MATCH (n)-[r]->(m)
+WHERE NOT n:Term AND NOT m:Term
+RETURN n, r, m
+```
+
+To see truly everything (raise Browser's node limit first, Settings → "Max
+nodes to display"):
+
+```cypher
+MATCH (n)-[r]->(m) RETURN n, r, m
+```
+
+Tip: in Bloom, search `Text`, then right-click → **Expand** by specific
+relationship types (`HAS_CHAPTER`, `HAS_VERSE`, `SPOKEN_BY`) to grow the view
+deliberately instead of loading the term hairball at once.
+
