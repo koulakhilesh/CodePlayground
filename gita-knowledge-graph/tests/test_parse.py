@@ -1,7 +1,7 @@
 """Unit tests for Gita KG parsing — run against fixtures, no Neo4j, no network."""
 from pathlib import Path
 
-from gita_kg import load_config
+from gita_kg import load_config, parse_verse_file
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -22,3 +22,19 @@ def test_load_config_reads_env():
 def test_load_config_defaults_uri():
     cfg = load_config({"NEO4J_USER": "neo4j", "NEO4J_PASSWORD": "secret"})
     assert cfg.uri == "bolt://localhost:7687"
+
+
+def test_parse_verse_file_extracts_numbers_and_id():
+    text = (FIXTURES / "verse_2_47.md").read_text()
+    rec = parse_verse_file(text)
+    assert rec.chapter == 2
+    assert rec.verse == 47
+    assert rec.id == "2.47"
+
+
+def test_parse_verse_file_extracts_only_translation():
+    text = (FIXTURES / "verse_2_47.md").read_text()
+    rec = parse_verse_file(text)
+    assert rec.translation.startswith("Your right is only to work")
+    assert "karma" not in rec.translation  # word-meanings section excluded
+    assert "##" not in rec.translation
