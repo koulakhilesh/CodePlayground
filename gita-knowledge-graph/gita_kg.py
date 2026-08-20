@@ -385,3 +385,43 @@ def _next_ops(records: list[FullVerse]) -> list[Op]:
             )
     return ops
 
+
+THEMES: dict[str, dict] = {
+    "jnana": {"label": "Jnana — Knowledge", "category": "metaphysics",
+              "lemmas": ["knowledge", "wisdom", "understanding", "know", "learn"]},
+    "samsara": {"label": "Samsara — Birth & Death", "category": "metaphysics",
+                "lemmas": ["birth", "death", "body", "world"]},
+    "karma": {"label": "Karma — Action", "category": "ethics",
+              "lemmas": ["action", "work", "deed", "fruit", "result", "act", "duty"]},
+    "senses-mind": {"label": "Senses & Mind", "category": "psychology",
+                    "lemmas": ["sense", "mind", "anger", "control", "intellect", "thought"]},
+    "detachment": {"label": "Detachment", "category": "ethics",
+                   "lemmas": ["attachment", "desire", "renunciation", "abandon", "renounce"]},
+    "atman": {"label": "Atman — The Self", "category": "metaphysics",
+              "lemmas": ["self", "soul", "being"]},
+    "guna": {"label": "Gunas — Qualities of Nature", "category": "metaphysics",
+             "lemmas": ["quality", "nature", "ignorance", "passion", "goodness", "mode"]},
+    "bhakti": {"label": "Bhakti — Devotion", "category": "devotion",
+               "lemmas": ["devotion", "worship", "faith", "devotee", "love", "god"]},
+    "sacrifice-austerity": {"label": "Sacrifice & Austerity", "category": "ritual",
+                            "lemmas": ["sacrifice", "austerity"]},
+    "yoga": {"label": "Yoga — Discipline & Union", "category": "path",
+             "lemmas": ["yoga", "union", "meditation", "practice", "path"]},
+    "dharma": {"label": "Dharma — Duty & Righteousness", "category": "ethics",
+               "lemmas": ["duty", "righteousness", "law", "sin"]},
+    "moksha": {"label": "Moksha — Liberation", "category": "metaphysics",
+               "lemmas": ["liberation", "freedom"]},
+    "brahman": {"label": "Brahman — The Absolute", "category": "metaphysics",
+                "lemmas": ["imperishable", "absolute", "brahman"]},
+}
+
+
+def theme_constraint_ops() -> list[Op]:
+    return [
+        (
+            "CREATE CONSTRAINT theme_name IF NOT EXISTS "
+            "FOR (n:Theme) REQUIRE n.name IS UNIQUE",
+            {},
+        )
+    ]
+
