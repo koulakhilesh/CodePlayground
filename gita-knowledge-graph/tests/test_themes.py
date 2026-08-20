@@ -1,5 +1,5 @@
 """Pure-builder tests for the C1 Theme layer. No Neo4j."""
-from gita_kg import THEMES, theme_constraint_ops
+from gita_kg import THEMES, theme_constraint_ops, theme_ops
 
 
 def test_themes_have_required_shape():
@@ -18,8 +18,6 @@ def test_theme_constraint_targets_name():
     assert "name" in stmts
     assert all("MERGE" not in c.upper() for c, _ in ops)
 
-
-from gita_kg import theme_ops
 
 _SAMPLE = {
     "karma": {"label": "Karma — Action", "category": "ethics",
