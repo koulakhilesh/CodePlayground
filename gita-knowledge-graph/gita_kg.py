@@ -74,3 +74,88 @@ def parse_verse_file(text: str) -> VerseRecord:
         id=f"{chapter}.{verse}",
         translation=translation,
     )
+
+
+PERSONS: list[dict] = [
+    {"name": "Dhritarashtra", "role": "king", "aliases": ["Dhritarashtra"]},
+    {"name": "Sanjaya", "role": "narrator", "aliases": ["Sanjaya"]},
+    {"name": "Arjuna", "role": "student", "aliases": ["Arjuna"]},
+    {
+        "name": "Krishna",
+        "role": "teacher",
+        "aliases": [
+            "The Blessed Lord",
+            "Sri Krishna",
+            "The Supreme Lord",
+            "Lord Krishna",
+            "The Lord",
+        ],
+    },
+]
+
+CHAPTER_NAMES: dict[int, str] = {
+    1: "Arjuna Vishada Yoga",
+    2: "Sankhya Yoga",
+    3: "Karma Yoga",
+    4: "Jnana Karma Sanyasa Yoga",
+    5: "Karma Sanyasa Yoga",
+    6: "Dhyana Yoga",
+    7: "Jnana Vijnana Yoga",
+    8: "Akshara Brahma Yoga",
+    9: "Raja Vidya Raja Guhya Yoga",
+    10: "Vibhuti Yoga",
+    11: "Vishwarupa Darshana Yoga",
+    12: "Bhakti Yoga",
+    13: "Kshetra Kshetrajna Vibhaga Yoga",
+    14: "Gunatraya Vibhaga Yoga",
+    15: "Purushottama Yoga",
+    16: "Daivasura Sampad Vibhaga Yoga",
+    17: "Shraddhatraya Vibhaga Yoga",
+    18: "Moksha Sanyasa Yoga",
+}
+
+EPITHETS: dict[str, list[str]] = {
+    "Arjuna": [
+        "Partha", "Bharata", "Bharatarshabha", "Dhananjaya", "Gudakesha",
+        "Kaunteya", "Pandava", "Parantapa", "Mahabaho", "Anagha", "Kurunandana",
+    ],
+    "Krishna": [
+        "Kesava", "Madhava", "Govinda", "Hrishikesha", "Madhusudana",
+        "Janardana", "Achyuta", "Varshneya", "Vasudeva", "Yadava", "Purushottama",
+    ],
+}
+
+PLACE = "Kurukshetra"
+
+CAST_EDGES: list[tuple[str, str, str]] = [
+    ("Krishna", "CHARIOTEER_OF", "Arjuna"),
+    ("Sanjaya", "NARRATES_TO", "Dhritarashtra"),
+]
+
+# alias (lowercased) -> canonical person name, longest-first for greedy match
+_ALIAS_TO_PERSON: list[tuple[str, str]] = sorted(
+    ((alias.lower(), p["name"]) for p in PERSONS for alias in p["aliases"]),
+    key=lambda pair: len(pair[0]),
+    reverse=True,
+)
+
+_ADDRESSEE = {
+    "Krishna": "Arjuna",
+    "Arjuna": "Krishna",
+    "Sanjaya": "Dhritarashtra",
+    "Dhritarashtra": "Sanjaya",
+}
+
+
+def resolve_speaker(translation: str, previous: str | None) -> str:
+    head = translation.lstrip().lower()
+    for alias, name in _ALIAS_TO_PERSON:
+        if head.startswith(f"{alias} said"):
+            return name
+    if previous is None:
+        raise ValueError("no speaker prefix and no previous speaker to inherit")
+    return previous
+
+
+def default_addressee(speaker: str) -> str:
+    return _ADDRESSEE[speaker]
