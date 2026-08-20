@@ -1,6 +1,8 @@
 """Unit tests for Gita KG parsing — run against fixtures, no Neo4j, no network."""
 from pathlib import Path
 
+import pytest
+
 from gita_kg import load_config, parse_verse_file
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -16,7 +18,7 @@ def test_load_config_reads_env():
     assert cfg.uri == "bolt://localhost:7687"
     assert cfg.user == "neo4j"
     assert cfg.password == "secret"
-    assert cfg.database == "TheGitaProject"
+    assert cfg.database == "neo4j"
 
 
 def test_load_config_defaults_uri():
@@ -92,6 +94,7 @@ def _nlp():
     return build_epithet_ruler(spacy.load("en_core_web_sm"))
 
 
+@pytest.mark.integration
 def test_build_records_orders_and_threads_speaker():
     records = build_records(MINI_VAULT, _nlp())
     ids = [r.id for r in records]
@@ -102,6 +105,7 @@ def test_build_records_orders_and_threads_speaker():
     assert by_id["2.48"].speaker == by_id["2.47"].speaker
 
 
+@pytest.mark.integration
 def test_build_records_attaches_addressee_epithets_terms():
     by_id = {r.id: r for r in build_records(MINI_VAULT, _nlp())}
     v = by_id["8.14"]  # real verse containing the epithet "O Partha"

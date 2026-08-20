@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Mapping
 
-DATABASE = "TheGitaProject"
+DATABASE = "neo4j"  # Community/Desktop default; named DBs require Enterprise
 DEFAULT_URI = "bolt://localhost:7687"
 
 
@@ -91,6 +91,7 @@ PERSONS: list[dict] = [
             "The Supreme Lord",
             "Lord Krishna",
             "The Lord",
+            "Krishna",
         ],
     },
 ]

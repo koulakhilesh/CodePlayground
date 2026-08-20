@@ -38,8 +38,9 @@ def test_verse_ops_link_next_within_chapter_only():
     records = [
         _verse("1.1", 1, 1), _verse("1.2", 1, 2), _verse("2.1", 2, 1),
     ]
-    joined = " ".join(c for c, _ in verse_ops(records))
-    params = [p for _, p in verse_ops(records)]
+    ops = verse_ops(records)
+    joined = " ".join(c for c, _ in ops)
+    params = [p for _, p in ops]
     assert ":NEXT" in joined
     next_pairs = {
         (p["from_id"], p["to_id"]) for p in params if "to_id" in p

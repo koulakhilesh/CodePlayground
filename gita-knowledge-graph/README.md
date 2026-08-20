@@ -9,9 +9,9 @@ layer (themes / concepts / similarity) can be added later without rework.
 
 ## Ontology
 
-**Nodes:** `Text`, `Chapter` (`number`, `name`, `verse_count`), `Verse`
+**Nodes:** `Text`, `Chapter` (`number`, `name`), `Verse`
 (`id`, `chapter`, `verse`, `translation`), `Person` (`name`, `role`, `aliases`),
-`Epithet` (`name`), `Place` (`name`), `Term` (`lemma`, `pos`).
+`Epithet` (`name`), `Place` (`name`), `Term` (`lemma`).
 
 **Relationships:** `HAS_CHAPTER`, `HAS_VERSE`, `NEXT`, `SPOKEN_BY`,
 `ADDRESSED_TO`, `USES_EPITHET`, `EPITHET_OF`, `SET_IN`, `CHARIOTEER_OF`,
@@ -35,11 +35,11 @@ layer (themes / concepts / similarity) can be added later without rework.
   on Community/Desktop that is the default `neo4j`; a named `TheGitaProject`
   database requires Neo4j Enterprise.
 - Verse source data at `data/TheGitaProject/Verses/ChapterNN/ChapterNNVerseNN.md`.
-- Python deps installed and the spaCy model downloaded:
+- Python deps installed (the pinned `en_core_web_sm` model is a declared
+  dependency, so `uv sync` installs it \u2014 no separate download step):
 
   ```bash
   uv sync
-  uv run python -m spacy download en_core_web_sm
   ```
 
 - A `.env` in this folder (copy `.env.example`) with your Neo4j credentials:
