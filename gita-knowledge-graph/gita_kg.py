@@ -425,3 +425,35 @@ def theme_constraint_ops() -> list[Op]:
         )
     ]
 
+
+def theme_ops(themes: dict[str, dict] = THEMES) -> list[Op]:
+    ops: list[Op] = []
+    for name, spec in themes.items():
+        ops.append(
+            (
+                "MERGE (th:Theme {name: $name}) "
+                "SET th.label = $label, th.category = $category",
+                {"name": name, "label": spec["label"], "category": spec["category"]},
+            )
+        )
+        ops.append(
+            (
+                "MATCH (th:Theme {name: $name}) "
+                "MATCH (t:Term) WHERE t.lemma IN $lemmas "
+                "MERGE (th)-[:INCLUDES_TERM]->(t)",
+                {"name": name, "lemmas": spec["lemmas"]},
+            )
+        )
+        ops.append(
+            (
+                "MATCH (th:Theme {name: $name}) "
+                "MATCH (v:Verse)-[m:MENTIONS_TERM]->(t:Term) "
+                "WHERE t.lemma IN $lemmas "
+                "WITH v, th, sum(m.count) AS w "
+                "MERGE (v)-[r:MENTIONS_THEME]->(th) "
+                "SET r.weight = w",
+                {"name": name, "lemmas": spec["lemmas"]},
+            )
+        )
+    return ops
+
