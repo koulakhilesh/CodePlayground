@@ -79,3 +79,32 @@ def test_default_addressee_pairs():
     assert default_addressee("Arjuna") == "Krishna"
     assert default_addressee("Sanjaya") == "Dhritarashtra"
     assert default_addressee("Dhritarashtra") == "Sanjaya"
+
+
+import spacy
+
+from gita_kg import build_epithet_ruler, build_records, default_addressee
+
+MINI_VAULT = FIXTURES / "mini_vault"
+
+
+def _nlp():
+    return build_epithet_ruler(spacy.load("en_core_web_sm"))
+
+
+def test_build_records_orders_and_threads_speaker():
+    records = build_records(MINI_VAULT, _nlp())
+    ids = [r.id for r in records]
+    assert ids == ["1.1", "2.47", "2.48", "8.14"]
+    by_id = {r.id: r for r in records}
+    assert by_id["1.1"].speaker == "Dhritarashtra"
+    # 2.48 has no "X said" prefix; inherits the last resolved speaker from 2.47.
+    assert by_id["2.48"].speaker == by_id["2.47"].speaker
+
+
+def test_build_records_attaches_addressee_epithets_terms():
+    by_id = {r.id: r for r in build_records(MINI_VAULT, _nlp())}
+    v = by_id["8.14"]  # real verse containing the epithet "O Partha"
+    assert ("Partha", "Arjuna") in v.epithets
+    assert v.addressee == default_addressee(v.speaker)
+    assert v.terms  # non-empty lemmatized term map

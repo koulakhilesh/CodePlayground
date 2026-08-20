@@ -9,6 +9,7 @@ from __future__ import annotations
 import re
 from collections import Counter
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Iterable, Mapping
 
 DATABASE = "TheGitaProject"
@@ -196,3 +197,53 @@ def select_terms(tokens: Iterable) -> Counter:
 
 def extract_terms(doc) -> Counter:
     return select_terms(doc)
+
+
+@dataclass(frozen=True)
+class FullVerse:
+    chapter: int
+    verse: int
+    id: str
+    translation: str
+    speaker: str
+    addressee: str
+    epithets: list[tuple[str, str]]
+    terms: dict[str, int]
+
+
+_VERSE_NUM_RE = re.compile(r"Chapter(\d+)Verse(\d+)", re.IGNORECASE)
+
+
+def _verse_sort_key(path: Path) -> tuple[int, int]:
+    m = _VERSE_NUM_RE.search(path.stem)
+    if m is None:
+        raise ValueError(f"cannot parse verse number from: {path.name}")
+    return int(m.group(1)), int(m.group(2))
+
+
+def build_records(verses_dir: Path, nlp) -> list[FullVerse]:
+    paths = sorted(
+        Path(verses_dir).glob("Chapter*/Chapter*Verse*.md"),
+        key=_verse_sort_key,
+    )
+    records: list[FullVerse] = []
+    previous_speaker: str | None = None
+    for path in paths:
+        rec = parse_verse_file(path.read_text())
+        speaker = resolve_speaker(rec.translation, previous_speaker)
+        previous_speaker = speaker
+        doc = nlp(rec.translation)
+        records.append(
+            FullVerse(
+                chapter=rec.chapter,
+                verse=rec.verse,
+                id=rec.id,
+                translation=rec.translation,
+                speaker=speaker,
+                addressee=default_addressee(speaker),
+                epithets=extract_epithets(doc),
+                terms=dict(extract_terms(doc)),
+            )
+        )
+    return records
+
