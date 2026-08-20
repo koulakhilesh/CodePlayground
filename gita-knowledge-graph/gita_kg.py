@@ -7,8 +7,9 @@ English translation only; Sanskrit/transliteration/word-meanings are ignored.
 from __future__ import annotations
 
 import re
+from collections import Counter
 from dataclasses import dataclass
-from typing import Mapping
+from typing import Iterable, Mapping
 
 DATABASE = "TheGitaProject"
 DEFAULT_URI = "bolt://localhost:7687"
@@ -180,3 +181,18 @@ def extract_epithets(doc) -> list[tuple[str, str]]:
         if ent.label_ == "EPITHET"
     }
     return sorted(found)
+
+
+_TERM_POS = {"NOUN", "VERB"}
+
+
+def select_terms(tokens: Iterable) -> Counter:
+    counts: Counter = Counter()
+    for tok in tokens:
+        if tok.pos_ in _TERM_POS and not tok.is_stop and tok.is_alpha:
+            counts[tok.lemma_.lower()] += 1
+    return counts
+
+
+def extract_terms(doc) -> Counter:
+    return select_terms(doc)

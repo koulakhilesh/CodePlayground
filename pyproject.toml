@@ -34,3 +34,4 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = ["london-blue-plaques", "gita-knowledge-graph"]
+markers = ["integration: requires the en_core_web_sm model or a live service"]
