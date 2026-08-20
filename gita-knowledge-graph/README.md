@@ -122,3 +122,15 @@ Tip: in Bloom, search `Text`, then right-click → **Expand** by specific
 relationship types (`HAS_CHAPTER`, `HAS_VERSE`, `SPOKEN_BY`) to grow the view
 deliberately instead of loading the term hairball at once.
 
+### Standalone HTML visualization
+
+No Neo4j UI needed — export an interactive Plotly graph to `exports/`:
+
+```bash
+uv run python gita-knowledge-graph/export_graph.py                 # backbone (no Term layer)
+uv run python gita-knowledge-graph/export_graph.py --include-terms # full graph
+```
+
+Then open `exports/gita_graph_backbone.html` (or `_full.html`) in a browser.
+`exports/` is gitignored.
+

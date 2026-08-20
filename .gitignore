@@ -23,5 +23,6 @@ data/
 # Generated chart exports (canonical copies live in the website repo)
 london-reservoir-levels/exports/
 london-blue-plaques/exports/
+gita-knowledge-graph/exports/
 
 
