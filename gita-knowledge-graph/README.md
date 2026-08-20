@@ -17,6 +17,35 @@ layer (themes / concepts / similarity) can be added later without rework.
 `ADDRESSED_TO`, `USES_EPITHET`, `EPITHET_OF`, `SET_IN`, `CHARIOTEER_OF`,
 `NARRATES_TO`, `MENTIONS_TERM` (with `count`).
 
+### Theme layer (C1)
+
+An optional curated layer over the core graph:
+
+- **Node** `Theme` (`name`, `label`, `category`) — 13 Gita themes (karma,
+  dharma, bhakti, jñāna, yoga, moksha, ātman, brahman, guṇa, saṃsāra,
+  detachment, senses-mind, sacrifice-austerity).
+- **Relationships** `(Verse)-[:MENTIONS_THEME {weight}]->(Theme)` and
+  `(Theme)-[:INCLUDES_TERM]->(Term)`.
+
+Themes are derived **deterministically** from the `Term` layer: each theme is
+defined by a set of lemmas, and a verse links to a theme when it mentions those
+terms. `weight` is the sum of the matched terms' per-verse counts.
+
+Run **after** `gita_kg.ipynb`:
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/themes_kg.ipynb
+```
+
+Sample query — the verses most about a theme:
+
+```cypher
+MATCH (v:Verse)-[r:MENTIONS_THEME]->(:Theme {name: 'karma'})
+RETURN v.id, r.weight ORDER BY r.weight DESC LIMIT 10
+```
+
+- **Spec:** `docs/superpowers/specs/2026-08-21-gita-kg-c1-themes-design.md`
+
 ## How it works
 
 - **Deterministic, two-tier parsing.** Structure (chapter/verse numbers, the
