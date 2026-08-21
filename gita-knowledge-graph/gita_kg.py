@@ -531,3 +531,70 @@ def build_similarity_pairs(
         )
     ]
 
+
+VECTOR_INDEX_NAME = "verse_translation_embeddings"
+
+
+def embedding_ops(rows: list[dict], config: EmbeddingConfig) -> list[Op]:
+    return [
+        (
+            "MATCH (v:Verse {id: $id}) "
+            "CALL db.create.setNodeVectorProperty(v, 'embedding', $embedding) "
+            "SET v.embedding_model = $model, "
+            "v.embedding_revision = $revision, "
+            "v.embedding_dimension = $dimension, "
+            "v.embedding_input_sha256 = $input_sha256",
+            {
+                "id": row["id"],
+                "embedding": row["embedding"],
+                "model": config.model_id,
+                "revision": config.revision,
+                "dimension": config.dimensions,
+                "input_sha256": row["input_sha256"],
+            },
+        )
+        for row in rows
+    ]
+
+
+def vector_index_ops(config: EmbeddingConfig) -> list[Op]:
+    return [
+        (
+            "CREATE VECTOR INDEX verse_translation_embeddings IF NOT EXISTS "
+            "FOR (v:Verse) ON (v.embedding) "
+            f"OPTIONS {{indexConfig: {{`vector.dimensions`: {config.dimensions}, "
+            "`vector.similarity_function`: 'cosine'}}}",
+            {},
+        )
+    ]
+
+
+def clear_similarity_ops() -> list[Op]:
+    return [("MATCH ()-[r:SIMILAR_TO]->() DELETE r", {})]
+
+
+def similarity_ops(pairs: list[SimilarityPair], config: EmbeddingConfig) -> list[Op]:
+    return [
+        (
+            "MATCH (a:Verse {id: $a_id}), (b:Verse {id: $b_id}) "
+            "MERGE (a)-[r:SIMILAR_TO]->(b) "
+            "SET r.score = $score, r.mutual = $mutual, "
+            "r.rank_a = $rank_a, r.rank_b = $rank_b, "
+            "r.model = $model, r.revision = $revision, "
+            "r.top_k = $top_k, r.threshold = $threshold",
+            {
+                "a_id": pair.a_id,
+                "b_id": pair.b_id,
+                "score": pair.score,
+                "mutual": pair.mutual,
+                "rank_a": pair.rank_a,
+                "rank_b": pair.rank_b,
+                "model": config.model_id,
+                "revision": config.revision,
+                "top_k": config.top_k,
+                "threshold": config.threshold,
+            },
+        )
+        for pair in pairs
+    ]
+

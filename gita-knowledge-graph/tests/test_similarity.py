@@ -88,3 +88,52 @@ def test_similarity_pairs_reject_asymmetric_matrix():
     sims = np.array([[1.0, 0.9], [0.7, 1.0]])  # asymmetric: [0,1]=0.9 but [1,0]=0.7
     with pytest.raises(ValueError, match="symmetric"):
         build_similarity_pairs(ids, sims, top_k=1, threshold=0.5)
+
+
+from gita_kg import (
+    SimilarityPair,
+    clear_similarity_ops,
+    embedding_ops,
+    similarity_ops,
+    vector_index_ops,
+)
+
+
+def test_embedding_ops_are_parameterized_and_store_metadata():
+    cfg = EmbeddingConfig()
+    rows = [{"id": "2.47", "embedding": [0.1] * 768, "input_sha256": "abc"}]
+    ops = embedding_ops(rows, cfg)
+    cypher, params = ops[0]
+    assert "setNodeVectorProperty" in cypher
+    assert "$embedding" in cypher
+    assert params["model"] == cfg.model_id
+    assert params["revision"] == cfg.revision
+    assert params["dimension"] == 768
+    assert params["input_sha256"] == "abc"
+
+
+def test_vector_index_op_has_expected_shape():
+    cypher, params = vector_index_ops(EmbeddingConfig())[0]
+    assert "CREATE VECTOR INDEX verse_translation_embeddings IF NOT EXISTS" in cypher
+    assert "768" in cypher
+    assert "cosine" in cypher
+    assert params == {}
+
+
+def test_clear_similarity_only_deletes_similarity_edges():
+    cypher, _ = clear_similarity_ops()[0]
+    assert "SIMILAR_TO" in cypher
+    assert "DELETE r" in cypher
+    assert "DETACH DELETE" not in cypher
+
+
+def test_similarity_ops_merge_canonical_pair_and_metadata():
+    cfg = EmbeddingConfig(threshold=0.65)
+    pair = SimilarityPair("2.47", "4.14", 0.81, 1, 3, True)
+    cypher, params = similarity_ops([pair], cfg)[0]
+    assert "MERGE (a)-[r:SIMILAR_TO]->(b)" in cypher
+    assert params["a_id"] == "2.47"
+    assert params["b_id"] == "4.14"
+    assert params["mutual"] is True
+    assert params["rank_a"] == 1 and params["rank_b"] == 3
+    assert params["threshold"] == 0.65
