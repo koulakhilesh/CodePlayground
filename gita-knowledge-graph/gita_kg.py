@@ -494,6 +494,8 @@ def build_similarity_pairs(
     matrix = np.asarray(similarity_matrix)
     if matrix.shape != (len(ids), len(ids)):
         raise ValueError("similarity matrix shape must match verse ids")
+    if not np.allclose(matrix, matrix.T, atol=1e-8):
+        raise ValueError("similarity matrix must be symmetric")
 
     directed: dict[tuple[str, str], tuple[float, int]] = {}
     for source_idx, source_id in enumerate(ids):

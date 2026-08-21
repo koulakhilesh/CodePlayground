@@ -74,3 +74,17 @@ def test_similarity_pairs_exclude_self_and_apply_threshold():
     ids = ["1.1", "1.2"]
     sims = np.array([[1.0, 0.49], [0.49, 1.0]])
     assert build_similarity_pairs(ids, sims, top_k=5, threshold=0.50) == []
+
+
+def test_similarity_pairs_reject_mismatched_shape():
+    ids = ["1.1", "1.2"]
+    sims = np.array([[1.0, 0.9, 0.8], [0.9, 1.0, 0.7]])  # 2x3, not 2x2
+    with pytest.raises(ValueError, match="shape must match"):
+        build_similarity_pairs(ids, sims, top_k=1, threshold=0.5)
+
+
+def test_similarity_pairs_reject_asymmetric_matrix():
+    ids = ["1.1", "1.2"]
+    sims = np.array([[1.0, 0.9], [0.7, 1.0]])  # asymmetric: [0,1]=0.9 but [1,0]=0.7
+    with pytest.raises(ValueError, match="symmetric"):
+        build_similarity_pairs(ids, sims, top_k=1, threshold=0.5)
