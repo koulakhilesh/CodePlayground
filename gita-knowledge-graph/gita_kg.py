@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Mapping
 
+import numpy as np
+
 DATABASE = "neo4j"  # Community/Desktop default; named DBs require Enterprise
 DEFAULT_URI = "bolt://localhost:7687"
 
@@ -465,4 +467,65 @@ class EmbeddingConfig:
     dimensions: int = 768
     top_k: int = 5
     threshold: float = 0.50
+
+
+@dataclass(frozen=True)
+class SimilarityPair:
+    a_id: str
+    b_id: str
+    score: float
+    rank_a: int | None
+    rank_b: int | None
+    mutual: bool
+
+
+def verse_order_key(verse_id: str) -> tuple[int, int]:
+    chapter, verse = verse_id.split(".", maxsplit=1)
+    return int(chapter), int(verse)
+
+
+def canonical_pair(a_id: str, b_id: str) -> tuple[str, str]:
+    return tuple(sorted((a_id, b_id), key=verse_order_key))
+
+
+def build_similarity_pairs(
+    ids: list[str], similarity_matrix: np.ndarray, top_k: int, threshold: float
+) -> list[SimilarityPair]:
+    matrix = np.asarray(similarity_matrix)
+    if matrix.shape != (len(ids), len(ids)):
+        raise ValueError("similarity matrix shape must match verse ids")
+
+    directed: dict[tuple[str, str], tuple[float, int]] = {}
+    for source_idx, source_id in enumerate(ids):
+        candidates = [idx for idx in np.argsort(-matrix[source_idx], kind="stable") if idx != source_idx]
+        for rank, target_idx in enumerate(candidates[:top_k], start=1):
+            score = float(matrix[source_idx, target_idx])
+            if score >= threshold:
+                directed[(source_id, ids[target_idx])] = (score, rank)
+
+    pair_data: dict[tuple[str, str], dict] = {}
+    for (source_id, target_id), (score, rank) in directed.items():
+        a_id, b_id = canonical_pair(source_id, target_id)
+        data = pair_data.setdefault(
+            (a_id, b_id), {"score": score, "rank_a": None, "rank_b": None}
+        )
+        data["score"] = max(data["score"], score)
+        if source_id == a_id:
+            data["rank_a"] = rank
+        else:
+            data["rank_b"] = rank
+
+    return [
+        SimilarityPair(
+            a_id=a_id,
+            b_id=b_id,
+            score=data["score"],
+            rank_a=data["rank_a"],
+            rank_b=data["rank_b"],
+            mutual=data["rank_a"] is not None and data["rank_b"] is not None,
+        )
+        for (a_id, b_id), data in sorted(
+            pair_data.items(), key=lambda item: (verse_order_key(item[0][0]), verse_order_key(item[0][1]))
+        )
+    ]
 
