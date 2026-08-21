@@ -457,3 +457,12 @@ def theme_ops(themes: dict[str, dict] = THEMES) -> list[Op]:
         )
     return ops
 
+
+@dataclass(frozen=True)
+class EmbeddingConfig:
+    model_id: str = "sentence-transformers/all-mpnet-base-v2"
+    revision: str = "e8c3b32edf5434bc2275fc9bab85f82640a19130"
+    dimensions: int = 768
+    top_k: int = 5
+    threshold: float = 0.50
+
