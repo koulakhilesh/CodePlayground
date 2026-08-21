@@ -177,4 +177,44 @@ def test_evaluate_thresholds_reports_coverage_mutual_and_cross_theme():
     stats = evaluate_thresholds(ids, sims, 1, (0.75,), chapters, themes)
     assert stats[0].covered_fraction == 1.0
     assert stats[0].pair_count == 2
+    assert stats[0].mutual_count == 1
     assert "karma" in stats[0].cross_chapter_themes
+
+
+def test_evaluate_thresholds_rejects_empty_ids():
+    import pytest
+    sims = np.array([[1]], dtype=float)
+    with pytest.raises(ValueError, match="ids must not be empty"):
+        evaluate_thresholds([], sims, 1, (0.75,), {}, {})
+
+
+def test_evaluate_thresholds_rejects_missing_chapters():
+    import pytest
+    ids = ["1.1", "2.3"]
+    sims = np.array([[1, .9], [.9, 1]], dtype=float)
+    chapters = {"1.1": 1}
+    with pytest.raises(ValueError, match=r"chapters missing verse ids: \['2.3'\]"):
+        evaluate_thresholds(ids, sims, 1, (0.75,), chapters, {})
+
+
+def test_select_threshold_raises_when_no_coverage():
+    import pytest
+    stats = [ThresholdStats(0.80, 0.85, frozenset(), 1, 0)]
+    with pytest.raises(ValueError, match="90% verse coverage"):
+        select_similarity_threshold(stats, set())
+
+
+def test_score_quantiles_have_expected_values():
+    result = similarity_score_quantiles([0.5, 0.6, 0.7, 0.8])
+    assert result["min"] == 0.5
+    assert result["max"] == 0.8
+    assert 0.64 < result["p50"] < 0.66
+
+
+def test_within_chapter_themes_excluded_from_cross_chapter():
+    ids = ["1.1", "1.2", "2.1"]
+    sims = np.array([[1, .9, .4], [.9, 1, .3], [.4, .3, 1]], dtype=float)
+    chapters = {"1.1": 1, "1.2": 1, "2.1": 2}
+    themes = {"1.1": {"dharma"}, "1.2": {"dharma"}, "2.1": {"action"}}
+    stats = evaluate_thresholds(ids, sims, 1, (0.75,), chapters, themes)
+    assert "dharma" not in stats[0].cross_chapter_themes

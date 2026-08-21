@@ -612,6 +612,10 @@ class ThresholdStats:
 
 
 def similarity_score_quantiles(scores: list[float]) -> dict[str, float]:
+    """Compute distribution quantiles for similarity scores.
+
+    Returns dict with keys: min, p05, p10, p25, p50, p75, p90, p95, max.
+    """
     if not scores:
         raise ValueError("scores must not be empty")
     values = np.asarray(scores, dtype=float)
@@ -627,6 +631,16 @@ def evaluate_thresholds(
     chapters: dict[str, int],
     themes_by_id: dict[str, set[str]],
 ) -> list[ThresholdStats]:
+    """Evaluate coverage and cross-chapter themes for each threshold.
+
+    Returns ThresholdStats per threshold with coverage fraction, pair counts,
+    and cross-chapter theme intersection.
+    """
+    if not ids:
+        raise ValueError("ids must not be empty")
+    missing = sorted(set(ids) - chapters.keys(), key=verse_order_key)
+    if missing:
+        raise ValueError(f"chapters missing verse ids: {missing}")
     results: list[ThresholdStats] = []
     for threshold in thresholds:
         pairs = build_similarity_pairs(ids, similarity_matrix, top_k, threshold)
@@ -648,6 +662,11 @@ def evaluate_thresholds(
 
 
 def select_similarity_threshold(stats: list[ThresholdStats], all_themes: set[str]) -> float:
+    """Select highest threshold meeting coverage and theme completeness.
+
+    Primary: highest threshold with >=90% coverage and all cross-chapter themes.
+    Fallback: highest threshold with >=90% coverage if no complete candidate.
+    """
     coverage_ok = [item for item in stats if item.covered_fraction >= 0.90]
     if not coverage_ok:
         raise ValueError("no candidate threshold retains 90% verse coverage")
