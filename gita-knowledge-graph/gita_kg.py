@@ -598,3 +598,60 @@ def similarity_ops(pairs: list[SimilarityPair], config: EmbeddingConfig) -> list
         for pair in pairs
     ]
 
+
+CANDIDATE_THRESHOLDS = (0.50, 0.55, 0.60, 0.65, 0.70, 0.75)
+
+
+@dataclass(frozen=True)
+class ThresholdStats:
+    threshold: float
+    covered_fraction: float
+    cross_chapter_themes: frozenset[str]
+    pair_count: int
+    mutual_count: int
+
+
+def similarity_score_quantiles(scores: list[float]) -> dict[str, float]:
+    if not scores:
+        raise ValueError("scores must not be empty")
+    values = np.asarray(scores, dtype=float)
+    percentiles = np.percentile(values, [0, 5, 10, 25, 50, 75, 90, 95, 100])
+    return dict(zip(("min", "p05", "p10", "p25", "p50", "p75", "p90", "p95", "max"), percentiles.tolist()))
+
+
+def evaluate_thresholds(
+    ids: list[str],
+    similarity_matrix: np.ndarray,
+    top_k: int,
+    thresholds: tuple[float, ...],
+    chapters: dict[str, int],
+    themes_by_id: dict[str, set[str]],
+) -> list[ThresholdStats]:
+    results: list[ThresholdStats] = []
+    for threshold in thresholds:
+        pairs = build_similarity_pairs(ids, similarity_matrix, top_k, threshold)
+        covered = {verse_id for pair in pairs for verse_id in (pair.a_id, pair.b_id)}
+        cross_themes: set[str] = set()
+        for pair in pairs:
+            if chapters[pair.a_id] != chapters[pair.b_id]:
+                cross_themes.update(themes_by_id.get(pair.a_id, set()) & themes_by_id.get(pair.b_id, set()))
+        results.append(
+            ThresholdStats(
+                threshold=threshold,
+                covered_fraction=len(covered) / len(ids),
+                cross_chapter_themes=frozenset(cross_themes),
+                pair_count=len(pairs),
+                mutual_count=sum(pair.mutual for pair in pairs),
+            )
+        )
+    return results
+
+
+def select_similarity_threshold(stats: list[ThresholdStats], all_themes: set[str]) -> float:
+    coverage_ok = [item for item in stats if item.covered_fraction >= 0.90]
+    if not coverage_ok:
+        raise ValueError("no candidate threshold retains 90% verse coverage")
+    complete = [item for item in coverage_ok if all_themes <= item.cross_chapter_themes]
+    candidates = complete or coverage_ok
+    return max(item.threshold for item in candidates)
+

@@ -137,3 +137,44 @@ def test_similarity_ops_merge_canonical_pair_and_metadata():
     assert params["mutual"] is True
     assert params["rank_a"] == 1 and params["rank_b"] == 3
     assert params["threshold"] == 0.65
+
+
+from gita_kg import (
+    ThresholdStats,
+    evaluate_thresholds,
+    select_similarity_threshold,
+    similarity_score_quantiles,
+)
+
+
+def test_selects_highest_threshold_with_coverage_and_all_themes():
+    stats = [
+        ThresholdStats(0.50, 1.0, frozenset({"karma", "bhakti"}), 3, 2),
+        ThresholdStats(0.60, 0.95, frozenset({"karma", "bhakti"}), 2, 1),
+        ThresholdStats(0.70, 0.80, frozenset({"karma", "bhakti"}), 1, 1),
+    ]
+    assert select_similarity_threshold(stats, {"karma", "bhakti"}) == 0.60
+
+
+def test_threshold_fallback_keeps_highest_90_percent_coverage():
+    stats = [
+        ThresholdStats(0.50, 1.0, frozenset({"karma"}), 3, 2),
+        ThresholdStats(0.60, 0.92, frozenset({"karma"}), 2, 1),
+    ]
+    assert select_similarity_threshold(stats, {"karma", "bhakti"}) == 0.60
+
+
+def test_score_quantiles_have_named_percentiles():
+    result = similarity_score_quantiles([0.5, 0.6, 0.7, 0.8])
+    assert set(result) == {"min", "p05", "p10", "p25", "p50", "p75", "p90", "p95", "max"}
+
+
+def test_evaluate_thresholds_reports_coverage_mutual_and_cross_theme():
+    ids = ["1.1", "1.2", "2.1"]
+    sims = np.array([[1, .9, .8], [.9, 1, .7], [.8, .7, 1]], dtype=float)
+    chapters = {"1.1": 1, "1.2": 1, "2.1": 2}
+    themes = {"1.1": {"karma"}, "1.2": {"karma"}, "2.1": {"karma"}}
+    stats = evaluate_thresholds(ids, sims, 1, (0.75,), chapters, themes)
+    assert stats[0].covered_fraction == 1.0
+    assert stats[0].pair_count == 2
+    assert "karma" in stats[0].cross_chapter_themes
