@@ -13,6 +13,10 @@ Each experiment lives in its own folder, with shared data under `data/`:
   London blue plaque, an analysis notebook (who gets remembered, and where), and a
   geospatial/optimisation notebook (Voronoi, DBSCAN, minimum spanning tree, and a
   hand-rolled travelling-salesman tour).
+- [`gita-knowledge-graph/`](gita-knowledge-graph/): a Sanskrit-grounded knowledge
+  graph of the Bhagavad Gita in Neo4j — 701 verses linked to themes, concepts, the
+  character cast, and semantic similarity, all built by a single notebook. The
+  domain model is documented in [ONTOLOGY.md](gita-knowledge-graph/ONTOLOGY.md).
 
 ## Getting started
 
@@ -36,6 +40,19 @@ uv remove <package>
 
 `uv` reads the target Python version from `.python-version` and pins exact
 dependency versions in `uv.lock`.
+
+## Tests
+
+Projects with a `tests/` suite are tested with `pytest`:
+
+```bash
+uv run pytest gita-knowledge-graph -m "not integration"   # unit tests, no Neo4j/model
+uv run pytest london-blue-plaques
+```
+
+GitHub Actions ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) runs
+these per project on every pull request and on pushes to `main`. Integration tests
+(which need the sentence-transformer model or a live Neo4j) are skipped in CI.
 
 ## License
 
