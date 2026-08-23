@@ -27,9 +27,12 @@ def test_published_docs_do_not_reference_internal_specs():
 
 
 def test_vector_examples_use_search_clause():
-    notebook = notebook_source(PROJECT_ROOT / "similarity_kg.ipynb")
     readme = (PROJECT_ROOT / "README.md").read_text()
+    notebooks = [notebook_source(p) for p in PROJECT_ROOT.glob("*.ipynb")]
 
-    for source in (notebook, readme):
+    # No maintained doc uses the deprecated vector procedure.
+    for source in [readme, *notebooks]:
         assert "db.index.vector.queryNodes" not in source
-        assert "SEARCH node IN (" in source
+
+    # The README documents vector search with the current SEARCH clause.
+    assert "SEARCH node IN (" in readme

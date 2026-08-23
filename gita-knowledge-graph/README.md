@@ -1,19 +1,43 @@
 # Bhagavad Gita Knowledge Graph
 
-Loads the Bhagavad Gita's structure — chapters, verses, speakers, addressees,
-epithets, setting, and lemmatized terms — from the English translations into a
-local Neo4j `TheGitaProject` database. Structural core (v1), built so a thematic
-layer (themes / concepts / similarity) can be added later without rework.
+Loads the Bhagavad Gita — chapters, verses, speakers, addressees, epithets,
+setting, lemmatized terms, and the Sanskrit Word Meanings — into a local Neo4j
+database, then layers themes, Sanskrit-grounded concepts, the character cast,
+the named war-conches, Krishna's Chapter 10 glories, and semantic similarity on
+top. Everything is built by a single notebook, `gita_kg.ipynb`.
 
 ## Ontology
 
+See [ONTOLOGY.md](ONTOLOGY.md) for the full domain model — operating principles,
+per-node/edge semantics, provenance, and known ontological tensions.
+
 **Nodes:** `Text`, `Chapter` (`number`, `name`), `Verse`
-(`id`, `chapter`, `verse`, `translation`), `Person` (`name`, `role`, `aliases`),
-`Epithet` (`name`), `Place` (`name`), `Term` (`lemma`).
+(`id`, `chapter`, `verse`, `translation`, `sanskrit`, `transliteration`),
+`Person` (`name`, `role`, `aliases`), `Epithet` (`name`), `Place` (`name`),
+`Term` (`lemma`).
 
 **Relationships:** `HAS_CHAPTER`, `HAS_VERSE`, `NEXT`, `SPOKEN_BY`,
 `ADDRESSED_TO`, `USES_EPITHET`, `EPITHET_OF`, `SET_IN`, `CHARIOTEER_OF`,
 `NARRATES_TO`, `MENTIONS_TERM` (with `count`).
+
+### Sanskrit, concept, character & entity layers (v2)
+
+Grounded directly in the Sanskrit Word Meanings of each verse:
+
+- **`SanskritTerm`** (`lemma`) — the normalized Sanskrit vocabulary, linked
+  `(Verse)-[:CONTAINS_TERM]->(SanskritTerm)`.
+- **`Concept`** (`name`, `label`, `category`) — 22 curated concepts grounded in
+  the Sanskrit terms via `(SanskritTerm)-[:INSTANCE_OF]->(Concept)` and
+  `(Verse)-[:EXPRESSES_CONCEPT {weight}]->(Concept)`. Concepts bridge to the
+  English theme index on shared names via `(Concept)-[:ALIGNS_WITH]->(Theme)`.
+- **`Character`** (`name`) — the cast discovered from the glosses, linked
+  `(Verse)-[:MENTIONS_CHARACTER]->(Character)`. Every `Person` is also a
+  `Character` (`Person` is the dialogue-role marker).
+- **`Conch`** (`name`, `kind`) — the six named war-conches of Chapter 1,
+  `(Verse)-[:NAMES_CONCH]->(Conch)` and `(Character)-[:SOUNDS_CONCH]->(Conch)`.
+- **`Vibhuti`** (`name`, `label`, `chapter`) — Krishna's Chapter 10 glories: the
+  verses that explicitly declare "I am …" (`asmi`), grouped via
+  `(Verse)-[:DECLARES_VIBHUTI]->(Vibhuti)` and `(Character)-[:MANIFESTS_AS]->(Vibhuti)`.
 
 ### Theme layer (C1)
 
@@ -29,11 +53,7 @@ Themes are derived **deterministically** from the `Term` layer: each theme is
 defined by a set of lemmas, and a verse links to a theme when it mentions those
 terms. `weight` is the sum of the matched terms' per-verse counts.
 
-Run **after** `gita_kg.ipynb`:
-
-```bash
-uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/themes_kg.ipynb
-```
+The theme layer is built as a section of `gita_kg.ipynb` — no separate notebook.
 
 Sample query — the verses most about a theme:
 
@@ -59,12 +79,12 @@ An optional semantic layer that adds reproducible verse-to-verse similarity disc
 
 **Calibration:** The notebook computes similarity at candidate thresholds (0.50–0.75), evaluates verse coverage and cross-chapter theme edges, and selects the highest threshold that retains ≥90% of verses. A manual quality gate requires sample inspection before edges are loaded.
 
-**Run order** (after v1 base graph):
+**Run order:** the similarity layer is the final section of `gita_kg.ipynb`, so
+the whole graph (structure → Sanskrit → themes → concepts → characters →
+weapons/vibhuti → similarity) builds in one pass:
 
 ```bash
 uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_kg.ipynb
-uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/themes_kg.ipynb
-uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/similarity_kg.ipynb
 ```
 
 **Prerequisites:** The exact pinned model `all-mpnet-base-v2` revision `e8c3b32...` must be accessible in the Hugging Face cache or from a local model directory. For offline loading, set this in the gitignored `.env`:
@@ -99,8 +119,10 @@ ORDER BY score DESC
   POS tagging drive the `Term` layer.
 - **Idempotent.** All writes are `MERGE` keyed on natural IDs, so re-running
   rebuilds the graph with no duplicates.
-- **English only.** Sanskrit, transliteration, and word-meaning sections are
-  ignored.
+- **Sanskrit-grounded.** Beyond the English translation, the Sanskrit Word
+  Meanings drive the `SanskritTerm`, `Concept`, `Character`, `Conch`, and
+  `Vibhuti` layers; each verse also stores its `sanskrit` and `transliteration`.
+  Embeddings (C2) still use the English `translation` only, by design.
 
 ## Prerequisites
 
@@ -211,13 +233,14 @@ ORDER BY r.score DESC
 
 ### Viewing the whole graph
 
-The full graph (~1900 nodes incl. the `Term` layer) is a hairball. Prefer the
-**structural backbone** — everything except terms — which is legible:
+The full graph (several thousand nodes once the `Term` and `SanskritTerm` layers
+are included) is a hairball. Prefer the **structural backbone** — everything
+except the term layers — which is legible:
 
 ```cypher
-// Backbone: Text, Chapters, Verses, Persons, Epithets, Place
+// Backbone: Text, Chapters, Verses, Persons, Epithets, Place, Characters, Conches
 MATCH (n)-[r]->(m)
-WHERE NOT n:Term AND NOT m:Term
+WHERE NOT n:Term AND NOT m:Term AND NOT n:SanskritTerm AND NOT m:SanskritTerm
 RETURN n, r, m
 ```
 
