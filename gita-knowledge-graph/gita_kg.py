@@ -563,7 +563,7 @@ def vector_index_ops(config: EmbeddingConfig) -> list[Op]:
             "CREATE VECTOR INDEX verse_translation_embeddings IF NOT EXISTS "
             "FOR (v:Verse) ON (v.embedding) "
             f"OPTIONS {{indexConfig: {{`vector.dimensions`: {config.dimensions}, "
-            "`vector.similarity_function`: 'cosine'}}}",
+            "`vector.similarity_function`: 'cosine'}}",
             {},
         )
     ]

@@ -17,6 +17,35 @@ def test_embedding_config_is_pinned():
     assert cfg.threshold == 0.50
 
 
+def test_load_embedding_model_prefers_local_path(monkeypatch, tmp_path):
+    local_model = tmp_path / "all-mpnet-base-v2"
+    local_model.mkdir()
+    sentinel = object()
+    calls = []
+
+    def fake_sentence_transformer(*args, **kwargs):
+        calls.append((args, kwargs))
+        return sentinel
+
+    monkeypatch.setenv("GITA_EMBEDDING_MODEL_PATH", str(local_model))
+    monkeypatch.setattr(
+        "sentence_transformers.SentenceTransformer", fake_sentence_transformer
+    )
+
+    model = load_embedding_model(EmbeddingConfig())
+
+    assert model is sentinel
+    assert calls == [((str(local_model),), {"local_files_only": True})]
+
+
+def test_load_embedding_model_rejects_missing_local_path(monkeypatch, tmp_path):
+    missing_path = tmp_path / "missing-model"
+    monkeypatch.setenv("GITA_EMBEDDING_MODEL_PATH", str(missing_path))
+
+    with pytest.raises(FileNotFoundError, match="GITA_EMBEDDING_MODEL_PATH"):
+        load_embedding_model(EmbeddingConfig())
+
+
 class FakeModel:
     def encode(self, texts, **kwargs):
         assert kwargs["normalize_embeddings"] is True
@@ -114,9 +143,12 @@ def test_embedding_ops_are_parameterized_and_store_metadata():
 
 def test_vector_index_op_has_expected_shape():
     cypher, params = vector_index_ops(EmbeddingConfig())[0]
-    assert "CREATE VECTOR INDEX verse_translation_embeddings IF NOT EXISTS" in cypher
-    assert "768" in cypher
-    assert "cosine" in cypher
+    assert cypher == (
+        "CREATE VECTOR INDEX verse_translation_embeddings IF NOT EXISTS "
+        "FOR (v:Verse) ON (v.embedding) "
+        "OPTIONS {indexConfig: {`vector.dimensions`: 768, "
+        "`vector.similarity_function`: 'cosine'}}"
+    )
     assert params == {}
 
 

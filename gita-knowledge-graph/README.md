@@ -5,8 +5,6 @@ epithets, setting, and lemmatized terms — from the English translations into a
 local Neo4j `TheGitaProject` database. Structural core (v1), built so a thematic
 layer (themes / concepts / similarity) can be added later without rework.
 
-- **Design spec:** `docs/superpowers/specs/2026-08-20-gita-knowledge-graph-design.md`
-
 ## Ontology
 
 **Nodes:** `Text`, `Chapter` (`number`, `name`), `Verse`
@@ -44,8 +42,6 @@ MATCH (v:Verse)-[r:MENTIONS_THEME]->(:Theme {name: 'karma'})
 RETURN v.id, r.weight ORDER BY r.weight DESC LIMIT 10
 ```
 
-- **Spec:** `docs/superpowers/specs/2026-08-21-gita-kg-c1-themes-design.md`
-
 ### Semantic similarity (C2)
 
 An optional semantic layer that adds reproducible verse-to-verse similarity discovery and vector search:
@@ -71,43 +67,28 @@ uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/
 uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/similarity_kg.ipynb
 ```
 
-**Prerequisites:** The exact pinned model `all-mpnet-base-v2` revision `e8c3b32...` must be accessible in the Hugging Face cache or downloadable. On networks where Hugging Face downloads are blocked, ensure the model is pre-cached. The notebook will fail loudly if the model cannot be loaded.
+**Prerequisites:** The exact pinned model `all-mpnet-base-v2` revision `e8c3b32...` must be accessible in the Hugging Face cache or from a local model directory. For offline loading, set this in the gitignored `.env`:
+
+```dotenv
+GITA_EMBEDDING_MODEL_PATH=~/Documents/embedding/all-mpnet-base-v2
+```
+
+The loader uses that directory with network access disabled for model resolution. Neo4j provenance still records the official model ID and pinned revision. The notebook fails immediately if the configured directory does not exist.
 
 **Vector search query** — find semantically similar verses at runtime:
 
 ```cypher
 MATCH (source:Verse {id: $verse_id})
-CALL db.index.vector.queryNodes(
-  'verse_translation_embeddings',
-  $limit,
-  source.embedding
-) YIELD node, score
+MATCH (node:Verse)
+SEARCH node IN (
+  VECTOR INDEX verse_translation_embeddings
+  FOR source.embedding
+  LIMIT $limit
+) SCORE AS score
 WHERE node <> source
 RETURN node.id AS verse, node.translation AS translation, score
 ORDER BY score DESC
 ```
-
-**Bloom queries:**
-
-High-confidence similarity neighbourhood (mutual edges only, 1–2 hops):
-
-```cypher
-MATCH p=(a:Verse {id: $verse_id})-[r:SIMILAR_TO*1..2]-(b:Verse)
-WHERE all(rel IN relationships(p) WHERE rel.mutual = true)
-RETURN p
-```
-
-Cross-chapter related verses sharing a C1 theme:
-
-```cypher
-MATCH (a:Verse {id: $verse_id})-[r:SIMILAR_TO]-(b:Verse)
-MATCH (a)-[:MENTIONS_THEME]->(th:Theme)<-[:MENTIONS_THEME]-(b)
-WHERE a.chapter <> b.chapter
-RETURN a, r, b, th
-ORDER BY r.score DESC
-```
-
-- **Spec:** `docs/superpowers/specs/2026-08-21-gita-kg-c2-semantic-similarity-design.md`
 
 ## How it works
 
@@ -161,15 +142,36 @@ and non-empty `Term` / epithet counts. Re-running yields the same counts
 uv run pytest gita-knowledge-graph -v
 ```
 
-Unit tests run against committed fixtures with no Neo4j and no network; the one
-`@pytest.mark.integration` test loads `en_core_web_sm`.
+Unit tests run against committed fixtures with no Neo4j and no network.
+`@pytest.mark.integration` tests load installed model artifacts, including
+`en_core_web_sm` and the pinned sentence-transformer. Set
+`GITA_EMBEDDING_MODEL_PATH` when the latter is stored outside the Hugging Face
+cache.
 
 ## Exploring in Neo4j Bloom
 
 Open **Neo4j Desktop → your DBMS → Neo4j Bloom** (or the **Explore** tab in
-Neo4j Workspace), connect to the `neo4j` database, and **Generate** a
-perspective. Set captions: `Verse`→`id`, `Person`/`Chapter`/`Epithet`/`Place`→
-`name`, `Term`→`lemma`.
+Neo4j Workspace), connect to the `neo4j` database, and generate a perspective.
+Keep the generated perspective as an admin view, then duplicate it into three
+focused perspectives:
+
+1. **Reading Structure** — include `Text`, `Chapter`, `Verse`, `Person`,
+  `Epithet`, and `Place`. Keep structural relationships such as `HAS_CHAPTER`,
+  `HAS_VERSE`, `NEXT`, `SPOKEN_BY`, `ADDRESSED_TO`, `USES_EPITHET`, and
+  `SET_IN`. Exclude `Term`, `Theme`, and `SIMILAR_TO`.
+2. **Theme Map** — include `Chapter`, `Verse`, and `Theme`, with `HAS_VERSE`
+  and `MENTIONS_THEME`. This makes cross-chapter thematic clusters visible
+  without semantic edges overwhelming the scene.
+3. **Semantic Neighbourhood** — include `Verse`, `Theme`, and `Chapter`, with
+  `SIMILAR_TO`, `MENTIONS_THEME`, and `HAS_VERSE`. Start from one verse and
+  expand one or two hops instead of loading every similarity edge.
+
+Use `id` as the `Verse` caption, `number` for `Chapter`, `name` for `Theme`,
+`Person`, `Epithet`, and `Place`, and `lemma` for `Term`. In the semantic
+perspective, caption `SIMILAR_TO` by `score`; style `mutual = true` edges with a
+strong color and non-mutual edges in light gray. Keep verse nodes compact,
+theme nodes larger, and chapter nodes visually distinct. Avoid using the
+768-value `embedding` property in captions or styling.
 
 ### Saved search phrases (Perspective → Search phrases → Create)
 
@@ -189,6 +191,22 @@ RETURN v, e, p
 ```cypher
 MATCH path = (:Chapter {number: $num})-[:HAS_VERSE]->(v)-[:NEXT*0..]->()
 RETURN path
+```
+
+**Mutual semantic neighbourhood of verse $verse_id**
+```cypher
+MATCH p=(a:Verse {id: $verse_id})-[r:SIMILAR_TO*1..2]-(b:Verse)
+WHERE all(rel IN relationships(p) WHERE rel.mutual = true)
+RETURN p
+```
+
+**Cross-chapter theme bridges for verse $verse_id**
+```cypher
+MATCH (a:Verse {id: $verse_id})-[r:SIMILAR_TO]-(b:Verse)
+MATCH (a)-[:MENTIONS_THEME]->(th:Theme)<-[:MENTIONS_THEME]-(b)
+WHERE a.chapter <> b.chapter
+RETURN a, r, b, th
+ORDER BY r.score DESC
 ```
 
 ### Viewing the whole graph
