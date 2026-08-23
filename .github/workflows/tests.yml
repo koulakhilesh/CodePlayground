@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # one job per project folder that has a tests/ suite
+        project:
+          - gita-knowledge-graph
+          - london-blue-plaques
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      # Skip integration tests: they need the sentence-transformer model download
+      # and/or a live Neo4j. Unit tests run against committed fixtures, no network.
+      - name: Run ${{ matrix.project }} tests
+        run: uv run pytest ${{ matrix.project }} -m "not integration" -q
