@@ -1,8 +1,8 @@
 """Export the Bhagavad Gita knowledge graph to a standalone interactive HTML.
 
 Pulls the graph from Neo4j and renders it with Plotly (no Neo4j UI needed).
-Defaults to the structural backbone (everything except the dense ``Term`` layer);
-pass ``--include-terms`` for the full graph.
+Defaults to the structural backbone (everything except the dense ``Term`` and
+``SanskritTerm`` layers); pass ``--include-terms`` for the full graph.
 
     uv run python gita-knowledge-graph/export_graph.py
     uv run python gita-knowledge-graph/export_graph.py --include-terms
@@ -29,11 +29,19 @@ _LABEL_COLORS = {
     "Person": "#2ca02c",
     "Epithet": "#d62728",
     "Place": "#9467bd",
+    "Theme": "#e377c2",
+    "Concept": "#17becf",
+    "Character": "#bcbd22",
+    "Conch": "#7f7f7f",
+    "Vibhuti": "#e7ba52",
     "Term": "#8c564b",
+    "SanskritTerm": "#c49c94",
 }
 _CAPTION_PROP = {
     "Text": "name", "Chapter": "name", "Verse": "id", "Person": "name",
-    "Epithet": "name", "Place": "name", "Term": "lemma",
+    "Epithet": "name", "Place": "name", "Theme": "name", "Concept": "name",
+    "Character": "name", "Conch": "name", "Vibhuti": "name",
+    "Term": "lemma", "SanskritTerm": "lemma",
 }
 
 
@@ -42,7 +50,10 @@ def _caption(label: str, props: dict) -> str:
 
 
 def fetch_graph(driver, database: str, include_terms: bool) -> nx.DiGraph:
-    where = "" if include_terms else "WHERE NOT n:Term AND NOT m:Term "
+    where = "" if include_terms else (
+        "WHERE NOT n:Term AND NOT m:Term "
+        "AND NOT n:SanskritTerm AND NOT m:SanskritTerm "
+    )
     query = (
         "MATCH (n)-[r]->(m) "
         f"{where}"
@@ -89,7 +100,7 @@ def build_figure(g: nx.DiGraph, title: str) -> go.Figure:
                 text=[g.nodes[n]["caption"] for n in nodes],
                 hovertemplate=f"<b>{label}</b>: %{{text}}<extra></extra>",
                 marker=dict(
-                    size=7 if label in {"Verse", "Term"} else 14,
+                    size=7 if label in {"Verse", "Term", "SanskritTerm"} else 14,
                     color=color, line=dict(width=0.5, color="#ffffff"),
                 ),
             )
@@ -107,7 +118,7 @@ def build_figure(g: nx.DiGraph, title: str) -> go.Figure:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--include-terms", action="store_true",
-                        help="include the dense Term layer (full graph)")
+                        help="include the dense Term and SanskritTerm layers (full graph)")
     args = parser.parse_args()
 
     load_dotenv(_PKG / ".env", override=True)
@@ -119,7 +130,7 @@ def main() -> None:
         driver.close()
 
     scope = "full" if args.include_terms else "backbone"
-    title = f"Bhagavad Gita Knowledge Graph ({scope}) — {g.number_of_nodes()} nodes, {g.number_of_edges()} edges"
+    title = f"Bhagavad Gita Knowledge Graph ({scope}): {g.number_of_nodes()} nodes, {g.number_of_edges()} edges"
     out = _PKG / "exports" / f"gita_graph_{scope}.html"
     out.parent.mkdir(exist_ok=True)
     build_figure(g, title).write_html(out, include_plotlyjs="cdn")
