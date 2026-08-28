@@ -1,7 +1,7 @@
 """Pure logic for the Bhagavad Gita knowledge graph.
 
 Parsing, ontology seeds, spaCy entity/term extraction, and Cypher-operation
-builders. No Neo4j driver calls live here — the notebook executes the ops.
+builders. No Neo4j driver calls live here. The notebook executes the ops.
 Reads the English translation plus the Sanskrit, transliteration, and
 word-by-word Word Meanings layers.
 """
