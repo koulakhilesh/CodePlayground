@@ -241,6 +241,17 @@ Focused, post-oriented notebooks that build on the survey above:
   uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_speaker_signatures.ipynb
   ```
 
+- **`gita_sanskrit_vocab.ipynb`**: the `SanskritTerm` layer counted. Term
+  frequencies, a **Zipf** log-log fit, hapax legomena, a vocabulary-growth
+  (**Heaps'**) curve over the reading order, and terms-per-verse by chapter.
+  Note that the graph stores no per-verse token counts, so "frequency" here is
+  **document frequency** (verses containing the term). Exports `sanskrit_*.html`
+  to `exports/`.
+
+  ```bash
+  uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_sanskrit_vocab.ipynb
+  ```
+
 ## Exploring in Neo4j Bloom
 
 Open **Neo4j Desktop → your DBMS → Neo4j Bloom** (or the **Explore** tab in
