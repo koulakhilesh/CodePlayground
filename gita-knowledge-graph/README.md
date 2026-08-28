@@ -1,14 +1,16 @@
 # Bhagavad Gita Knowledge Graph
 
-Loads the Bhagavad Gita — chapters, verses, speakers, addressees, epithets,
-setting, lemmatized terms, and the Sanskrit Word Meanings — into a local Neo4j
+Loads the Bhagavad Gita (chapters, verses, speakers, addressees, epithets,
+setting, lemmatized terms, and the Sanskrit Word Meanings) into a local Neo4j
 database, then layers themes, Sanskrit-grounded concepts, the character cast,
 the named war-conches, Krishna's Chapter 10 glories, and semantic similarity on
-top. Everything is built by a single notebook, `gita_kg.ipynb`.
+top. Everything is built by a single notebook, `gita_kg.ipynb`. A second
+notebook, `gita_analysis.ipynb`, reads the finished graph and runs graph data
+science over it (see [Analysis](#analysis-graph-data-science)).
 
 ## Ontology
 
-See [ONTOLOGY.md](ONTOLOGY.md) for the full domain model — operating principles,
+See [ONTOLOGY.md](ONTOLOGY.md) for the full domain model: operating principles,
 per-node/edge semantics, provenance, and known ontological tensions.
 
 **Nodes:** `Text`, `Chapter` (`number`, `name`), `Verse`
@@ -24,18 +26,18 @@ per-node/edge semantics, provenance, and known ontological tensions.
 
 Grounded directly in the Sanskrit Word Meanings of each verse:
 
-- **`SanskritTerm`** (`lemma`) — the normalized Sanskrit vocabulary, linked
+- **`SanskritTerm`** (`lemma`) is the normalized Sanskrit vocabulary, linked
   `(Verse)-[:CONTAINS_TERM]->(SanskritTerm)`.
-- **`Concept`** (`name`, `label`, `category`) — 22 curated concepts grounded in
+- **`Concept`** (`name`, `label`, `category`) covers 22 curated concepts grounded in
   the Sanskrit terms via `(SanskritTerm)-[:INSTANCE_OF]->(Concept)` and
   `(Verse)-[:EXPRESSES_CONCEPT {weight}]->(Concept)`. Concepts bridge to the
   English theme index on shared names via `(Concept)-[:ALIGNS_WITH]->(Theme)`.
-- **`Character`** (`name`) — the cast discovered from the glosses, linked
+- **`Character`** (`name`) is the cast discovered from the glosses, linked
   `(Verse)-[:MENTIONS_CHARACTER]->(Character)`. Every `Person` is also a
   `Character` (`Person` is the dialogue-role marker).
-- **`Conch`** (`name`, `kind`) — the six named war-conches of Chapter 1,
+- **`Conch`** (`name`, `kind`) covers the six named war-conches of Chapter 1,
   `(Verse)-[:NAMES_CONCH]->(Conch)` and `(Character)-[:SOUNDS_CONCH]->(Conch)`.
-- **`Vibhuti`** (`name`, `label`, `chapter`) — Krishna's Chapter 10 glories: the
+- **`Vibhuti`** (`name`, `label`, `chapter`) holds Krishna's Chapter 10 glories: the
   verses that explicitly declare "I am …" (`asmi`), grouped via
   `(Verse)-[:DECLARES_VIBHUTI]->(Vibhuti)` and `(Character)-[:MANIFESTS_AS]->(Vibhuti)`.
 
@@ -43,7 +45,7 @@ Grounded directly in the Sanskrit Word Meanings of each verse:
 
 An optional curated layer over the core graph:
 
-- **Node** `Theme` (`name`, `label`, `category`) — 13 Gita themes (karma,
+- **Node** `Theme` (`name`, `label`, `category`) covers 13 Gita themes (karma,
   dharma, bhakti, jñāna, yoga, moksha, ātman, brahman, guṇa, saṃsāra,
   detachment, senses-mind, sacrifice-austerity).
 - **Relationships** `(Verse)-[:MENTIONS_THEME {weight}]->(Theme)` and
@@ -53,9 +55,9 @@ Themes are derived **deterministically** from the `Term` layer: each theme is
 defined by a set of lemmas, and a verse links to a theme when it mentions those
 terms. `weight` is the sum of the matched terms' per-verse counts.
 
-The theme layer is built as a section of `gita_kg.ipynb` — no separate notebook.
+The theme layer is built as a section of `gita_kg.ipynb`, with no separate notebook.
 
-Sample query — the verses most about a theme:
+Sample query, the verses most about a theme:
 
 ```cypher
 MATCH (v:Verse)-[r:MENTIONS_THEME]->(:Theme {name: 'karma'})
@@ -70,14 +72,14 @@ An optional semantic layer that adds reproducible verse-to-verse similarity disc
 - **Input:** `Verse.translation` text only. No Sanskrit, transliteration, chapter titles, or C1 theme labels are included in embeddings.
 - **Embeddings:** Normalized 768-dimensional vectors stored on each `Verse` node with metadata (`embedding_model`, `embedding_revision`, `embedding_dimension`, `embedding_input_sha256`).
 - **Vector index:** Native Neo4j cosine vector index named `verse_translation_embeddings` on `Verse.embedding` for dynamic nearest-neighbour search.
-- **Relationship:** `(Verse)-[:SIMILAR_TO {score, mutual, rank_a, rank_b, model, revision, top_k, threshold}]->(Verse)` — canonical unordered pairs selected via calibrated union top-5.
+  - **Relationship:** `(Verse)-[:SIMILAR_TO {score, mutual, rank_a, rank_b, model, revision, top_k, threshold}]->(Verse)`, canonical unordered pairs selected via calibrated union top-5.
   - `score`: cosine similarity (symmetric).
   - `mutual`: true when both verses select each other in their top-5.
   - `rank_a`, `rank_b`: endpoint ranks in each other's top-5 lists (1-based; one may be null for one-sided selections).
   - Canonical direction is ascending numeric `(chapter, verse)` order (`2.1` precedes `10.1`).
   - **Always query undirected:** `MATCH (a:Verse)-[r:SIMILAR_TO]-(b:Verse)`
 
-**Calibration:** The notebook computes similarity at candidate thresholds (0.50–0.75), evaluates verse coverage and cross-chapter theme edges, and selects the highest threshold that retains ≥90% of verses. A manual quality gate requires sample inspection before edges are loaded.
+**Calibration:** The notebook computes similarity at candidate thresholds (0.50 to 0.75), evaluates verse coverage and cross-chapter theme edges, and selects the highest threshold that retains ≥90% of verses. A manual quality gate requires sample inspection before edges are loaded.
 
 **Run order:** the similarity layer is the final section of `gita_kg.ipynb`, so
 the whole graph (structure → Sanskrit → themes → concepts → characters →
@@ -95,7 +97,7 @@ GITA_EMBEDDING_MODEL_PATH=~/Documents/embedding/all-mpnet-base-v2
 
 The loader uses that directory with network access disabled for model resolution. Neo4j provenance still records the official model ID and pinned revision. The notebook fails immediately if the configured directory does not exist.
 
-**Vector search query** — find semantically similar verses at runtime:
+**Vector search query**, find semantically similar verses at runtime:
 
 ```cypher
 MATCH (source:Verse {id: $verse_id})
@@ -126,12 +128,12 @@ ORDER BY score DESC
 
 ## Prerequisites
 
-- A local Neo4j instance. Set `NEO4J_DATABASE` to a database that exists on it —
-  on Community/Desktop that is the default `neo4j`; a named `TheGitaProject`
+- A local Neo4j instance. Set `NEO4J_DATABASE` to a database that exists on it.
+  On Community/Desktop that is the default `neo4j`; a named `TheGitaProject`
   database requires Neo4j Enterprise.
 - Verse source data at `data/TheGitaProject/Verses/ChapterNN/ChapterNNVerseNN.md`.
 - Python deps installed (the pinned `en_core_web_sm` model is a declared
-  dependency, so `uv sync` installs it \u2014 no separate download step):
+  dependency, so `uv sync` installs it, with no separate download step):
 
   ```bash
   uv sync
@@ -144,7 +146,7 @@ ORDER BY score DESC
   # then edit .env and set NEO4J_PASSWORD (and URI/USER if not the defaults)
   ```
 
-  `.env` is gitignored — credentials never enter version control.
+  `.env` is gitignored, so credentials never enter version control.
 
 ## Run
 
@@ -170,6 +172,75 @@ Unit tests run against committed fixtures with no Neo4j and no network.
 `GITA_EMBEDDING_MODEL_PATH` when the latter is stored outside the Hugging Face
 cache.
 
+## Analysis: Graph Data Science
+
+Once the graph is built, `gita_analysis.ipynb` reads it (never writes to it) and
+runs six analyses through the **Neo4j Graph Data Science (GDS)** library,
+exporting an interactive Plotly HTML per analysis to `exports/` (gitignored):
+
+1. **Verse communities:** Louvain (plus a Leiden cross-check) on the `SIMILAR_TO`
+   network; shows that the semantic communities cut across chapter boundaries.
+2. **Verse centrality:** PageRank (the semantic centre of gravity) and
+   Betweenness (the bridge verses between clusters).
+3. **Theme & concept correlation:** GDS Node Similarity (Jaccard over shared
+   verses) on the reverse-projected `MENTIONS_THEME` / `EXPRESSES_CONCEPT`
+   graphs; which ideas travel together.
+4. **Character co-occurrence:** the social network of the cast named in the
+   verses, sized by PageRank centrality.
+5. **Narrative arc:** theme share traced along the 700-verse reading order
+   (a descriptive sequence analysis, not a graph algorithm).
+6. **Dialogue dynamics:** who speaks, to whom, chapter by chapter
+   (also descriptive).
+
+The split is deliberate: `gita_kg.ipynb` **writes** the graph (all `MERGE`,
+idempotent), while `gita_analysis.ipynb` only **reads** it. It builds in-memory
+GDS projections, streams the results, and drops them at the end, so analysis can
+never mutate the graph.
+
+**Correctness.** There is no separate test suite for the analysis; instead every
+section ends with inline `assert`s that halt on mismatch: projection counts
+equal the stored graph, similarity graphs are symmetric, community coverage is
+total, the GDS Jaccard is re-derived from a plain Cypher count, and every
+plotted number comes from the same dataframe (never hand-typed).
+
+**Prerequisites:** a graph already built by `gita_kg.ipynb`, plus the **GDS
+plugin** installed in Neo4j (Neo4j Desktop, then your DBMS, then Plugins, then
+Graph Data Science; the open-source Community tier suffices). The
+`graphdatascience` Python client is a declared dependency (`uv sync`).
+
+**Run** (headless, from the repo root, after the graph is built):
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_analysis.ipynb
+```
+
+### Deep dives
+
+Focused, post-oriented notebooks that build on the survey above:
+
+- **`gita_verse_map.ipynb`**: the "shape of the Gita". Projects the 701 pinned
+  verse embeddings into 2D with scikit-learn **t-SNE**, colours the map by GDS
+  Louvain community and by chapter, then characterises each community by its
+  most *distinctive* themes (lift over the global share), its top concept, and
+  an exemplar verse nearest the community centroid. No extra dependency (t-SNE
+  ships with scikit-learn; UMAP is avoided because `numba` lacks wheels on this
+  project's Python). Exports `map_*.html` to `exports/`.
+
+  ```bash
+  uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_verse_map.ipynb
+  ```
+
+- **`gita_speaker_signatures.ipynb`**: how the four voices (Krishna, Arjuna,
+  Sanjaya, Dhritarashtra) differ. Speaking share, theme/concept *fingerprints*
+  (lift over the whole text), and a **Dunning log-likelihood (G²) keyness**
+  analysis, the standard corpus-linguistics test for the content words most
+  over-represented in each voice. Read-only, no schema change; keyness is limited
+  to the content-lemma `Term` layer. Exports `speaker_*.html` to `exports/`.
+
+  ```bash
+  uv run jupyter nbconvert --to notebook --execute --inplace gita-knowledge-graph/gita_speaker_signatures.ipynb
+  ```
+
 ## Exploring in Neo4j Bloom
 
 Open **Neo4j Desktop → your DBMS → Neo4j Bloom** (or the **Explore** tab in
@@ -177,14 +248,14 @@ Neo4j Workspace), connect to the `neo4j` database, and generate a perspective.
 Keep the generated perspective as an admin view, then duplicate it into three
 focused perspectives:
 
-1. **Reading Structure** — include `Text`, `Chapter`, `Verse`, `Person`,
+1. **Reading Structure:** include `Text`, `Chapter`, `Verse`, `Person`,
   `Epithet`, and `Place`. Keep structural relationships such as `HAS_CHAPTER`,
   `HAS_VERSE`, `NEXT`, `SPOKEN_BY`, `ADDRESSED_TO`, `USES_EPITHET`, and
   `SET_IN`. Exclude `Term`, `Theme`, and `SIMILAR_TO`.
-2. **Theme Map** — include `Chapter`, `Verse`, and `Theme`, with `HAS_VERSE`
+2. **Theme Map:** include `Chapter`, `Verse`, and `Theme`, with `HAS_VERSE`
   and `MENTIONS_THEME`. This makes cross-chapter thematic clusters visible
   without semantic edges overwhelming the scene.
-3. **Semantic Neighbourhood** — include `Verse`, `Theme`, and `Chapter`, with
+3. **Semantic Neighbourhood:** include `Verse`, `Theme`, and `Chapter`, with
   `SIMILAR_TO`, `MENTIONS_THEME`, and `HAS_VERSE`. Start from one verse and
   expand one or two hops instead of loading every similarity edge.
 
@@ -234,8 +305,8 @@ ORDER BY r.score DESC
 ### Viewing the whole graph
 
 The full graph (several thousand nodes once the `Term` and `SanskritTerm` layers
-are included) is a hairball. Prefer the **structural backbone** — everything
-except the term layers — which is legible:
+are included) is a hairball. Prefer the **structural backbone**, everything
+except the term layers, which is legible:
 
 ```cypher
 // Backbone: Text, Chapters, Verses, Persons, Epithets, Place, Characters, Conches
@@ -257,10 +328,10 @@ deliberately instead of loading the term hairball at once.
 
 ### Standalone HTML visualization
 
-No Neo4j UI needed — export an interactive Plotly graph to `exports/`:
+No Neo4j UI needed. Export an interactive Plotly graph to `exports/`:
 
 ```bash
-uv run python gita-knowledge-graph/export_graph.py                 # backbone (no Term layer)
+uv run python gita-knowledge-graph/export_graph.py                 # backbone (no Term/SanskritTerm layers)
 uv run python gita-knowledge-graph/export_graph.py --include-terms # full graph
 ```
 
