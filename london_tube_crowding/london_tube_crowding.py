@@ -12,6 +12,10 @@ import requests
 
 
 TF_L_API = "https://api.tfl.gov.uk"
+TUBE_LINES = {
+    "bakerloo", "central", "circle", "district", "hammersmith-city", "jubilee",
+    "metropolitan", "northern", "piccadilly", "victoria", "waterloo-city",
+}
 
 
 def _load_tfl_credentials() -> tuple[str | None, str | None]:
@@ -291,49 +295,82 @@ def export_station_csv(stations: list[dict[str, Any]], output_path: str | Path) 
     return output
 
 
-def extract_line_flow_rows(payload: dict[str, Any], station_id: str, station_name: str | None = None, line_name: str | None = None) -> list[dict[str, Any]]:
-    """Flatten a TfL crowding payload into one row per station-line-time-slice."""
-    if not isinstance(payload, dict):
-        return []
-
-    if line_name is None:
-        station_name = payload.get("commonName") or station_name
-        lines = payload.get("lines") or []
-        rows: list[dict[str, Any]] = []
-        for line in lines:
-            rows.extend(extract_line_flow_rows(payload, station_id, station_name, line.get("id") or line.get("name")))
-        return rows
-
-    lines = payload.get("lines") or []
+def _line_crowding_block(payload: dict[str, Any], station_id: str, line_name: str) -> dict[str, Any]:
     selected = None
-    for line in lines:
+    for line in payload.get("lines") or []:
         if (line.get("id") or line.get("name")) == line_name:
             selected = line
             break
     if selected is None and payload.get("stationNaptan") == station_id:
         selected = payload
+    return (selected or {}).get("crowding") or payload.get("crowding") or {}
 
-    crowding = (selected or {}).get("crowding") or payload.get("crowding") or {}
-    flows = crowding.get("passengerFlows") or []
 
-    rows: list[dict[str, Any]] = []
+def extract_line_flow_rows(payload: dict[str, Any], station_id: str, station_name: str | None = None, line_name: str | None = None) -> list[dict[str, Any]]:
+    """Flatten a TfL crowding payload into one row per station-line-time-slice.
+
+    TfL returns several unlabeled, unordered flow components per slice, so they are summed.
+    """
+    if not isinstance(payload, dict):
+        return []
+
+    if line_name is None:
+        station_name = payload.get("commonName") or station_name
+        rows: list[dict[str, Any]] = []
+        for line in payload.get("lines") or []:
+            rows.extend(extract_line_flow_rows(payload, station_id, station_name, line.get("id") or line.get("name")))
+        return rows
+
+    flows = _line_crowding_block(payload, station_id, line_name).get("passengerFlows") or []
+    totals: dict[str, list[int]] = {}
     for flow in flows:
         time_slice = flow.get("timeSlice")
         value = flow.get("value")
         if time_slice is None or value is None:
             continue
+        agg = totals.setdefault(str(time_slice), [0, 0])
+        agg[0] += int(value)
+        agg[1] += 1
+
+    name = station_name or payload.get("commonName") or payload.get("stationName")
+    return [
+        {
+            "station_naptan": station_id,
+            "common_name": name,
+            "line": line_name,
+            "time_slice": time_slice,
+            "value": value,
+            "n_components": n,
+        }
+        for time_slice, (value, n) in sorted(totals.items())
+    ]
+
+
+def extract_train_loading_rows(payload: dict[str, Any], station_id: str, station_name: str | None, line_name: str) -> list[dict[str, Any]]:
+    """Flatten directional train-loading bands (train departing this station towards `naptanTo`)."""
+    if not isinstance(payload, dict):
+        return []
+    loadings = _line_crowding_block(payload, station_id, line_name).get("trainLoadings") or []
+    name = station_name or payload.get("commonName") or payload.get("stationName")
+    rows: list[dict[str, Any]] = []
+    for item in loadings:
+        if item.get("timeSlice") is None or item.get("value") is None:
+            continue
         rows.append({
             "station_naptan": station_id,
-            "common_name": station_name or payload.get("commonName") or payload.get("stationName"),
+            "common_name": name,
             "line": line_name,
-            "time_slice": str(time_slice),
-            "value": int(value),
+            "direction": item.get("direction"),
+            "line_direction": item.get("lineDirection"),
+            "naptan_to": item.get("naptanTo"),
+            "time_slice": str(item["timeSlice"]),
+            "value": int(item["value"]),
         })
     return rows
 
 
 def build_station_crowding_dataset(
-    catalog_path: str | Path = "data/tube_station_catalog.csv",
+    catalog_path: str | Path = "data/tube_crowding/station_line_edges.csv",
     output_dir: str | Path = "data/tube_crowding",
     *,
     live: bool = False,
@@ -358,46 +395,38 @@ def build_station_crowding_dataset(
     (output_path / "raw").mkdir(parents=True, exist_ok=True)
 
     if not catalog_path.exists():
-        raise FileNotFoundError(f"Catalog CSV not found: {catalog_path}. Build it first with build_station_catalog(live=True).")
+        raise FileNotFoundError(f"Station-line CSV not found: {catalog_path} (expects columns naptan, name, line).")
 
-    catalog = pd.read_csv(catalog_path)
-    catalog = catalog.fillna("")
-    catalog = catalog[catalog["station_naptan"].astype(str).str.strip() != ""]
-    catalog = catalog[catalog["station_naptan"].astype(str).str.startswith("940GZZ")].copy()
+    catalog = pd.read_csv(catalog_path).fillna("")
+    catalog = catalog[catalog["naptan"].astype(str).str.startswith("940GZZ")]
+    catalog = catalog[catalog["line"].isin(TUBE_LINES)].drop_duplicates(["naptan", "line"])
+    if limit is not None:
+        catalog = catalog.head(limit)
 
     rows: list[dict[str, Any]] = []
-    for idx, row in catalog.iterrows():
-        if limit is not None and idx >= limit:
-            break
-        station_id = str(row.get("station_naptan") or row.get("naptan_id") or "").strip()
-        if not station_id:
+    loading_rows: list[dict[str, Any]] = []
+    for _, row in catalog.iterrows():
+        station_id = str(row["naptan"]).strip()
+        line_name = str(row["line"]).strip()
+        station_name = str(row.get("name") or "").strip() or None
+        try:
+            payload = fetch_station_crowding(station_id, line_name)
+        except (ValueError, requests.RequestException):
             continue
 
-        line_ids = [part.strip() for part in str(row.get("line_ids") or "").split(";") if part.strip()]
-        if not line_ids:
-            continue
+        rows.extend(extract_line_flow_rows(payload, station_id, station_name, line_name))
+        loading_rows.extend(extract_train_loading_rows(payload, station_id, station_name, line_name))
 
-        for line_name in line_ids:
-            try:
-                payload = fetch_station_crowding(station_id, line_name)
-            except ValueError:
-                continue
-            except requests.RequestException:
-                continue
-
-            station_name = str(row.get("common_name") or row.get("station_name") or "").strip() or None
-            extracted = extract_line_flow_rows(payload, station_id, station_name, line_name)
-            rows.extend(extracted)
-
-            raw_file = output_path / "raw" / f"{station_id}_{line_name}.json"
-            raw_file.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-            time.sleep(sleep_seconds)
+        raw_file = output_path / "raw" / f"{station_id}_{line_name}.json"
+        raw_file.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        time.sleep(sleep_seconds)
 
     csv_path = output_path / "station_line_crowding.csv"
     pd.DataFrame(rows).to_csv(csv_path, index=False)
+    pd.DataFrame(loading_rows).to_csv(output_path / "train_loadings.csv", index=False)
 
     missing_station_path = output_path / "missing_station_audit.csv"
-    catalog_ids = set(catalog["station_naptan"].astype(str).str.strip())
+    catalog_ids = set(catalog["naptan"].astype(str).str.strip())
     crowding_ids = set(pd.DataFrame(rows)["station_naptan"].astype(str).str.strip()) if rows else set()
     missing_ids = sorted(catalog_ids - crowding_ids)
     pd.DataFrame({
@@ -421,9 +450,5 @@ if __name__ == "__main__":
             "Live fetch disabled by default. Re-run with --live to refresh the data, or use the cached local CSV for EDA."
         )
 
-    catalog_path = Path("data/tube_station_catalog.csv")
-    if not catalog_path.exists():
-        export_station_catalog_csv(catalog_path, live=True)
-
-    output = build_station_crowding_dataset(catalog_path, live=True, limit=args.limit, sleep_seconds=args.sleep)
+    output = build_station_crowding_dataset(live=True, limit=args.limit, sleep_seconds=args.sleep)
     print(f"Saved crowding dataset to {output}")

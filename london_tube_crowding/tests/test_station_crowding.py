@@ -11,6 +11,65 @@ build_station_catalog = module.build_station_catalog
 extract_time_series = module.extract_time_series
 parse_station_payload = module.parse_station_payload
 canonical_station_naptans = module.canonical_station_naptans
+extract_line_flow_rows = module.extract_line_flow_rows
+extract_train_loading_rows = module.extract_train_loading_rows
+
+
+def _crowding_payload():
+    return {
+        "naptanId": "940GZZLUACT",
+        "commonName": "Acton Town Underground Station",
+        "lines": [
+            {
+                "id": "district",
+                "name": "District",
+                "crowding": {
+                    # TfL returns several unlabeled components per slice, in no fixed order.
+                    "passengerFlows": [
+                        {"timeSlice": "0815-0830", "value": 69},
+                        {"timeSlice": "0800-0815", "value": 14},
+                        {"timeSlice": "0815-0830", "value": 4},
+                        {"timeSlice": "0800-0815", "value": 4},
+                        {"timeSlice": "0815-0830", "value": 10},
+                    ],
+                    "trainLoadings": [
+                        {"line": "District", "lineDirection": "WB", "platformDirection": "WB",
+                         "direction": "Inbound", "naptanTo": "940GZZLUECM", "timeSlice": "0815-0830", "value": 1},
+                        {"line": "District", "lineDirection": "EB", "platformDirection": "EB",
+                         "direction": "Outbound", "naptanTo": "940GZZLUCWP", "timeSlice": "0815-0830", "value": 3},
+                    ],
+                },
+            },
+            {"id": "piccadilly", "name": "Piccadilly", "crowding": {}},
+        ],
+    }
+
+
+def test_extract_line_flow_rows_sums_unlabeled_components_per_slice():
+    rows = extract_line_flow_rows(_crowding_payload(), "940GZZLUACT", "Acton Town", "district")
+    by_slice = {r["time_slice"]: r for r in rows}
+    assert len(rows) == 2
+    assert by_slice["0815-0830"]["value"] == 83
+    assert by_slice["0815-0830"]["n_components"] == 3
+    assert by_slice["0800-0815"]["value"] == 18
+    assert by_slice["0800-0815"]["n_components"] == 2
+    assert all(r["line"] == "district" for r in rows)
+
+
+def test_extract_train_loading_rows_keeps_direction_and_next_station():
+    rows = extract_train_loading_rows(_crowding_payload(), "940GZZLUACT", "Acton Town", "district")
+    assert len(rows) == 2
+    outbound = next(r for r in rows if r["direction"] == "Outbound")
+    assert outbound == {
+        "station_naptan": "940GZZLUACT",
+        "common_name": "Acton Town",
+        "line": "district",
+        "direction": "Outbound",
+        "line_direction": "EB",
+        "naptan_to": "940GZZLUCWP",
+        "time_slice": "0815-0830",
+        "value": 3,
+    }
 
 
 def test_canonical_station_naptans_ignores_platform_stop_points():
