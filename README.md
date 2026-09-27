@@ -13,6 +13,9 @@ Each experiment lives in its own folder, with shared data under `data/`:
   London blue plaque, an analysis notebook (who gets remembered, and where), and a
   geospatial/optimisation notebook (Voronoi, DBSCAN, minimum spanning tree, and a
   hand-rolled travelling-salesman tour).
+- [`london_tube_crowding/`](london_tube_crowding/): a London Tube movement EDA project
+  that fetches live station metadata, extracts NaPTAN codes, and flattens TfL crowding
+  time-series data for exploratory analysis.
 - [`gita-knowledge-graph/`](gita-knowledge-graph/): a Sanskrit-grounded knowledge
   graph of the Bhagavad Gita in Neo4j — 701 verses linked to themes, concepts, the
   character cast, and semantic similarity, all built by a single notebook. The

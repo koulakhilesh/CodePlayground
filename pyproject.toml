@@ -20,6 +20,7 @@ dependencies = [
     "pandas>=2.2.0",
     "plotly>=5.24.0",
     "python-dotenv>=1.0.0",
+    "requests>=2.32.0",
     "scikit-learn>=1.9.0",
     "scipy>=1.18.0",
     "sentence-transformers>=6,<7",
@@ -36,5 +37,5 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["london-blue-plaques", "gita-knowledge-graph"]
+pythonpath = ["london-blue-plaques", "gita-knowledge-graph", "london_tube_crowding"]
 markers = ["integration: requires the en_core_web_sm model or a live service"]
