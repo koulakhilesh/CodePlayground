@@ -37,5 +37,5 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["london-blue-plaques", "gita-knowledge-graph", "london_tube_crowding"]
+pythonpath = ["london-blue-plaques", "gita-knowledge-graph", "london_tube_crowding", "human-migration"]
 markers = ["integration: requires the en_core_web_sm model or a live service"]
