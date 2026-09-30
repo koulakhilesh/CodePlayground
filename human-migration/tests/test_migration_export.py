@@ -51,7 +51,8 @@ def test_build_outputs_integer_geometry_inside_the_frame():
         xy = np.array(ring).reshape(-1, 2)
         assert (xy >= 0).all() and (xy[:, 0] <= world["w"]).all() and (xy[:, 1] <= world["h"]).all()
     assert [s["id"] for s in migration["stops"]] == [s["id"] for s in STOPS]
-    assert all("route" not in s and s["path"] and len(s["site"]) == 2 for s in migration["stops"])
+    assert all("route" not in s and s["path"] and len(s["xy"]) == 2 for s in migration["stops"])
+    assert [s["site"] for s in migration["stops"]] == [s["site"] for s in STOPS]
     json.dumps(world, allow_nan=False)
     json.dumps(migration, allow_nan=False)
 

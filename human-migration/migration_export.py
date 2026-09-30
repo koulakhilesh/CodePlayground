@@ -170,7 +170,7 @@ def build(geoms, min_area_px: float = 4.0, tol_px: float = 0.6) -> tuple[dict, d
     for s in STOPS:
         path = [layout.flat(seg, 0.4 * PX) for seg in paths[s["id"]]]
         stops.append({k: v for k, v in s.items() if k != "route"} |
-                     {"path": path, "site": layout.flat(F.project(*s["route"][-1]))})
+                     {"path": path, "xy": layout.flat(F.project(*s["route"][-1]))})
     migration = {"origin": {**ORIGIN, "xy": layout.flat(F.project(*ORIGIN["ll"]))}, "stops": stops}
     return world, migration
 

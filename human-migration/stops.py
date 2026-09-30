@@ -104,7 +104,7 @@ STOPS = [
 ]
 
 LABELS = [
-    ("Africa", (20.0, 5.0)), ("Europe", (22.0, 52.0)), ("Asia", (95.0, 45.0)),
-    ("Australia", (134.0, -25.0)), ("North America", (-100.0, 45.0)),
+    ("Africa", (20.0, 5.0)), ("Europe", (28.0, 60.0)), ("Asia", (95.0, 45.0)),
+    ("Australia", (134.0, -25.0)), ("North America", (-100.0, 58.0)),
     ("South America", (-60.0, -15.0)), ("Antarctica", (60.0, -78.0)),
 ]
