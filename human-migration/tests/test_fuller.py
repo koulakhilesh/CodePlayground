@@ -61,6 +61,21 @@ def test_cities_land_inside_their_face_triangle():
         assert _triangle_contains(F.FACES[i].place(F.FACES[i].v), z), name
 
 
+def test_no_mirroring_and_modest_distortion():
+    # A small east step and north step keep their handedness, and their ratio and angle stay near 1 and 90°.
+    rng = np.random.default_rng(2)
+    for lon, lat in zip(rng.uniform(-180, 180, 600), rng.uniform(-75, 75, 600)):
+        d = 0.05
+        pts = [(lon, lat), (lon + d / np.cos(np.radians(lat)), lat), (lon, lat + d)]
+        if len({F.face_of(F.orient(*p)) for p in pts}) > 1:
+            continue
+        z = F.project(*zip(*pts))
+        east, north = z[1] - z[0], z[2] - z[0]
+        angle = np.degrees(np.angle(north / east))
+        assert 76 < angle < 104, (lon, lat, angle)
+        assert 0.78 < abs(north) / abs(east) < 1.26, (lon, lat)
+
+
 def test_rotation_matches_d3_convention():
     # d3.geoRotation([90, 0]) sends [0, 0] to [90, 0]; geoRotation([0, 90]) sends it to the north pole.
     assert np.allclose(F.to_lonlat(F.rotation(90, 0, 0) @ F.to_xyz(0, 0)), [90, 0])
