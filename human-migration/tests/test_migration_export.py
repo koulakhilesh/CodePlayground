@@ -81,6 +81,22 @@ def test_real_coastlines_keep_known_places_on_land():
         assert land.contains(Point(z.real, z.imag)), name
 
 
+def test_route_breaks_only_at_real_cuts_in_the_net():
+    # The New Zealand voyage is drawn in pieces; each break must sit on the outer edge of Fuller's net.
+    net = shapely.union_all([Polygon(np.c_[z.real, z.imag]) for z in (f.place(f.v) for f in F.FACES)])
+    edge = net.boundary
+    nz = next(s for s in STOPS if s["id"] == "new-zealand")
+    pieces = M.route_pieces(nz["route"])
+    assert len(pieces) > 1
+    tol = 0.02 * abs(F.FACES[0].place(F.FACES[0].v[:1])[0] - F.FACES[0].place(F.FACES[0].v[1:2])[0])
+    for a, b in zip(pieces[:-1], pieces[1:]):
+        for z in (a[-1], b[0]):
+            assert edge.distance(Point(z.real, z.imag)) < tol
+    for s in STOPS:
+        if s["id"] != "new-zealand":
+            assert len(M.route_pieces(s["route"])) == 1, s["id"]
+
+
 def test_africa_top_left_and_the_americas_to_the_right():
     world, migration = M.build([box(20, -5, 30, 5)], min_area_px=0)
     lab = {d["t"]: d["xy"] for d in world["labels"]}
