@@ -2,6 +2,7 @@ import json
 import re
 
 import numpy as np
+import pytest
 import shapely
 from shapely.geometry import Point, Polygon, box
 
@@ -55,13 +56,29 @@ def test_build_outputs_integer_geometry_inside_the_frame():
     json.dumps(migration, allow_nan=False)
 
 
-def test_a_continent_sized_polygon_is_not_torn():
-    # A polygon spanning several faces keeps all of its interior (does not yet reproduce the torn-Africa bug).
-    big = box(-20, -35, 60, 40)
-    land = shapely.union_all(M.project_land([big]))
-    lon, lat = np.meshgrid(np.linspace(-18, 58, 20), np.linspace(-33, 38, 20))
-    inside = [land.buffer(1e-3).contains(Point(z.real, z.imag)) for z in F.project(lon.ravel(), lat.ravel())]
-    assert all(inside)
+def test_a_self_crossing_clipped_ring_keeps_both_lobes():
+    # Regression: clipped continent rings can cross themselves; buffer(0) dropped a lobe (Cairo, Lagos).
+    f = F.FACES[0]
+    c = f.v.mean(0) / np.linalg.norm(f.v.mean(0))
+    u = np.cross(c, [0, 0, 1.0]); u /= np.linalg.norm(u)
+    w = np.cross(c, u)
+    bowtie = np.array([c + 0.1 * (a * u + b * w) for a, b in ((-1, -1), (1, 1), (1, -1), (-1, 1))])
+    bowtie /= np.linalg.norm(bowtie, axis=1, keepdims=True)
+    poly = M._face_poly(f, bowtie)
+    lobes = getattr(poly, "geoms", [poly])
+    assert len(lobes) == 2 and all(g.area > 0 for g in lobes)
+
+
+@pytest.mark.skipif(not M.SOURCE.exists(), reason="Natural Earth land not downloaded")
+def test_real_coastlines_keep_known_places_on_land():
+    import geopandas as gpd
+    land = shapely.union_all(M.project_land(gpd.read_file(M.SOURCE).geometry)).buffer(1e-3)
+    places = {"Cairo": (31, 28), "Riyadh": (45, 24), "Lagos": (5, 8), "Dakar": (-15.5, 14.5),
+              "Reykjavik": (-19, 64.8), "Tokyo": (138.5, 36), "Wellington": (175.5, -39.5),
+              "Hawaii": (-155.5, 19.6), "Tierra del Fuego": (-68.5, -54), "Antarctica": (0, -80)}
+    for name, ll in places.items():
+        z = F.project(*ll)[0]
+        assert land.contains(Point(z.real, z.imag)), name
 
 
 def test_africa_top_left_and_the_americas_to_the_right():
