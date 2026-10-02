@@ -15,8 +15,10 @@ eight places. Each guess is scored against the published evidence.
   - Geometry is clipped to each face on the sphere before it is projected.
 - `stops.py`: the hand-curated game data.
   - The origin, eight stops, continent labels and route waypoints.
-  - Each stop has an evidence range (years ago), a short note and at least one citation. All 14 DOIs
-    were checked against Crossref on 28 Sep 2026.
+  - Each stop has an evidence range (years ago), a short note and at least one citation. All 19 DOIs
+    were checked against Crossref (28 Sep and 2 Oct 2026), and the wording against the papers'
+    abstracts on Europe PMC. New Zealand is also dated in CE (`ce`), so the site can keep "years ago"
+    current.
 - `migration_export.py`: CLI that writes the two JSON files the site loads.
 - `tests/`: tests for the projection, clipping, routes and data.
 

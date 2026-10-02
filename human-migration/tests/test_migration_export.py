@@ -17,6 +17,8 @@ def test_stop_ranges_fit_the_slider_and_are_ordered():
     for s in STOPS:
         assert 500 <= s["lo"] < s["hi"] <= 300000, s["id"]
         assert isinstance(s["lo"], int) and isinstance(s["hi"], int)
+        if "ce" in s:
+            assert (s["lo"], s["hi"]) == (2026 - s["ce"][1], 2026 - s["ce"][0]), s["id"]
 
 
 def test_every_stop_is_cited_with_a_doi():
