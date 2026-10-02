@@ -89,13 +89,29 @@ def test_route_breaks_only_at_real_cuts_in_the_net():
     nz = next(s for s in STOPS if s["id"] == "new-zealand")
     pieces = M.route_pieces(nz["route"])
     assert len(pieces) > 1
-    tol = 0.02 * abs(F.FACES[0].place(F.FACES[0].v[:1])[0] - F.FACES[0].place(F.FACES[0].v[1:2])[0])
+    tol = 1e-6 * abs(F.FACES[0].place(F.FACES[0].v[:1])[0] - F.FACES[0].place(F.FACES[0].v[1:2])[0])
     for a, b in zip(pieces[:-1], pieces[1:]):
         for z in (a[-1], b[0]):
             assert edge.distance(Point(z.real, z.imag)) < tol
     for s in STOPS:
         if s["id"] != "new-zealand":
             assert len(M.route_pieces(s["route"])) == 1, s["id"]
+
+
+@pytest.mark.skipif(not M.SOURCE.exists(), reason="Natural Earth land not downloaded")
+def test_all_twelve_icosahedron_corners_are_at_sea_and_land_share_is_kept():
+    import geopandas as gpd
+    geo = gpd.read_file(M.SOURCE).geometry
+    land_ll = shapely.union_all(geo.values)
+    corners = F.to_xyz([0, 0] + [(i * 36 + 180) % 360 - 180 for i in range(10)],
+                       [90, -90] + [F.THETA if i & 1 else -F.THETA for i in range(10)])
+    for v in corners:
+        lon, lat = F.to_lonlat(v @ F._R)
+        assert not land_ll.contains(Point(lon, lat)), (lon, lat)
+    net = shapely.union_all([Polygon(np.c_[z.real, z.imag]) for z in (f.place(f.v) for f in F.FACES)])
+    share = shapely.union_all(M.project_land(geo)).area / net.area
+    sphere = gpd.GeoSeries(geo, crs=4326).to_crs("+proj=cea").area.sum() / (4 * np.pi * 6371008.8 ** 2)
+    assert abs(share - sphere) < 0.002, (share, sphere)
 
 
 def test_africa_top_left_and_the_americas_to_the_right():

@@ -61,6 +61,30 @@ def test_cities_land_inside_their_face_triangle():
         assert _triangle_contains(F.FACES[i].place(F.FACES[i].v), z), name
 
 
+def test_matches_d3_geo_polygon_airocean():
+    # Reference: d3-geo-polygon 2.x geoAirocean()(lon, lat), screen pixels at its default scale and angle.
+    ref = [((-0.13, 51.51), (421.86352126962385, 137.25649072901552)),
+           ((36.82, -1.29), (272.6967753226149, 107.9630297177199)),
+           ((151.21, -33.87), (175.47609164852292, 419.97839062986145)),
+           ((-74.0, 40.71), (570.5669371232466, 205.1667315633137)),
+           ((-70.65, -33.45), (761.9600796321456, 198.72232322612518)),
+           ((139.69, 35.69), (378.23012064038, 353.26734425717643)),
+           ((-21.94, 64.15), (474.66403945915465, 181.91148226023034)),
+           ((166.67, -77.85), (893.4293667827496, 290.11534035189146)),
+           ((18.42, -33.92), (232.49207941038682, 25.110269683062107)),
+           ((116.4, 39.9), (346.28363529366436, 312.5285597831716)),
+           ((-155.5, 19.6), (592.2598715403436, 379.3988403333435)),
+           ((31.2, 30.0), (342.11455249263634, 140.78594765971474))]
+    ll = np.array([r[0] for r in ref])
+    d3 = np.array([complex(*r[1]) for r in ref])
+    ours = np.conj(F.project(ll[:, 0], ll[:, 1]))  # y-down, like d3's screen coordinates
+    A = np.c_[ours, np.ones(len(ours))]
+    (a, b), *_ = np.linalg.lstsq(A, d3, rcond=None)
+    # One similarity fits every point: d3's own scale (45.4631) and angle (60°), nothing else.
+    assert abs(abs(a) - 45.4631) < 1e-6 and abs(np.degrees(np.angle(a)) - 60) < 1e-6
+    assert np.abs(A @ [a, b] - d3).max() < 1e-6
+
+
 def test_no_mirroring_and_modest_distortion():
     # A small east step and north step keep their handedness, and their ratio and angle stay near 1 and 90°.
     rng = np.random.default_rng(2)
