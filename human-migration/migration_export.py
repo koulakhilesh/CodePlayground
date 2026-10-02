@@ -48,16 +48,22 @@ def _face_poly(face: F.Face, ring: np.ndarray):
     return None if poly.is_empty else poly
 
 
+def _polygons(geom):
+    if isinstance(geom, Polygon):
+        if not geom.is_empty:
+            yield geom
+    elif hasattr(geom, "geoms"):
+        for g in geom.geoms:
+            yield from _polygons(g)
+
+
 def _tiles(geoms, size: int = 10):
     """Cut land into lon/lat tiles: clipping a whole continent on the sphere can wrap the wrong way."""
     for geom in geoms:
         x0, y0, x1, y1 = geom.bounds
         for x in range(int(np.floor(x0 / size)) * size, int(np.ceil(x1)), size):
             for y in range(int(np.floor(y0 / size)) * size, int(np.ceil(y1)), size):
-                piece = geom.intersection(box(x, y, x + size, y + size))
-                for poly in getattr(piece, "geoms", [piece]):
-                    if isinstance(poly, Polygon) and not poly.is_empty:
-                        yield poly
+                yield from _polygons(geom.intersection(box(x, y, x + size, y + size)))
 
 
 def project_land(geoms) -> list:
@@ -103,14 +109,39 @@ def graticule(step: int = 15) -> list[np.ndarray]:
     return project_lines(lines)
 
 
+def _is_cut(fa: int, fb: int) -> bool:
+    """Two faces that touch on the sphere but are not joined in the unfolded net."""
+    return fa != fb and F.PARENTS[fa] != fb and F.PARENTS[fb] != fa
+
+
+def _boundary(a: np.ndarray, b: np.ndarray, fa: int) -> np.ndarray:
+    """The point where the great circle from a (on face fa) to b leaves face fa."""
+    lo, hi = a, b
+    for _ in range(48):
+        m = (lo + hi) / np.linalg.norm(lo + hi)
+        if F.FACES[fa].contains(m)[0]:
+            lo = m
+        else:
+            hi = m
+    return lo
+
+
 def route_pieces(waypoints) -> list[np.ndarray]:
-    """Great-circle legs through lon/lat waypoints, split where the net is cut, then smoothed."""
+    """Great-circle legs through lon/lat waypoints, split exactly where the net is cut, then smoothed."""
     ll = np.asarray(waypoints, float)
     p = F.densify(F.orient(ll[:, 0], ll[:, 1]), max_deg=0.5)
-    z = np.array([F.FACES[F.face_of(q)].place(q)[0] for q in p])
-    step = np.abs(np.diff(z))
-    cuts = np.where(step > 10 * np.median(step))[0]
-    return [_chaikin(seg) for seg in np.split(z, cuts + 1) if len(seg) > 1]
+    faces = [F.face_of(q) for q in p]
+    pieces, cur = [], [F.FACES[faces[0]].place(p[0])[0]]
+    for i in range(1, len(p)):
+        fa, fb = faces[i - 1], faces[i]
+        if _is_cut(fa, fb):
+            edge = _boundary(p[i - 1], p[i], fa)
+            cur.append(F.FACES[fa].place(edge)[0])
+            pieces.append(np.array(cur))
+            cur = [F.FACES[fb].place(edge)[0]]
+        cur.append(F.FACES[fb].place(p[i])[0])
+    pieces.append(np.array(cur))
+    return [_chaikin(seg) for seg in pieces if len(seg) > 1]
 
 
 def _chaikin(z: np.ndarray, n: int = 3) -> np.ndarray:
@@ -153,15 +184,17 @@ def build(geoms, min_area_px: float = 4.0, tol_px: float = 0.6) -> tuple[dict, d
     layout = Layout([np.asarray(g.exterior.coords) @ [1, 1j] for g in land] +
                     [seg for segs in paths.values() for seg in segs])
     tol, min_area = tol_px * PX, min_area_px * (PX / layout.k) ** 2
-    rings = []
+    rings, lakes = [], []
     for poly in sorted(land, key=lambda g: -g.area):
         if poly.area < min_area:
             continue
-        for ring in [poly.exterior, *poly.interiors]:
-            rings.append(layout.flat(np.asarray(ring.coords) @ [1, 1j], tol))
+        rings.append(layout.flat(np.asarray(poly.exterior.coords) @ [1, 1j], tol))
+        lakes += [layout.flat(np.asarray(h.coords) @ [1, 1j], tol)
+                  for h in poly.interiors if Polygon(h).area >= min_area]
     world = {
         "w": layout.w, "h": layout.h,
         "land": rings,
+        "lakes": lakes,
         "grat": [layout.flat(line, tol) for line in graticule()],
         "faces": [layout.flat(f.place(f.v)) for f in F.FACES],
         "labels": [{"t": t, "xy": layout.flat(F.project(*ll))} for t, ll in LABELS],
