@@ -1,0 +1,22 @@
+{"reviewed_at": "2026-10-08", "pages": [
+	{"church_id": "church_e1e23e7f7045dab242b2", "url": "https://www.stpauls.co.uk/", "publisher": "St Paul's Cathedral",
+	 "access_scope": "interior", "published_status": "hours_published",
+	 "opening_quotes": ["We're open from 8.30am Monday to Saturday for sightseeing.", "Our Dome Galleries open at 9.30am with last entry at 4.15pm.",
+	                    "Opening and closing times can change, so we recommend you visit our calendar to check the day you will be attending."],
+	 "fee_quotes": ["It's free to worship at St Paul's, but sightseeing is ticketed. The cost of our Monday to Saturday sightseeing is £27 per adult and £10.50 per child"],
+	 "accessibility_quotes": ["measures in place to improve physical accessibility"]},
+	{"church_id": "church_3649373fa271295dd02f", "url": "https://stclementdanesraf.org/", "publisher": "St Clement Danes",
+	 "access_scope": "interior", "published_status": "hours_published",
+	 "opening_quotes": ["Wed-Fri 1030-1530 Sat & Sun 10:00 to 15:00",
+	                    "On occasions there will be activities that preclude casual visits and mean the church is closed at short notice"],
+	 "notes": "The page also carries dated closure notices from earlier years; they are not treated as current."},
+	{"church_id": "church_424361ee2e98d08c05b8", "url": "https://www.sjp.org.uk/visit-us/", "publisher": "St James's Church Piccadilly",
+	 "access_scope": "interior", "published_status": "hours_published",
+	 "opening_quotes": ["Monday – 10am – 4.30pm", "Tuesday – Friday 10am – 6pm", "Saturday – 10am – 4.30pm", "Sunday – 10am – 5.30pm"],
+	 "accessibility_quotes": ["There is step-free access to the church from both Piccadilly and Jermyn St.",
+	                          "The main body of the church is step-free with a wide central aisle."]},
+	{"church_id": "church_6ff79b5f1b52ab2026b7", "url": "https://chelsea-pensioners.co.uk/visit/wren-chapel-services", "publisher": "Royal Hospital Chelsea",
+	 "access_scope": "interior", "published_status": "services_only",
+	 "opening_quotes": ["All are welcome to our chapel services that are held in the Wren Chapel every Sunday."],
+	 "notes": "No casual visiting hours on this page; chapel access outside services is via the Royal Hospital's tours and events."}
+]}

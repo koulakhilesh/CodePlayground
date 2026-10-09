@@ -1,0 +1,155 @@
+[
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72", "field": "attribution", "selected_claim_ids": ["review_aldermary_attribution"], "rejected_claim_ids": [],
+		"rationale": "Historic England 1079145 Details, cached via the British Listed Buildings OGL mirror (HE returns 403 to the downloader): 'Late C17, by Wren, incorporating work of early C16 and early C17'. Matches a manual read of the HE page.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_d833ff19d973f4e6ea91", "field": "relocation", "selected_claim_ids": ["review_aldermanbury_relocation"], "rejected_claim_ids": [],
+		"rationale": "Read America's National Churchill Museum history: 'In 1965 the removal process began', 7,000 stones shipped; foundation stone laid October 1966. Seed 1964 kept as reported alternative, not chosen.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_d833ff19d973f4e6ea91", "field": "construction_range", "selected_claim_ids": ["review_aldermanbury_construction"], "rejected_claim_ids": [],
+		"rationale": "Custodian history states work began 1672 and was essentially complete by 1677, cupola 1679. Verified as the body interval this source reports; seed 1670-74 remains a differing alternative.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_ce1ae257c8d26b67fe2c", "field": "relocation", "selected_claim_ids": ["review_allhallows_tower_relocation"], "rejected_claim_ids": [],
+		"rationale": "Historic England 1080836 Details: 'Tower of All Hallows, Lombard Street by Wren, re-erected 1940 as tower of new Church'.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_9276dbe5911bb7c95486", "field": "relocation", "selected_claim_ids": ["review_antholin_spire_origin"], "rejected_claim_ids": [],
+		"rationale": "Historic England 1079973 Details: spire upper part 'Brought from demolished Church by Sir Christopher Wren in City of London', now at Round Hill SE26.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_9276dbe5911bb7c95486", "field": "relocation_year", "selected_claim_ids": ["review_antholin_spire_year"], "rejected_claim_ids": [],
+		"rationale": "Article paragraph states the upper spire was replaced in 1829 and the removed portion sold to Robert Harrild. Verified as what this source reports; official listing gives no year.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_b06a559a338a87e6ccff", "field": "fittings_transfer", "selected_claim_ids": ["review_dionis_bells"], "rejected_claim_ids": [],
+		"rationale": "Article states the ten bells were transferred to All Hallows Lombard Street when St Dionis was demolished; names the other church directly.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "steeple_comparison", "selected_claim_ids": ["review_walbrook_steeple_comparison"], "rejected_claim_ids": [],
+		"rationale": "Read detailed official history: explicit resemblance to St James Garlickhythe and St Michael Paternoster Royal. Verify reported comparison, not inferred influence.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_f1ee327a3a3cf15889c5", "field": "craftsman_connections", "selected_claim_ids": ["review_abchurch_kempster_connections"], "rejected_claim_ids": [],
+		"rationale": "Official Abchurch history explicitly names Kempster and the three other church projects; retain wording about Walbrook collaboration with Strong.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_f1ee327a3a3cf15889c5", "field": "dome_feature", "selected_claim_ids": ["review_abchurch_dome_feature"], "rejected_claim_ids": [],
+		"rationale": "Official architectural description states interior dome largely carried on walls; do not verify surrounding promotional or priority claims.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "dome_feature", "selected_claim_ids": ["review_walbrook_dome_feature"], "rejected_claim_ids": [],
+		"rationale": "Official detailed history describes dome carried by columns and walls; verify described feature, not asserted artistic value or influence.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_a981b548f08f2ca3d02c", "field": "damage_date", "selected_claim_ids": ["review_augustine_body_loss"], "rejected_claim_ids": [],
+		"rationale": "Read official listing's history and component description: body/spire destroyed in 1941, tower stages retained. Verify component destruction, not total site loss.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_a981b548f08f2ca3d02c", "field": "restoration_reported_years", "selected_claim_ids": ["review_augustine_spire_restoration_window"], "rejected_claim_ids": [],
+		"rationale": "Official listing contains both 1966 and 1967. Verify the reporting window as stated, keeping uncertainty about milestones rather than claiming an exact completion year.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_5b8d30f86235f4bca39b", "field": "construction_range", "selected_claim_ids": ["review_edmund_body_range"], "rejected_claim_ids": [],
+		"rationale": "Read article and official entry; both report 1670-1679 construction. Retain Hooke/Wren office authorship caveat.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "foundation_date", "selected_claim_ids": ["review_walbrook_foundation"], "rejected_claim_ids": [],
+		"rationale": "Read official detailed history by Kerry Downes: foundation stones 17 December 1672. Verify reported milestone, not completion interval.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "ready_for_use", "selected_claim_ids": ["review_walbrook_ready_for_use"], "rejected_claim_ids": [],
+		"rationale": "Official history states ready for use when dinner was planned 27 May 1679. Retain this specific milestone without resolving all-fabric date dispute.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "steeple_construction_range", "selected_claim_ids": ["review_walbrook_steeple_range"], "rejected_claim_ids": [],
+		"rationale": "Read official detailed history reporting later steeple 1713-1717; separate from church body.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "damage_date", "selected_claim_ids": ["review_walbrook_dome_damage"], "rejected_claim_ids": [],
+		"rationale": "Read official wartime page: air raid in 1941 and church dome damage. Do not claim total destruction or unverified restoration year.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "visitor_hours", "selected_claim_ids": ["review_walbrook_visitor_hours"], "rejected_claim_ids": [],
+		"rationale": "Published hours read on official Contact & Visit Us page; verified as published information on review date, not live availability.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "field": "visitor_restrictions", "selected_claim_ids": ["review_walbrook_visitor_restrictions"], "rejected_claim_ids": [],
+		"rationale": "Official visitor page explicitly states weekends/festivals and early private-event closures; retain contact/calendar advice.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_f1ee327a3a3cf15889c5", "field": "visitor_restrictions", "selected_claim_ids": ["review_abchurch_closure"], "rejected_claim_ids": [],
+		"rationale": "Official homepage announces nine-month closure from about 12 October 2026. Record approximate date and unknown reopening; supersedes general history-page opening statement.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72", "field": "visitor_hours", "selected_claim_ids": ["review_aldermary_cafe_hours"], "rejected_claim_ids": [],
+		"rationale": "Read cafe's official page, linked from church site. Verify cafe hours only, not unrestricted church opening.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72", "field": "visitor_restrictions", "selected_claim_ids": ["review_aldermary_cafe_booking"], "rejected_claim_ids": [],
+		"rationale": "Official cafe page requires booking when working over 1.5 hours; do not apply condition to short tourist visits without evidence.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3",
+		"field": "attribution",
+		"selected_claim_ids": ["review_walbrook_attribution"],
+		"rejected_claim_ids": [],
+		"rationale": "Read official Historic England Details passage; Wren attribution is explicit and corroborates article p[6]. No resolution of differing construction end years is implied.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_f6098c18ac1a4b5e89d0", "field": "attribution",
+		"selected_claim_ids": ["review_clement_attribution"], "rejected_claim_ids": [],
+		"rationale": "Read official church Details and article post-fire history; Wren attribution agrees.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_e8bc0e17c415ba4350d2", "field": "attribution",
+		"selected_claim_ids": ["review_james_attribution"], "rejected_claim_ids": [],
+		"rationale": "Read official church Details and article post-fire history; verify attribution only, not discrepant dates.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_242e1fb7e0f59ab308f9", "field": "attribution",
+		"selected_claim_ids": ["review_michael_attribution"], "rejected_claim_ids": [],
+		"rationale": "Official church Details corroborates article Wren attribution; body and tower date differences remain open.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_d6c2fc1de75f4fb8266c", "field": "attribution",
+		"selected_claim_ids": ["review_somerset_attribution"], "rejected_claim_ids": [],
+		"rationale": "Read official tower listing and article replacement history; both attribute Wren work.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_5545087f42179c09af84", "field": "attribution",
+		"selected_claim_ids": ["review_olave_attribution"], "rejected_claim_ids": [],
+		"rationale": "Recovered official tower listing corroborates article Wren attribution; no date conflict resolved.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_0bd50dd9d5cd68cf153d", "field": "attribution",
+		"selected_claim_ids": ["review_greyfriars_attribution"], "rejected_claim_ids": [],
+		"rationale": "Official remains listing explicitly names Sir Christopher Wren; article corroborates post-fire replacement.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_f6098c18ac1a4b5e89d0", "field": "construction_range",
+		"selected_claim_ids": ["review_clement_body_range"], "rejected_claim_ids": [],
+		"rationale": "Official 1683-87 range agrees with article's explicit 1683 start and 1687 completion; record body phase.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_d6c2fc1de75f4fb8266c", "field": "construction_range",
+		"selected_claim_ids": ["review_somerset_body_range"], "rejected_claim_ids": [],
+		"rationale": "Official 1686-94 range agrees with article start and completion; preserve interruption caveat.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_d6c2fc1de75f4fb8266c", "field": "loss_date",
+		"selected_claim_ids": ["review_somerset_body_loss"], "rejected_claim_ids": [],
+		"rationale": "Official Details and article introduction agree on 1871 demolition of body, with tower retained.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"subject_id": "church_5baeb9a819ba88adc5fa",
+		"field": "tower_date",
+		"selected_claim_ids": ["review_dunstan_tower_date"],
+		"rejected_claim_ids": [],
+		"rationale": "Read official Historic England Details: Tower, 1698, by Wren; body 1817-18 by David Laing. Verified as the listing's tower date, not whole-church rebuilding duration.",
+		"reviewed_at": "2026-10-08"
+	}
+]

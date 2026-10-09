@@ -1,0 +1,360 @@
+{
+	"claims": [
+		{
+			"claim_id": "review_walbrook_steeple_comparison", "subject_id": "church_81162558a0dc9e44d7a3", "field": "steeple_comparison",
+			"value": {"related_church_ids": ["church_e8bc0e17c415ba4350d2", "church_242e1fb7e0f59ab308f9"], "relationship": "reported_similarity"},
+			"source_id": "source_d9cdf3c8319cd2f91f0e", "locator": "reference-block[21] (claim_0bc60c98669c8e33f305)", "review_status": "extracted",
+			"caveat": "Official history reports resemblance; not direct influence, identical designer or same construction date."
+		},
+		{
+			"claim_id": "review_abchurch_kempster_connections", "subject_id": "church_f1ee327a3a3cf15889c5", "field": "craftsman_connections",
+			"value": {"person": "Christopher Kempster", "related_church_ids": ["church_81162558a0dc9e44d7a3", "church_e8bc0e17c415ba4350d2", "church_e1e23e7f7045dab242b2"]},
+			"source_id": "source_33d61657b52ce58961dc", "locator": "reference-block[2] (claim_6eb97793c49d042283f5)", "review_status": "extracted",
+			"caveat": "Named mason's participation across projects; not identical personal design authorship. Walbrook participation described with Thomas Strong."
+		},
+		{
+			"claim_id": "review_abchurch_dome_feature", "subject_id": "church_f1ee327a3a3cf15889c5", "field": "dome_feature", "value": "Domed church interior, largely supported on walls",
+			"source_id": "source_33d61657b52ce58961dc", "locator": "reference-block[3] (claim_2dbd46f9c094002d1360)", "review_status": "extracted",
+			"caveat": "Accept described dome feature only, not the page's broader claims of architectural priority."
+		},
+		{
+			"claim_id": "review_walbrook_dome_feature", "subject_id": "church_81162558a0dc9e44d7a3", "field": "dome_feature", "value": "Domed church interior with columns and supporting walls",
+			"source_id": "source_d9cdf3c8319cd2f91f0e", "locator": "reference-block[36] (claim_fa5862cc12bab92cceba)", "review_status": "extracted",
+			"caveat": "Shared feature does not imply same structural system or direct influence."
+		},
+		{
+			"claim_id": "review_augustine_body_loss", "subject_id": "church_a981b548f08f2ca3d02c", "field": "damage_date", "value": 1941,
+			"source_id": "source_9293c61dda4f4b33b3a4", "locator": "reference-block[26] (claim_2b4e6c2d58ece79f22fd): body and spire destroyed, two tower stages retained",
+			"phase": "body_and_spire", "review_status": "extracted", "caveat": "Destruction of components, not loss of all tower fabric or demolition event."
+		},
+		{
+			"claim_id": "review_augustine_spire_restoration_window", "subject_id": "church_a981b548f08f2ca3d02c", "field": "restoration_reported_years", "value": [1966, 1967],
+			"source_id": "source_9293c61dda4f4b33b3a4", "locator": "reference-block[26] (claim_2b4e6c2d58ece79f22fd): reconstructed 1966; exterior description says restored 1967",
+			"phase": "spire", "review_status": "extracted", "caveat": "Verified as a bounded window of differing dates reported within one listing, not continuous work or an adjudicated completion year."
+		},
+		{
+			"claim_id": "review_edmund_body_range", "subject_id": "church_5b8d30f86235f4bca39b",
+			"field": "construction_range", "value": [1670, 1679], "phase": "body",
+			"source_id": "source_df3adcb4ee1c38307f9a", "locator": "reference-block[26]; article claim_19f6e062320f2da7bb06 corroborates interval",
+			"review_status": "extracted", "caveat": "Hooke design signed off by Wren in article; do not infer sole authorship."
+		},
+		{
+			"claim_id": "review_walbrook_foundation", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "foundation_date", "value": {"year": 1672, "date": "1672-12-17", "role": "foundation_milestone"},
+			"source_id": "source_d9cdf3c8319cd2f91f0e", "locator": "reference-block[18] (claim_f4ca9476f2d27f3fd56a)", "review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_ready_for_use", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "ready_for_use", "value": {"year": 1679, "reported_date": "1679-05-27", "role": "readiness_milestone"},
+			"source_id": "source_d9cdf3c8319cd2f91f0e", "locator": "reference-block[21] (claim_0bc60c98669c8e33f305)", "review_status": "extracted",
+			"caveat": "Date is vestry dinner planning because church was ready; not asserted consecration or completion of all fabric."
+		},
+		{
+			"claim_id": "review_walbrook_steeple_range", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "steeple_construction_range", "value": [1713, 1717], "phase": "steeple",
+			"source_id": "source_d9cdf3c8319cd2f91f0e", "locator": "reference-block[21] (claim_0bc60c98669c8e33f305)", "review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_dome_damage", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "damage_date", "value": 1941, "phase": "dome",
+			"source_id": "source_a173a686a99693e441fb", "locator": "reference-block[13]-[14]; claim_3934b61e5c847a4baec3",
+			"review_status": "extracted", "caveat": "Official page reports dome damage, not complete church destruction."
+		},
+		{
+			"claim_id": "review_walbrook_visitor_hours", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "visitor_hours", "value": {"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "10:30", "closes": "15:30", "timezone": "Europe/London", "scope": "church"},
+			"source_id": "source_01827df3dee91ebebcf9", "locator": "reference-block[1] (claim_f9303eec705575049aa5)", "review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_visitor_restrictions", "subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "visitor_restrictions", "value": "Closed weekends except great festivals; may close early for private events. Contact church and check official calendar before visiting.",
+			"source_id": "source_01827df3dee91ebebcf9", "locator": "reference-block[1] and [3] (claim_41ab3fd53105a7629ce1)", "review_status": "extracted"
+		},
+		{
+			"claim_id": "review_abchurch_closure", "subject_id": "church_f1ee327a3a3cf15889c5",
+			"field": "visitor_restrictions", "value": {"status": "announced_closure", "start_approximate": "2026-10-12", "duration_text": "approximately nine months", "reopening_date": null, "scope": "interior"},
+			"source_id": "source_6fc2db4ba204a05ffe39", "locator": "reference-block[1] (claim_3dee0a9ba9ad40eee03e)", "review_status": "extracted",
+			"caveat": "Closure announcement overrides general weekday-opening prose in history page. No exact reopening date inferred."
+		},
+		{
+			"claim_id": "review_aldermary_cafe_hours", "subject_id": "church_e8eb6586c63f2ae7cf72",
+			"field": "visitor_hours", "value": {"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:30", "closes": "16:00", "timezone": "Europe/London", "scope": "Host Cafe"},
+			"source_id": "source_f4b3ca195236896a1e96", "locator": "reference-block[9]-[10] (claim_80361a1f8cc3e7689e94, claim_c1a8990a358830566018)", "review_status": "extracted",
+			"caveat": "Cafe operating hours, not unrestricted access to every church area."
+		},
+		{
+			"claim_id": "review_aldermary_cafe_booking", "subject_id": "church_e8eb6586c63f2ae7cf72",
+			"field": "visitor_restrictions", "value": "Advance booking required for working more than 1.5 hours; this is a cafe work-session policy, not a general tourist booking requirement.",
+			"source_id": "source_f4b3ca195236896a1e96", "locator": "reference-block[8] (claim_f68289d97100ba5f7f42)", "review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_wikipedia_range",
+			"subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "construction_range",
+			"value": [1672, 1679],
+			"source_id": "source_b3b59e72c2a887d1eebd",
+			"locator": "p[6] (claim_2fc208e0fbb334dca02d)",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_heritage_range",
+			"subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "construction_range",
+			"value": [1672, 1687],
+			"source_id": "source_7290d5929d6f6faf1c66",
+			"locator": "reference-block[26] (claim_62a3101ecb38cffbd50a)",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_walbrook_attribution",
+			"subject_id": "church_81162558a0dc9e44d7a3",
+			"field": "attribution",
+			"value": "Christopher Wren",
+			"source_id": "source_7290d5929d6f6faf1c66",
+			"locator": "reference-block[26]: 1672 to 87 by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_clement_attribution",
+			"subject_id": "church_f6098c18ac1a4b5e89d0",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_52cbbff6168393e5b5b3", "locator": "reference-block[26]: 1683 to 87, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_james_attribution",
+			"subject_id": "church_e8bc0e17c415ba4350d2",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_90e18ca050295ca062a1", "locator": "reference-block[26]: 1674-87, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_michael_attribution",
+			"subject_id": "church_242e1fb7e0f59ab308f9",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_f3f93cfc96dbcda05722", "locator": "reference-block[26]: 1686 to 94, tower completed 1713, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_somerset_attribution",
+			"subject_id": "church_d6c2fc1de75f4fb8266c",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_2fbc6bc45db687d3130a", "locator": "reference-block[26]: 1686-94, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_olave_attribution",
+			"subject_id": "church_5545087f42179c09af84",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_cc20e27e0e6317086aa8", "locator": "reference-block[26]: 1670-79, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_greyfriars_attribution",
+			"subject_id": "church_0bd50dd9d5cd68cf153d",
+			"field": "attribution", "value": "Christopher Wren",
+			"source_id": "source_df7d0cd010fa8e6b66c7", "locator": "reference-block[26]: 1677 to 91 Sir Christopher Wren; tower 1704",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_clement_body_range",
+			"subject_id": "church_f6098c18ac1a4b5e89d0",
+			"field": "construction_range", "value": [1683, 1687],
+			"source_id": "source_52cbbff6168393e5b5b3", "locator": "reference-block[26]; corroborated by article claim_971395d39ea399d5aed6",
+			"review_status": "extracted", "phase": "body"
+		},
+		{
+			"claim_id": "review_somerset_body_range",
+			"subject_id": "church_d6c2fc1de75f4fb8266c",
+			"field": "construction_range", "value": [1686, 1694],
+			"source_id": "source_2fbc6bc45db687d3130a", "locator": "reference-block[26]; corroborated by article claim_8a83a5900b19a0b1e333",
+			"review_status": "extracted", "phase": "body", "caveat": "Interval includes interruption in 1688; elapsed span is not continuous labour time."
+		},
+		{
+			"claim_id": "review_somerset_body_loss",
+			"subject_id": "church_d6c2fc1de75f4fb8266c",
+			"field": "loss_date", "value": 1871,
+			"source_id": "source_2fbc6bc45db687d3130a", "locator": "reference-block[26]: Body of church demolished in 1871",
+			"review_status": "extracted", "phase": "body", "caveat": "Tower retained; not complete loss of site fabric."
+		},
+		{
+			"claim_id": "review_olave_loss_listing",
+			"subject_id": "church_5545087f42179c09af84",
+			"field": "loss_date", "value": 1888,
+			"source_id": "source_cc20e27e0e6317086aa8", "locator": "reference-block[26]: Body destroyed 1888 except part of west wall",
+			"review_status": "extracted", "phase": "body"
+		},
+		{
+			"claim_id": "review_olave_loss_article",
+			"subject_id": "church_5545087f42179c09af84",
+			"field": "loss_date", "value": 1887,
+			"source_id": "source_d38b16acca67826732fe", "locator": "p[2] (claim_25de9cab82315c6ce2c2): demolished in 1887 except tower and west wall",
+			"review_status": "extracted", "phase": "body"
+		},
+		{
+			"claim_id": "review_james_range_listing",
+			"subject_id": "church_e8bc0e17c415ba4350d2",
+			"field": "construction_range", "value": [1674, 1687],
+			"source_id": "source_90e18ca050295ca062a1", "locator": "reference-block[26]: 1674-87, by Wren",
+			"review_status": "extracted", "phase": "unspecified", "caveat": "Listing does not distinguish start, opening, body completion and steeple phases."
+		},
+		{
+			"claim_id": "review_james_range_article",
+			"subject_id": "church_e8bc0e17c415ba4350d2",
+			"field": "construction_range", "value": [1676, 1683],
+			"source_id": "source_ea3d22506793e2e53e3b", "locator": "p[14] (claim_136a92b09501ae79eb14): foundations 1676, finished 1683",
+			"review_status": "extracted", "phase": "body", "caveat": "Article separately reports reopening 1682 and missing steeple; not comparable to listing until phase scope reconciled."
+		},
+		{
+			"claim_id": "review_michael_range_listing",
+			"subject_id": "church_242e1fb7e0f59ab308f9",
+			"field": "construction_range", "value": [1686, 1694],
+			"source_id": "source_f3f93cfc96dbcda05722", "locator": "reference-block[26]: 1686 to 94, tower completed 1713",
+			"review_status": "extracted", "phase": "body"
+		},
+		{
+			"claim_id": "review_michael_range_article",
+			"subject_id": "church_242e1fb7e0f59ab308f9",
+			"field": "construction_range", "value": [1685, 1694],
+			"source_id": "source_f48cd5e9156e84b1ee1a", "locator": "p[9] (claim_67371bf58799a94ddc15): began 1685, finished 1694",
+			"review_status": "extracted", "phase": "body", "caveat": "Construction interruption recorded; steeple 1713-1717 differs from listing's tower-completed milestone."
+		},
+		{
+			"claim_id": "review_dunstan_tower_date",
+			"subject_id": "church_5baeb9a819ba88adc5fa",
+			"field": "tower_date",
+			"value": {"year": 1698, "precision": "year", "phase": "tower", "interpretation": "Date reported by official listing, not assumed completion of whole church"},
+			"source_id": "source_980bd68e7c1c3ffe1e79",
+			"locator": "reference-block[26] (claim_eb57cfda15bd428049b3): Tower, 1698, by Wren",
+			"review_status": "extracted"
+		},
+		{
+			"claim_id": "review_aldermary_attribution", "subject_id": "church_e8eb6586c63f2ae7cf72", "field": "attribution",
+			"value": {"architect": "Christopher Wren", "date_text": "Late C17", "scope": "Rebuilding incorporating early C16 and early C17 work, especially in tower; Perpendicular Gothic style"},
+			"source_id": "source_a952400bcdf7bff03619",
+			"locator": "reference-block[27] (claim_5ab20013a103fce13bb6): 'Late C17, by Wren, incorporating work of early C16 and early C17, especially in tower. Perpendicular Gothic style.'",
+			"retrieval_method": "listing_mirror", "retrieval_note": "Historic England 1079145 returns HTTP 403 to the downloader; text cached from British Listed Buildings, which republishes the OGL list entry. Wording matches a manual read of the Historic England page on 2026-10-08.",
+			"review_status": "extracted", "caveat": "Mirror of the official entry, not the publisher's own server. Gives century, not years."
+		},
+		{
+			"claim_id": "review_aldermanbury_relocation", "subject_id": "church_d833ff19d973f4e6ea91", "field": "relocation",
+			"value": {"destination": "Fulton, Missouri", "component": "fabric", "year": 1965, "detail": "About 7,000 stones labelled and shipped; foundation stone in Fulton laid October 1966"},
+			"source_id": "source_33dc04effc428129cc27",
+			"locator": "reference-block[21] (claim_397d19b42ff76f5d5bb9) and reference-block[22] (claim_417d2b2c972ebc32b494)",
+			"review_status": "extracted", "caveat": "Custodian says removal began 1965; the seed list says 1964. Seed value kept as reported alternative."
+		},
+		{
+			"claim_id": "review_aldermanbury_construction", "subject_id": "church_d833ff19d973f4e6ea91", "field": "construction_range",
+			"value": [1672, 1677], "phase": "body",
+			"source_id": "source_33dc04effc428129cc27",
+			"locator": "reference-block[8] (claim_204951260ea8b60d22f0): work began in 1672 ... by 1677 essentially complete; cupola 1679",
+			"review_status": "extracted", "caveat": "Rebuilding approved 1670; essentially complete by 1677; tower cupola added 1679. Seed list gives 1670-74."
+		},
+		{
+			"claim_id": "review_allhallows_tower_relocation", "subject_id": "church_ce1ae257c8d26b67fe2c", "field": "relocation",
+			"value": {"destination": "All Hallows, Chertsey Road, Twickenham", "component": "tower", "year": 1940},
+			"source_id": "source_0d418a03fc281c9e6ee2",
+			"locator": "reference-block[26] (claim_330d9483876e4856b7b4): Tower of All Hallows, Lombard Street by Wren, re-erected 1940 as tower of new Church",
+			"review_status": "extracted", "caveat": "1940 is the re-erection year at Twickenham; City demolition year differs between sources (1937 article, 1939 seed list)."
+		},
+		{
+			"claim_id": "review_antholin_spire_origin", "subject_id": "church_9276dbe5911bb7c95486", "field": "relocation",
+			"value": {"destination": "Round Hill, Sydenham (SE26)", "component": "spire_upper_part"},
+			"source_id": "source_32afa837fead2f7484da",
+			"locator": "reference-block[26] (claim_54718a9c50a14ac4b8fd): Brought from demolished Church by Sir Christopher Wren in City of London ... the upper part only",
+			"review_status": "extracted", "caveat": "Official listing confirms origin and location but gives no removal year."
+		},
+		{
+			"claim_id": "review_antholin_spire_year", "subject_id": "church_9276dbe5911bb7c95486", "field": "relocation_year",
+			"value": {"year": 1829, "detail": "Upper spire replaced; removed portion sold for 5 pounds to Robert Harrild and erected at Round Hill House"},
+			"source_id": "source_dd0beb415a5cc306af0a",
+			"locator": "p[9] (claim_0a5bc32b66102961bbf0)",
+			"review_status": "extracted", "caveat": "Year from the encyclopedia article and its citations; not stated in the official listing."
+		},
+		{
+			"claim_id": "review_dionis_bells", "subject_id": "church_b06a559a338a87e6ccff", "field": "fittings_transfer",
+			"value": {"related_church_ids": ["church_ce1ae257c8d26b67fe2c"], "component": "ten bells", "relationship": "bells_transferred"},
+			"source_id": "source_9b5a0ea2dc1d3c883987",
+			"locator": "p[12] (claim_00cbb4bf42d58254e723)",
+			"review_status": "extracted", "caveat": "Bells moved to All Hallows Lombard Street when St Dionis was demolished; six reported surviving at Twickenham."
+		}
+	],
+	"events": [
+		{
+			"event_id": "review_aldermanbury_relocation_event", "church_id": "church_d833ff19d973f4e6ea91", "kind": "relocation", "phase": "fabric",
+			"earliest_year": 1965, "latest_year": 1965, "claim_ids": ["review_aldermanbury_relocation"], "date_role": "removal_start",
+			"destination": "Fulton, Missouri", "date_basis": "Custodian: removal began 1965; reconstruction foundation stone October 1966.",
+			"caveat": "Seed list reports 1964."
+		},
+		{
+			"event_id": "review_aldermanbury_construction_event", "church_id": "church_d833ff19d973f4e6ea91", "kind": "construction", "phase": "body",
+			"earliest_year": 1672, "latest_year": 1677, "claim_ids": ["review_aldermanbury_construction"], "date_role": "construction_interval",
+			"date_basis": "Custodian history: work began 1672, essentially complete 1677; cupola 1679 excluded."
+		},
+		{
+			"event_id": "review_allhallows_tower_relocation_event", "church_id": "church_ce1ae257c8d26b67fe2c", "kind": "relocation", "phase": "tower",
+			"earliest_year": 1940, "latest_year": 1940, "claim_ids": ["review_allhallows_tower_relocation"], "date_role": "re_erection_year",
+			"destination": "All Hallows, Chertsey Road, Twickenham", "date_basis": "Official listing: re-erected 1940 as tower of new church.",
+			"caveat": "City demolition year differs between sources (1937 article, 1939 seed list)."
+		},
+		{
+			"event_id": "review_antholin_spire_relocation_event", "church_id": "church_9276dbe5911bb7c95486", "kind": "relocation", "phase": "spire_upper_part",
+			"earliest_year": 1829, "latest_year": 1829, "claim_ids": ["review_antholin_spire_origin", "review_antholin_spire_year"], "date_role": "reported_year",
+			"destination": "Round Hill, Sydenham (SE26)", "date_basis": "Origin from official listing; 1829 from encyclopedia article.",
+			"caveat": "Moved while the church still stood (upper spire replaced in 1829); church later demolished."
+		},
+		{
+			"event_id": "review_augustine_body_loss_event", "church_id": "church_a981b548f08f2ca3d02c", "kind": "damage", "phase": "body_and_spire",
+			"earliest_year": 1941, "latest_year": 1941, "claim_ids": ["review_augustine_body_loss"], "date_role": "component_destruction_milestone", "date_basis": "Body and spire destroyed in bombing; tower stages retained."
+		},
+		{
+			"event_id": "review_augustine_spire_restoration_event", "church_id": "church_a981b548f08f2ca3d02c", "kind": "restoration", "phase": "spire",
+			"earliest_year": 1966, "latest_year": 1967, "claim_ids": ["review_augustine_spire_restoration_window"], "date_role": "reported_year_window", "date_basis": "Listing reports reconstruction 1966 and restoration 1967; bounded reporting window, not elapsed labour interval."
+		},
+		{
+			"event_id": "review_edmund_body_construction", "church_id": "church_5b8d30f86235f4bca39b", "kind": "construction", "phase": "body",
+			"earliest_year": 1670, "latest_year": 1679, "claim_ids": ["review_edmund_body_range"], "date_role": "construction_interval", "date_basis": "Official range agrees with article; office authorship is qualified."
+		},
+		{
+			"event_id": "review_walbrook_foundation_event", "church_id": "church_81162558a0dc9e44d7a3", "kind": "construction", "phase": "body",
+			"earliest_year": 1672, "latest_year": 1672, "claim_ids": ["review_walbrook_foundation"], "date_role": "foundation_milestone", "date_basis": "Foundation stones laid 17 December; not a zero-year building interval."
+		},
+		{
+			"event_id": "review_walbrook_ready_event", "church_id": "church_81162558a0dc9e44d7a3", "kind": "construction", "phase": "body",
+			"earliest_year": 1679, "latest_year": 1679, "claim_ids": ["review_walbrook_ready_for_use"], "date_role": "readiness_milestone", "date_basis": "Official history says ready for use at dinner planning, 27 May; not all-fabric completion."
+		},
+		{
+			"event_id": "review_walbrook_steeple_event", "church_id": "church_81162558a0dc9e44d7a3", "kind": "construction", "phase": "steeple",
+			"earliest_year": 1713, "latest_year": 1717, "claim_ids": ["review_walbrook_steeple_range"], "date_role": "construction_interval", "date_basis": "Steeple interval reported in official church history."
+		},
+		{
+			"event_id": "review_walbrook_dome_damage_event", "church_id": "church_81162558a0dc9e44d7a3", "kind": "damage", "phase": "dome",
+			"earliest_year": 1941, "latest_year": 1941, "claim_ids": ["review_walbrook_dome_damage"], "date_role": "damage_milestone", "date_basis": "Official wartime page reports 1941 dome damage; not complete loss."
+		},
+		{
+			"event_id": "review_clement_body_construction", "church_id": "church_f6098c18ac1a4b5e89d0",
+			"kind": "construction", "phase": "body", "earliest_year": 1683, "latest_year": 1687,
+			"claim_ids": ["review_clement_body_range"], "date_basis": "Construction start to completion, independently corroborated"
+		},
+		{
+			"event_id": "review_somerset_body_construction", "church_id": "church_d6c2fc1de75f4fb8266c",
+			"kind": "construction", "phase": "body", "earliest_year": 1686, "latest_year": 1694,
+			"claim_ids": ["review_somerset_body_range"], "date_basis": "Construction interval includes documented interruption"
+		},
+		{
+			"event_id": "review_somerset_body_demolition", "church_id": "church_d6c2fc1de75f4fb8266c",
+			"kind": "partial_demolition", "phase": "body", "earliest_year": 1871, "latest_year": 1871,
+			"claim_ids": ["review_somerset_body_loss"], "date_basis": "Church body demolished; tower retained"
+		},
+		{
+			"event_id": "review_dunstan_tower_construction",
+			"church_id": "church_5baeb9a819ba88adc5fa",
+			"kind": "construction",
+			"phase": "tower",
+			"earliest_year": 1698,
+			"latest_year": 1698,
+			"claim_ids": ["review_dunstan_tower_date"],
+			"date_basis": "Listing's reported tower date; not a construction start/completion interval"
+		}
+	]
+}

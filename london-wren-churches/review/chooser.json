@@ -1,0 +1,97 @@
+{
+  "reviewed_at": "2026-10-09",
+  "note": "Editorial yes/no tree for the website chooser, after Matt Brown's flow chart of London museums. Questions and leaf membership are choices; every site's checks must hold against the reviewed tables (chooser_wren.validate).",
+  "start": "q_inside",
+  "questions": [
+    {"id": "q_inside", "text": "Do you want to go inside?", "yes": "q_stepfree", "no": "q_city"},
+    {"id": "q_city", "text": "Staying in the City?", "yes": "q_garden", "no": "l_moved"},
+    {"id": "q_garden", "text": "Would you like somewhere to sit?", "yes": "l_gardens", "no": "l_towers"},
+    {"id": "q_stepfree", "text": "Do you need step-free access?", "yes": "l_stepfree", "no": "q_weekday"},
+    {"id": "q_weekday", "text": "Is it a weekday?", "yes": "q_coffee", "no": "q_cathedral"},
+    {"id": "q_cathedral", "text": "Wren's biggest job, the cathedral?", "yes": "l_stpauls", "no": "l_weekend"},
+    {"id": "q_coffee", "text": "Coffee with your Wren?", "yes": "l_cafes", "no": "q_original"},
+    {"id": "q_original", "text": "Is a post-war rebuild fine?", "yes": "q_spend", "no": "q_lunch"},
+    {"id": "q_lunch", "text": "Only got a lunch hour?", "yes": "l_walk", "no": "l_original"},
+    {"id": "q_spend", "text": "The one that cost the most?", "yes": "l_bow", "no": "l_vedast"}
+  ],
+  "leaves": [
+    {"id": "l_moved", "title": "Follow the stone out of town", "sites": [
+      {"name": "St Antholin, Budge Row", "label": "St Antholin's spire top, Sydenham", "why": "Moved in 1829, about 8.8 km from its City site.",
+       "checks": [{"kind": "moved", "to": "Sydenham", "km": 8.8}]},
+      {"name": "All Hallows Lombard Street", "label": "All Hallows tower, Twickenham", "why": "Re-erected in 1940, about 18.4 km away.",
+       "checks": [{"kind": "moved", "to": "Twickenham", "km": 18.4}]},
+      {"name": "St Mary Aldermanbury", "label": "St Mary Aldermanbury, Fulton, Missouri", "why": "The whole shell, shipped in the 1960s.",
+       "checks": [{"kind": "moved", "to": "Fulton"}]}
+    ]},
+    {"id": "l_gardens", "title": "A garden in the ruins", "sites": [
+      {"name": "St Dunstan-in-the-East", "why": "Tower and garden, daily 8am to 7pm or dusk.",
+       "checks": [{"kind": "scope", "value": "tower_and_garden"}, {"kind": "hours", "quote": "Daily, 8am to 7pm or dusk if earlier"}]},
+      {"name": "Christ Church Greyfriars", "why": "Tower and a garden in the old nave.",
+       "checks": [{"kind": "scope", "value": "tower_and_garden"}]},
+      {"name": "St Mary Aldermanbury", "label": "St Mary Aldermanbury garden", "why": "Garden and remains; the stones are in Missouri.",
+       "checks": [{"kind": "scope", "value": "garden_and_remains"}]},
+      {"name": "St Swithin, London Stone", "label": "St Swithin's garden", "why": "Garden on the site.",
+       "checks": [{"kind": "scope", "value": "garden"}]}
+    ]},
+    {"id": "l_towers", "title": "Just the tower, from the street", "sites": [
+      {"name": "St Alban's, Wood Street", "why": "Tower only.", "checks": [{"kind": "scope", "value": "tower"}]},
+      {"name": "St Augustine Watling Street", "why": "Tower only.", "checks": [{"kind": "scope", "value": "tower"}]},
+      {"name": "St Mary Somerset", "why": "Tower only.", "checks": [{"kind": "scope", "value": "tower"}]},
+      {"name": "St Olave Old Jewry", "why": "Tower only.", "checks": [{"kind": "scope", "value": "tower"}]}
+    ]},
+    {"id": "l_stepfree", "title": "Says it is step-free", "note": "The only five sites I found with a step-free statement. Read the church's own page first.", "sites": [
+      {"name": "St Mary Aldermary", "why": "Step-free via the West door, off Bow Lane.", "checks": [{"kind": "stepfree"}]},
+      {"name": "St Margaret Pattens", "why": "Ramp via Plantation Lane.", "checks": [{"kind": "stepfree"}]},
+      {"name": "St Bride's Church", "why": "Step-free via the west door; largely step-free inside.", "checks": [{"kind": "stepfree"}]},
+      {"name": "St James's Church, Piccadilly", "why": "Ramps from Piccadilly and the courtyard.", "checks": [{"kind": "stepfree"}]},
+      {"name": "St Paul's Cathedral", "why": "Ramps and lifts; 257 steps to the first gallery.", "checks": [{"kind": "stepfree"}]}
+    ]},
+    {"id": "l_stpauls", "title": "St Paul's Cathedral", "sites": [
+      {"name": "St Paul's Cathedral", "why": "Sightseeing Monday to Saturday from 8.30am; cost £1,095,556 by 1716.",
+       "checks": [{"kind": "hours", "quote": "8.30am Monday to Saturday for sightseeing"}, {"kind": "cost", "amount": 1095556}]}
+    ]},
+    {"id": "l_weekend", "title": "Open at the weekend", "sites": [
+      {"name": "St Andrew, Holborn", "why": "Daily.", "checks": [{"kind": "hours", "quote": "daily"}]},
+      {"name": "St Bride's Church", "why": "Saturday and Sunday.", "checks": [{"kind": "hours", "quote": "Sat 10am-3.30pm Sun 10am - 6.30pm"}]},
+      {"name": "St Clement Danes", "why": "Saturday and Sunday, 10am to 3pm.", "checks": [{"kind": "hours", "quote": "Sat & Sun 10:00 to 15:00"}]},
+      {"name": "St James's Church, Piccadilly", "why": "Saturday and Sunday.", "checks": [{"kind": "hours", "quote": "Sunday"}]},
+      {"name": "St Mary Aldermary", "why": "Every third Saturday.", "checks": [{"kind": "hours", "quote": "every third Saturday"}]}
+    ]},
+    {"id": "l_cafes", "title": "A church with a café", "sites": [
+      {"name": "St Mary Aldermary", "why": "Host Café, run by the church, in the nave.",
+       "checks": [{"kind": "text", "quote": "run by St Mary Aldermary Church"}, {"kind": "section", "value": "Survived in original form"}]},
+      {"name": "St Nicholas Cole Abbey", "why": "A café called The Wren.",
+       "checks": [{"kind": "text", "quote": "cafe known as The Wren"}, {"kind": "hours", "quote": "Monday to Friday"}]},
+      {"name": "St James's Church, Piccadilly", "why": "A Redemption Roasters café, in partnership with the church.",
+       "checks": [{"kind": "text", "quote": "partnered with Redemption Roasters"}]}
+    ]},
+    {"id": "l_walk", "title": "Walbrook, then Aldermary", "note": "293 m between the two sites, about 4 minutes on foot; about 49 minutes with both visits.", "sites": [
+      {"name": "St Stephen Walbrook", "why": "Weekdays 10.30am to 3.30pm. Wren's domed church.", "checks": [{"kind": "hours", "quote": "Monday-Friday: 10.30am to 3.30pm"}, {"kind": "walk", "walk": "walk_weekday_interiors_pilot", "distance_m": 293, "total_minutes": 49}]},
+      {"name": "St Mary Aldermary", "why": "Weekdays 7.30am to 4pm, rebuilt in Gothic style.", "checks": [{"kind": "hours", "quote": "Monday to Friday 7.30am to 4pm"}]}
+    ]},
+    {"id": "l_original", "title": "Listed as surviving in original form", "note": "The Wikipedia list's grouping; some were bomb-damaged and repaired. Weekday hours as published.", "sites": [
+      {"name": "St Stephen Walbrook", "why": "Weekdays.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Monday-Friday"}]},
+      {"name": "St Margaret Lothbury", "why": "Weekdays from 7.15am.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Monday to Friday 7.15"}]},
+      {"name": "St Margaret Pattens", "why": "Weekdays from 7.30am.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Monday to Friday 7.30am"}]},
+      {"name": "St James Garlickhythe", "why": "Weekdays 10.30am to 4pm.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Monday to Friday 10.30am to 4pm"}]},
+      {"name": "St Martin, Ludgate", "why": "Weekdays, hours vary by day.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Monday to Wednesday"}]},
+      {"name": "St Peter upon Cornhill", "why": "Tuesday afternoons only.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "Tuesdays from 1pm to 4pm"}]},
+      {"name": "St Benet Paul's Wharf", "why": "Thursdays only.", "checks": [{"kind": "section", "value": "Survived in original form"}, {"kind": "hours", "quote": "each Thursday"}]}
+    ]},
+    {"id": "l_bow", "title": "St Mary-le-Bow", "sites": [
+      {"name": "St Mary-le-Bow", "why": "£15,421, the most of any replacement church. Interior rebuilt after the war.",
+       "checks": [{"kind": "cost", "amount": 15421, "rank": "max"}, {"kind": "fabric", "value": "interior_reconstructed_in_facsimile"}, {"kind": "hours", "quote": "Monday to Friday"}]}
+    ]},
+    {"id": "l_vedast", "title": "St Vedast Foster Lane", "sites": [
+      {"name": "St Vedast Foster Lane", "why": "£1,854 for the main body, the least of any. Interior rebuilt after the war.",
+       "checks": [{"kind": "cost", "amount": 1854, "rank": "min"}, {"kind": "fabric", "value": "interior_reconstructed_in_facsimile"}, {"kind": "hours", "quote": "Monday – Friday"}]}
+    ]}
+  ],
+  "aside": {"title": "Not today", "note": "Interiors that were closed, closing, or open only by arrangement or for services when checked.", "sites": [
+    {"name": "St Mary Abchurch", "why": "Closing for refurbishment.", "checks": [{"kind": "status", "value": "closure_notice"}]},
+    {"name": "St Michael Paternoster Royal", "why": "Not open to the public.", "checks": [{"kind": "status", "value": "closure_notice"}]},
+    {"name": "St Edmund, King and Martyr", "why": "By arrangement only.", "checks": [{"kind": "status", "value": "by_arrangement"}]},
+    {"name": "St Clement Eastcheap", "why": "No regular opening times.", "checks": [{"kind": "status", "value": "no_regular_hours"}]},
+    {"name": "Chapel of the Royal Hospital Chelsea", "label": "Royal Hospital Chelsea chapel", "why": "Sunday services only.", "checks": [{"kind": "status", "value": "services_only"}]}
+  ]}
+}

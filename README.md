@@ -20,6 +20,11 @@ Each experiment lives in its own folder, with shared data under `data/`:
   graph of the Bhagavad Gita in Neo4j — 701 verses linked to themes, concepts, the
   character cast, and semantic similarity, all built by a single notebook. The
   domain model is documented in [ONTOLOGY.md](gita-knowledge-graph/ONTOLOGY.md).
+- [`london-wren-churches/`](london-wren-churches/): an evidence-tiered research
+  pipeline on Wren's post-Great-Fire City churches: rebuilding intervals, how and why
+  churches were lost, the 34 parishes never rebuilt, relocated fabric, a discovery
+  graph and published visitor listings. Every claim carries its source and review
+  status; see [METHODS.md](london-wren-churches/METHODS.md).
 
 ## Getting started
 
@@ -51,6 +56,7 @@ Projects with a `tests/` suite are tested with `pytest`:
 ```bash
 uv run pytest gita-knowledge-graph -m "not integration"   # unit tests, no Neo4j/model
 uv run pytest london-blue-plaques
+uv run pytest london-wren-churches
 ```
 
 GitHub Actions ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) runs

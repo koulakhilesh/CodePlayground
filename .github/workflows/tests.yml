@@ -20,6 +20,7 @@ jobs:
         project:
           - gita-knowledge-graph
           - london-blue-plaques
+          - london-wren-churches
     steps:
       - uses: actions/checkout@v4
 

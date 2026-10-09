@@ -1,0 +1,17 @@
+{"reviewed_at": "2026-10-08", "statements": [
+	{"church_id": "church_1e78c75021dff9e9d0f7", "url": "https://www.stbrides.com/visit-us/", "step_free_main_space": "largely",
+	 "quotes": ["Step free access to the main body of St Bride’s is via the west door entrance at the Salisbury Court end of St Bride’s Avenue.",
+	            "The main church is largely step free and very accessible, apart from the side aisle seating which is raised by three steps.",
+	            "Accessible toilets are available when services are taking place but are not available at other times to members of the public."]},
+	{"church_id": "church_424361ee2e98d08c05b8", "url": "https://www.sjp.org.uk/visit-us/", "step_free_main_space": "yes",
+	 "quotes": ["From Piccadilly, there is a ramp to the right-hand side of the main gates, into the courtyard, and a ramp from the courtyard into the church.",
+	            "From Jermyn St, there is a ramp to enter the church via the South Door."]},
+	{"church_id": "church_fdc4eeccfca2286e4581", "url": "https://stmargaretpattens.org/map", "step_free_main_space": "ramp_stated",
+	 "quotes": ["There is disabled access ramp to the Church via Plantation Lane which runs from the lower end of Rood Lane along the north wall of the Church."]},
+	{"church_id": "church_e8eb6586c63f2ae7cf72", "url": "https://www.stmaryaldermary.com/visit-us", "step_free_main_space": "yes",
+	 "quotes": ["We have step-free access via the West door, off Bow Lane (outside Mansion House Tube station).",
+	            "There is also level access across the entire church including the nave, café and toilets."]},
+	{"church_id": "church_e1e23e7f7045dab242b2", "url": "https://stpauls.co.uk/planning-your-visit", "step_free_main_space": "support_stated",
+	 "quotes": ["from ramps and lifts, to guides for those with hearing and visual impairments.",
+	            "There are a total of 257 steps to the Whispering Gallery, 376 steps up to the Stone Gallery and 528 steps (total) to the Golden Gallery."]}
+]}

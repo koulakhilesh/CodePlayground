@@ -1,0 +1,122 @@
+[
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72", "url": "https://britishlistedbuildings.co.uk/101079145-church-of-st-mary-aldermary-cordwainer-ward",
+		"publisher": "British Listed Buildings (mirror of Historic England list entry 1079145, OGL)", "intended_fields": ["attribution"],
+		"relationship": "listing_mirror",
+		"reason": "Historic England returns HTTP 403 to the downloader; this independent site republishes the same OGL list-entry text and robots.txt allows it."
+	},
+	{
+		"subject_id": "church_e1e23e7f7045dab242b2", "url": "https://www.stpauls.co.uk/",
+		"publisher": "St Paul's Cathedral", "intended_fields": ["visitor_hours", "fee"], "relationship": "visitor_information",
+		"reason": "Official site: sightseeing hours and ticket prices; not covered by the Friends listings."
+	},
+	{
+		"subject_id": "church_3649373fa271295dd02f", "url": "https://stclementdanesraf.org/",
+		"publisher": "St Clement Danes", "intended_fields": ["visitor_hours", "restrictions"], "relationship": "visitor_information",
+		"reason": "Official site (infobox website): public opening hours and closure advice."
+	},
+	{
+		"subject_id": "church_424361ee2e98d08c05b8", "url": "https://www.sjp.org.uk/visit-us/",
+		"publisher": "St James's Church Piccadilly", "intended_fields": ["visitor_hours", "accessibility"], "relationship": "visitor_information",
+		"reason": "Official visit page (site from infobox website): hours and step-free access statements."
+	},
+	{
+		"subject_id": "church_6ff79b5f1b52ab2026b7", "url": "https://chelsea-pensioners.co.uk/visit/wren-chapel-services",
+		"publisher": "Royal Hospital Chelsea", "intended_fields": ["visitor_hours", "construction"], "relationship": "visitor_information",
+		"reason": "Official chapel page: service times, access notice and the chapel's construction dates."
+	},
+	{
+		"subject_id": "church_d833ff19d973f4e6ea91", "url": "https://www.nationalchurchillmuseum.org/history-church-of-st-mary.html",
+		"publisher": "America's National Churchill Museum", "intended_fields": ["relocation"], "relationship": "relocated_component",
+		"reason": "Custodian of the rebuilt church in Fulton; checks the seed (1964) versus article (1965) relocation year."
+	},
+	{
+		"subject_id": "church_ce1ae257c8d26b67fe2c", "url": "https://historicengland.org.uk/listing/the-list/list-entry/1080836",
+		"publisher": "Historic England", "intended_fields": ["relocation"], "relationship": "relocated_component",
+		"reason": "Official listing of All Hallows Twickenham, which incorporates the Lombard Street tower; destination evidence only."
+	},
+	{
+		"subject_id": "church_9276dbe5911bb7c95486", "url": "https://historicengland.org.uk/listing/the-list/list-entry/1079973",
+		"publisher": "Historic England", "intended_fields": ["relocation"], "relationship": "relocated_component",
+		"reason": "Official listing of the St Antholin spire top at Round Hill, Sydenham; describes the relocated component, not the City church."
+	},
+	{
+		"subject_id": "church_6ff79b5f1b52ab2026b7", "url": "https://historicengland.org.uk/listing/the-list/list-entry/1000353",
+		"publisher": "Historic England", "intended_fields": ["context"], "relationship": "context_only",
+		"reason": "Registered park and garden entry for the hospital grounds, not the chapel; its dates must not compete with chapel construction."
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "url": "https://www.ststephenwalbrook.net/st-stephen-walbrook",
+		"publisher": "St Stephen Walbrook", "intended_fields": ["construction"], "relationship": "church_entry",
+		"reason": "Detailed church history separates foundation, readiness for use and later steeple."
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3", "url": "https://www.ststephenwalbrook.net/word-war-ii",
+		"publisher": "St Stephen Walbrook", "intended_fields": ["damage"], "relationship": "church_entry",
+		"reason": "Official wartime history reports dome damage in 1941; not total building loss."
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3",
+		"url": "https://www.ststephenwalbrook.net/contact-2",
+		"publisher": "St Stephen Walbrook",
+		"intended_fields": ["visitor_hours", "restrictions"],
+		"relationship": "visitor_information",
+		"reason": "Official visitor page with weekday hours, weekend closure and private-event caveats."
+	},
+	{
+		"subject_id": "church_81162558a0dc9e44d7a3",
+		"url": "https://www.ststephenwalbrook.net/history",
+		"publisher": "St Stephen Walbrook",
+		"intended_fields": ["construction", "restoration"],
+		"relationship": "church_entry",
+		"reason": "Official church history for construction-phase cross-checking."
+	},
+	{
+		"subject_id": "church_f1ee327a3a3cf15889c5",
+		"url": "https://www.stmaryabchurch.org.uk/",
+		"publisher": "St Mary Abchurch",
+		"intended_fields": ["restrictions", "visitor_hours"],
+		"relationship": "visitor_information",
+		"reason": "Official closure announcement from about 12 October 2026 for approximately nine months; do not infer reopening date."
+	},
+	{
+		"subject_id": "church_f1ee327a3a3cf15889c5",
+		"url": "https://www.stmaryabchurch.org.uk/history-and-gallery",
+		"publisher": "St Mary Abchurch",
+		"intended_fields": ["construction", "restoration"],
+		"relationship": "church_entry",
+		"reason": "Official church history and wartime restoration evidence."
+	},
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72",
+		"url": "https://www.hostcafelondon.com/",
+		"publisher": "Host Cafe, St Mary Aldermary",
+		"intended_fields": ["visitor_hours", "restrictions"],
+		"relationship": "visitor_information",
+		"reason": "Official church-run cafe hours; must not be presented as unrestricted church opening hours."
+	},
+	{
+		"subject_id": "church_e8eb6586c63f2ae7cf72",
+		"url": "https://historicengland.org.uk/listing/the-list/list-entry/1079145?section=official-list-entry",
+		"publisher": "Historic England",
+		"intended_fields": ["attribution", "fabric"],
+		"relationship": "church_entry",
+		"reason": "Official-entry navigation URL was readable in source inspection when canonical cached requests returned HTTP 403. Record independently, without deleting failed attempts."
+	},
+	{
+		"subject_id": "church_899606993011a9c8e0d6",
+		"url": "https://historicengland.org.uk/listing/the-list/list-entry/1359203?section=official-list-entry",
+		"publisher": "Historic England",
+		"intended_fields": ["context"],
+		"relationship": "context_only",
+		"reason": "Entry is Fishmongers Hall, not St Magnus. Keep as related architectural context, never as verification of church construction."
+	},
+	{
+		"subject_id": "church_5545087f42179c09af84",
+		"url": "https://historicengland.org.uk/listing/the-list/list-entry/1359180?section=official-list-entry",
+		"publisher": "Historic England",
+		"intended_fields": ["construction", "fabric"],
+		"relationship": "church_entry",
+		"reason": "Official-entry navigation URL for St Olave tower; canonical cached request remains a separately recorded failure."
+	}
+]

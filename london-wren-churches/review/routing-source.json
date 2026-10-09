@@ -1,0 +1,9 @@
+{
+  "status": "selected",
+  "reviewed_at": "2026-10-08",
+  "name": "FOSSGIS OSRM routing server, foot profile",
+  "about_url": "https://routing.openstreetmap.de/about.html",
+  "attribution": "Routing © FOSSGIS OSRM server; map data © OpenStreetMap contributors (ODbL). Fix the map: https://www.openstreetmap.org/fixthemap",
+  "usage_policy": "Max one request per second, valid user agent, no scraping or heavy use. Legs are cached so each is requested once.",
+  "reason": "Open data, documented foot profile and an explicit usage policy compatible with a few cached requests. Distances run between source-reported site coordinates, not entrances; minutes are the profile's estimate, not a surveyed or step-free route."
+}

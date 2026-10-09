@@ -1,0 +1,310 @@
+[
+	{
+		"candidate_id": "church_e1e23e7f7045dab242b2",
+		"church_id": "church_e1e23e7f7045dab242b2",
+		"cohort": "cathedral",
+		"rationale": "St Paul's is explicitly the cathedral in the seed and article, not a parish replacement for duration comparisons.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_24c4b3b93a6d6f4291c8",
+		"church_id": "church_24c4b3b93a6d6f4291c8",
+		"cohort": "refurbishment",
+		"rationale": "Seed classifies Temple Church under Interior refurbished by Christopher Wren; keep separate from replacement construction.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_d9f7b5c9847781759701",
+		"church_id": "church_d9f7b5c9847781759701",
+		"cohort": "outside_fire_area",
+		"rationale": "Seed's explicit outside-City/fire-area section, retained for contextual discovery rather than assumed post-fire replacement.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_3649373fa271295dd02f",
+		"church_id": "church_3649373fa271295dd02f",
+		"cohort": "outside_fire_area",
+		"rationale": "Seed's explicit outside-City/fire-area section, retained for contextual discovery rather than assumed post-fire replacement.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_424361ee2e98d08c05b8",
+		"church_id": "church_424361ee2e98d08c05b8",
+		"cohort": "outside_fire_area",
+		"rationale": "Seed's explicit outside-City/fire-area section, retained for contextual discovery rather than assumed post-fire replacement.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_6ff79b5f1b52ab2026b7",
+		"church_id": "church_6ff79b5f1b52ab2026b7",
+		"cohort": "outside_fire_area",
+		"rationale": "Seed lists the chapel, but links the broader Royal Hospital Chelsea article. Preserve chapel identity and do not treat the entire hospital as a church replacement.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_f6098c18ac1a4b5e89d0",
+		"church_id": "church_f6098c18ac1a4b5e89d0",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_4f9b5a48e65c5e9d2cac identifies post-fire rebuilding; official claim_37bca77a44a20f173ed0 dates church 1683-87 by Wren.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_e8bc0e17c415ba4350d2",
+		"church_id": "church_e8bc0e17c415ba4350d2",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_fbbe407bc7f471b4b257 identifies destruction in 1666 and Wren-office rebuilding; official claim_a767789642e71cfd1fd4 attributes church to Wren. Differing construction ranges remain unresolved.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_242e1fb7e0f59ab308f9",
+		"church_id": "church_242e1fb7e0f59ab308f9",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_968d650c887f72cbbad9 identifies post-fire replacement; official claim_246dc9a27028cf086d4b attributes body and tower to Wren. Body and later tower dates must remain separate.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_d6c2fc1de75f4fb8266c",
+		"church_id": "church_d6c2fc1de75f4fb8266c",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_e826922be18999b1fc26 identifies post-fire replacement; official claim_f459e445cdb8117b2c42 attributes 1686-94 work to Wren and records demolition of the body in 1871, not loss of the tower.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_5545087f42179c09af84",
+		"church_id": "church_5545087f42179c09af84",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_25de9cab82315c6ce2c2 identifies post-fire replacement; recovered official claim_ad5efd15e874fc4a69ac attributes 1670-79 work to Wren. Article and listing disagree on start and demolition years; retained fabric is not complete loss.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_0bd50dd9d5cd68cf153d",
+		"church_id": "church_0bd50dd9d5cd68cf153d",
+		"cohort": "parish_replacement",
+		"rationale": "Article claim_2918e37b56d77a952460 identifies post-fire Wren replacement; official claim_34900689d46d9660bc22 attributes church and separately dated tower to Wren. Completion milestones differ across sources.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_21b0c84c3020ec8bda20", "church_id": "church_21b0c84c3020ec8bda20", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_c8fd539905ccad354f35"],
+		"rationale": "Read article: destroyed 1666, rebuilt to Wren design. Source-supported cohort, not independent date verification.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_5b8d30f86235f4bca39b", "church_id": "church_5b8d30f86235f4bca39b", "cohort": "parish_replacement",
+		"wren_work": "office_replacement_hooke_design", "evidence_claim_ids": ["claim_19f6e062320f2da7bb06"],
+		"rationale": "Article reports Hooke design signed off by Wren, replacing fire-destroyed church. Office programme membership does not imply sole Wren authorship.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_062c9b6337e376acddeb", "church_id": "church_062c9b6337e376acddeb", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_676fe4f8551452b6e131"],
+		"rationale": "Article explicitly reports 1666 destruction and Wren-office rebuilding. Dates still require separate review.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_fdc4eeccfca2286e4581", "church_id": "church_fdc4eeccfca2286e4581", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_4f595e638406da0fdb45"],
+		"rationale": "Read post-fire history: destroyed 1666 and present church by Wren. Cohort source-supported; dates not promoted.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_3eb9a891e84960f6e782", "church_id": "church_3eb9a891e84960f6e782", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_07e465485ea47bafa39e", "claim_8e120f1fa20cb9aa16a4"],
+		"rationale": "Article identifies 1666 destruction and Wren present design; multiple reported completion milestones remain unverified.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_f1ee327a3a3cf15889c5", "church_id": "church_f1ee327a3a3cf15889c5", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_e06685ba472f1df869fa", "claim_cae38915d7fba35bcaac"],
+		"rationale": "Article explicitly identifies replacement of fire-destroyed predecessor under Wren's aegis; preserve authorship qualification.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_e8eb6586c63f2ae7cf72", "church_id": "church_e8eb6586c63f2ae7cf72", "cohort": "parish_replacement",
+		"wren_work": "reconstruction_retained_medieval_fabric", "evidence_claim_ids": ["claim_faf094fbb497303987e7", "claim_051eef10c1ac74927fbd"],
+		"rationale": "Article reports mostly rebuilt church retaining walls/tower; official page also describes incorporated early fabric but downloader remains blocked. Source-supported classification, not cached independent verification.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_6cb9838ada79111efb92", "church_id": "church_6cb9838ada79111efb92", "cohort": "unresolved",
+			"wren_work": "disputed_body_attribution", "evidence_claim_ids": ["claim_b34ed91097d6b3dac9dd", "claim_118a7e0018c7c5757d04", "claim_d52ea7cf8728b3ce9fbb"],
+			"rationale": "Three positions recorded, none chosen. For: Historic England listing ('1670 to 77, by Wren. Tower 1715 to 21 by Hawksmoor') and Parentalia (1750) entry XLIV in the catalogue of churches built under Wren's care. Against: the Buildings of England assessment cited by the article, that the parish dealt directly with builders and Wren's office had no involvement with the body. The listing and Parentalia descend from the same tradition the modern assessment challenges, so they are not independent rebuttals. Resolution needs the building accounts (Guildhall Library / Wren Society). Counted in Parentalia's 51; kept outside replacement-only summaries.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_6bda05d69e2f28b9468f", "church_id": "church_6bda05d69e2f28b9468f", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_188da6d16e6e16eea423"],
+		"rationale": "Article reports 1666 destruction and rebuilding to Wren design; retain as source-supported replacement.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_81162558a0dc9e44d7a3", "church_id": "church_81162558a0dc9e44d7a3", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_8736c594c327b034f9ff", "claim_62a3101ecb38cffbd50a"],
+		"rationale": "Article identifies destroyed medieval predecessor and Wren replacement, corroborated by official attribution; differing construction end years remain disputed.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_899606993011a9c8e0d6", "church_id": "church_899606993011a9c8e0d6", "cohort": "parish_replacement",
+		"wren_work": "office_rebuilding_with_prior_mason_work", "evidence_claim_ids": ["claim_f8468ab18f8f2a6fa054"],
+		"rationale": "Article describes post-fire rebuilding begun by Dowdeswell, then directed by Wren; neither dates nor sole authorship inferred. Fishmongers Hall reference is context, not church corroboration.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_0c6624e54655979632bb", "church_id": "church_0c6624e54655979632bb", "cohort": "parish_repair",
+		"wren_work": "interior_and_east_end_reconstruction", "evidence_claim_ids": ["claim_818a96ba928b559ae133"],
+		"rationale": "Article describes rebuilt interior/east end with three medieval walls and west tower retained; distinguish partial reconstruction from whole-body replacement.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_81a662ab3e3ef69ba437", "church_id": "church_81a662ab3e3ef69ba437", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_d7c98b9952591ebf25c5"],
+		"rationale": "Article explicitly describes loss in 1666 and subsequent Wren-designed church. Source-supported, dates unverified.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_b3f67626e10573fc3f30", "church_id": "church_b3f67626e10573fc3f30", "cohort": "parish_nonfire_rebuilding",
+		"wren_work": "rebuilding_of_fire_survivor", "evidence_claim_ids": ["claim_94049bc1f95b018098f1"],
+		"rationale": "Article explicitly says church survived Great Fire but was rebuilt by Wren due to poor repair; exclude from fire-destroyed replacements without excluding from broader atlas.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_2a8497222584daa8d385", "church_id": "church_2a8497222584daa8d385", "cohort": "parish_replacement",
+		"wren_work": "office_replacement_possible_hooke_contribution", "evidence_claim_ids": ["claim_dfa825f0a61e210a640a"],
+		"rationale": "Article identifies Wren rebuilding and possible Hooke contribution, with post-fire parish merger. Retain office authorship qualification.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_1e78c75021dff9e9d0f7", "church_id": "church_1e78c75021dff9e9d0f7", "cohort": "parish_replacement",
+		"wren_work": "replacement_later_reconstructed", "evidence_claim_ids": ["claim_675cb063279fe8a0d7ad"],
+		"rationale": "Article identifies Wren building and subsequent wartime gutting/reconstruction; classification follows post-fire seed and article, not present fabric survival.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_4f888938c2b37dfeb0b9", "church_id": "church_4f888938c2b37dfeb0b9", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_4f35908e471d858188da"],
+		"rationale": "Article explicitly identifies 1666 destruction and Wren replacement. Source-supported, no date promotion.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_11ecdb2a6a33dc21e3be", "church_id": "church_11ecdb2a6a33dc21e3be", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_da34f0bd97289300bf99"],
+		"rationale": "Article identifies present Wren work following Great Fire; costs and height comparisons are not accepted from this classification alone.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_4a4e84744c84662cc4c1", "church_id": "church_4a4e84744c84662cc4c1", "cohort": "parish_replacement",
+		"wren_work": "office_replacement_later_reconstructed", "evidence_claim_ids": ["claim_07cf3b387c4d771e2bab"],
+		"rationale": "Article identifies destruction in 1666, Wren-office replacement and later Bailey reconstruction. Keep successive building phases distinct.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_c93e3e0db62d3aef28e9", "church_id": "church_c93e3e0db62d3aef28e9", "cohort": "parish_replacement",
+		"wren_work": "body_reconstruction_on_old_walls", "evidence_claim_ids": ["claim_b52ab187d2cca7edfb90"],
+		"rationale": "Article explicitly places substantial body reconstruction in office programme despite retained medieval walls. Replacement category permits reused fabric; precise phase dates unverified.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_1f7deb0b63ce51ace28e", "church_id": "church_1f7deb0b63ce51ace28e", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_7a0dc8a9740a828500e6"],
+		"rationale": "Article identifies 1666 destruction, Wren Gothic replacement and tower surviving later bombing.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_a981b548f08f2ca3d02c", "church_id": "church_a981b548f08f2ca3d02c", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_39d4b2315b98e48e20da"],
+		"rationale": "Article explicitly identifies post-fire Wren rebuilding and later tower retention; not a present intact church.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_ce1ae257c8d26b67fe2c", "church_id": "church_ce1ae257c8d26b67fe2c", "cohort": "parish_replacement",
+		"wren_work": "replacement_after_failed_repairs", "evidence_claim_ids": ["claim_71dc1b0ab8fd7fa93115"],
+		"rationale": "Article distinguishes attempted post-fire patching from ultimate replacement by Wren office; classify final Wren intervention, not initial repairs.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_d833ff19d973f4e6ea91", "church_id": "church_d833ff19d973f4e6ea91", "cohort": "parish_replacement",
+		"wren_work": "replacement_later_relocated", "evidence_claim_ids": ["claim_9f762504abf2335a2589", "claim_3e558e3f9dda9d5c3dc6"],
+		"rationale": "Article and official footings entry identify post-fire Wren rebuilding; relocation year remains conflicting and no location is treated as visitor entrance.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_f4b95114fff7a8620a5b", "church_id": "church_f4b95114fff7a8620a5b", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_2d4834c93d4ceaff9580"],
+		"rationale": "Article reports 1666 destruction and Wren-office replacement, subsequently demolished. Source-supported cohort only.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_3ed548b5a0e06be09d25", "church_id": "church_3ed548b5a0e06be09d25", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_76338c70563ac4cae2a9"],
+		"rationale": "Article explicitly reports new Wren-designed church replacing medieval building destroyed in fire.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_9276dbe5911bb7c95486", "church_id": "church_9276dbe5911bb7c95486", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_c22315fdfceebcd904ae"],
+		"rationale": "Article reports Wren design after destruction in 1666; later demolition does not exclude historical cohort.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_11736dfc0c10f1801f83", "church_id": "church_11736dfc0c10f1801f83", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_487b34c6dc70019368c7"],
+		"rationale": "Article reports post-fire replacement by Wren office and later demolition. Dates remain candidate evidence.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_c401d828a536ad3e06ab", "church_id": "church_c401d828a536ad3e06ab", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_dc3e91ed5ccdb141c21d"],
+		"rationale": "Article explicitly identifies fire destruction and Wren-office rebuilding, subsequently demolished.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_b06a559a338a87e6ccff", "church_id": "church_b06a559a338a87e6ccff", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_619b1168e9cf91ff58d3"],
+		"rationale": "Article explicitly identifies post-fire replacement to Wren design; cohort source-supported only.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_4b302a5099ad2d7a9ab3", "church_id": "church_4b302a5099ad2d7a9ab3", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_aa4ae14d2aee20b09ccd"],
+		"rationale": "Article reports 1666 destruction and Wren-office replacement; retains demolished site in register.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_b94cf370e3cc0a854be2", "church_id": "church_b94cf370e3cc0a854be2", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_7451fc3c537d79bf8ac3"],
+		"rationale": "Article distinguishes post-fire replacement, later warehouse-fire damage and eventual demolition; no single destruction event inferred.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_26c69e2c9a8c6e80bd75", "church_id": "church_26c69e2c9a8c6e80bd75", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_8a3531d2ca81e892e0b0"],
+		"rationale": "Article explicitly identifies Wren-office replacement after 1666 and later demolition.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_d87e61d9fadab5c0f4d5", "church_id": "church_d87e61d9fadab5c0f4d5", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_0bca493c26a9426cabd5"],
+		"rationale": "Article reports fire destruction and Wren rebuilding but carries citation-quality warning; source-supported classification requires further bibliography check.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_4defd041ce30462720ca", "church_id": "church_4defd041ce30462720ca", "cohort": "parish_repair",
+		"wren_work": "reconstruction_retaining_outer_walls_and_tower", "evidence_claim_ids": ["claim_f6c07b471e4ae7d67ea2"],
+		"rationale": "Article describes surviving outer walls/tower and restoration using old material; separate from new-body replacement in this study's operational definition.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_61489cbbd3f936061001", "church_id": "church_61489cbbd3f936061001", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_f4d79e927f86b65570e2"],
+		"rationale": "Article identifies post-fire Wren rebuilding and later demolition; source-supported cohort, dates unverified.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_07bb7af31b35dea0c890", "church_id": "church_07bb7af31b35dea0c890", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_19339d40e3ae9e4997b0"],
+		"rationale": "Article reports 1666 destruction and Wren rebuilding, later demolished; retain lost church rather than survivor-only cohort.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_5da6dad14704b6c16f49", "church_id": "church_5da6dad14704b6c16f49", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_215111a30fe6ae93c648"],
+		"rationale": "Article identifies replacement of fire-destroyed church to Wren design; demolition phases remain separately reviewed work.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_31d87ea58b68eb95bee7", "church_id": "church_31d87ea58b68eb95bee7", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_48b7bc2c36f6ec36d4c8"],
+		"rationale": "Article explicitly reports 1666 destruction and Wren-office rebuilding followed by demolition.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_60b4ee5585b015364aed", "church_id": "church_60b4ee5585b015364aed", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_7537620d1b74875773fc"],
+		"rationale": "Article explicitly identifies Wren-office rebuilding after 1666; its traditional count is not accepted as cohort validation.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_1e5b64e6ca54a70f8ee1", "church_id": "church_1e5b64e6ca54a70f8ee1", "cohort": "parish_replacement",
+		"wren_work": "office_replacement", "evidence_claim_ids": ["claim_71ebfe9f8cba0bb9cea4"],
+		"rationale": "Article identifies new body replacing fire-destroyed medieval church and later wartime loss without rebuilding.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_54c90c875a6858af8235", "church_id": "church_54c90c875a6858af8235", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_5d0f29257338f169fef0"],
+		"rationale": "Article explicitly describes post-fire Wren design and later bombing; no intact-survival assumption.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_28a06037fa6c9137e1a5", "church_id": "church_28a06037fa6c9137e1a5", "cohort": "parish_replacement",
+		"wren_work": "replacement", "evidence_claim_ids": ["claim_c226f921b09db7dddda2"],
+		"rationale": "Article identifies fire destruction and Wren rebuilding, then wartime damage and later clearance as distinct processes.", "reviewed_at": "2026-10-08"
+	},
+	{
+		"candidate_id": "church_5baeb9a819ba88adc5fa",
+		"church_id": "church_5baeb9a819ba88adc5fa",
+		"cohort": "parish_repair",
+		"wren_work": "postfire_repair_and_wren_tower",
+		"evidence_claim_ids": ["claim_e9b7895b32ac6448607a", "claim_eb57cfda15bd428049b3"],
+		"rationale": "Article describes patched-up body rather than complete post-fire rebuilding; official listing identifies Wren tower and later Laing body. Historical programme membership is wider than this study's replacement cohort.",
+		"reviewed_at": "2026-10-08"
+	}
+]
