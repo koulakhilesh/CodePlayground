@@ -1,0 +1,22 @@
+[
+  {
+    "visit_id": "visit_walbrook_weekday", "place_id": "place_96a956e4204562774cf9", "access_type": "interior",
+    "hours": {"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "10:30", "closes": "15:30", "timezone": "Europe/London", "scope": "church"},
+    "restrictions": "Closed weekends except great festivals. May close early for private events: contact church and check its calendar before visiting.",
+    "closure": null, "booking_url": null, "fee": null, "accessibility": null,
+    "checked_at": "2026-10-08", "claim_ids": ["review_walbrook_visitor_hours", "review_walbrook_visitor_restrictions"]
+  },
+  {
+    "visit_id": "visit_aldermary_host_cafe", "place_id": "place_c1174c111f3156bcbc54", "access_type": "interior",
+    "hours": {"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:30", "closes": "16:00", "timezone": "Europe/London", "scope": "Host Cafe, not unrestricted church access"},
+    "restrictions": "Church-run cafe access, not a guarantee of access to every church area. Working for more than 1.5 hours requires advance booking.",
+    "closure": null, "booking_url": "https://www.hostcafelondon.com/work-from-host", "fee": null, "accessibility": null,
+    "checked_at": "2026-10-08", "claim_ids": ["review_aldermary_cafe_hours", "review_aldermary_cafe_booking"]
+  },
+  {
+    "visit_id": "visit_abchurch_closure_notice", "place_id": "place_d8a50b7c6f85c58b1d5d", "access_type": "interior",
+    "hours": null, "restrictions": "Official homepage announces refurbishment closure. Do not assume the history page's general weekday access remains current. Exterior access during work has not been verified.",
+    "closure": {"status": "announced_closure", "start_approximate": "2026-10-12", "duration_text": "approximately nine months", "reopening_date": null},
+    "booking_url": null, "fee": null, "accessibility": null, "checked_at": "2026-10-08", "claim_ids": ["review_abchurch_closure"]
+  }
+]

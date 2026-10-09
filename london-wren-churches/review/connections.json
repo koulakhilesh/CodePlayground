@@ -1,0 +1,50 @@
+[
+  {
+    "connection_id": "connection_dionis_allhallows_bells", "from_id": "church_b06a559a338a87e6ccff", "to_id": "church_ce1ae257c8d26b67fe2c",
+    "relation": "fittings_transferred", "theme": "travelling_stone", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_dionis_bells"], "explanation": "St Dionis Backchurch's ten bells went to All Hallows Lombard Street when St Dionis was demolished; that tower in turn moved to Twickenham.",
+    "caveat": "Both City churches are gone; six bells are reported surviving at Twickenham. Not a walking route."
+  },
+  {
+    "connection_id": "connection_walbrook_james_steeple", "from_id": "church_81162558a0dc9e44d7a3", "to_id": "church_e8bc0e17c415ba4350d2",
+    "relation": "reported_similarity", "theme": "interiors_and_domes", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_walbrook_steeple_comparison"], "explanation": "Walbrook's official history compares its steeple with St James Garlickhythe's.",
+    "caveat": "Reported resemblance, not proof of influence, same designer or same building date."
+  },
+  {
+    "connection_id": "connection_walbrook_michael_steeple", "from_id": "church_81162558a0dc9e44d7a3", "to_id": "church_242e1fb7e0f59ab308f9",
+    "relation": "reported_similarity", "theme": "interiors_and_domes", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_walbrook_steeple_comparison"], "explanation": "Walbrook's official history compares its steeple with St Michael Paternoster Royal's.",
+    "caveat": "A visual comparison, not a walking instruction or resolved construction chronology."
+  },
+  {
+    "connection_id": "connection_abchurch_walbrook_kempster", "from_id": "church_f1ee327a3a3cf15889c5", "to_id": "church_81162558a0dc9e44d7a3",
+    "relation": "shared_craftsman", "theme": "people_and_stories", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_abchurch_kempster_connections"], "explanation": "Abchurch's official history names Kempster at both churches, with Thomas Strong at Walbrook.",
+    "caveat": "Craft participation does not establish sole design authorship."
+  },
+  {
+    "connection_id": "connection_abchurch_james_kempster", "from_id": "church_f1ee327a3a3cf15889c5", "to_id": "church_e8bc0e17c415ba4350d2",
+    "relation": "shared_craftsman", "theme": "people_and_stories", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_abchurch_kempster_connections"], "explanation": "Abchurch's official history names Christopher Kempster's work at Abchurch and St James Garlickhythe.",
+    "caveat": "Shared mason, not evidence that church designs are identical."
+  },
+  {
+    "connection_id": "connection_abchurch_pauls_kempster", "from_id": "church_f1ee327a3a3cf15889c5", "to_id": "church_e1e23e7f7045dab242b2",
+    "relation": "shared_craftsman", "theme": "people_and_stories", "evidence_kind": "direct_statement",
+    "claim_ids": ["review_abchurch_kempster_connections"], "explanation": "Abchurch's history identifies Kempster as its mason and a key mason at St Paul's.",
+    "caveat": "The cathedral remains outside parish duration comparisons."
+  },
+  {
+    "connection_id": "connection_abchurch_walbrook_domes", "from_id": "church_f1ee327a3a3cf15889c5", "to_id": "church_81162558a0dc9e44d7a3",
+    "relation": "shared_feature", "theme": "interiors_and_domes", "evidence_kind": "descriptive_comparison",
+    "claim_ids": ["review_abchurch_dome_feature", "review_walbrook_dome_feature"], "explanation": "Official descriptions establish domed interiors at both churches, supported in different ways.",
+    "caveat": "Editorial feature grouping, not direct influence. Abchurch announces an October 2026 closure; discovery is not access advice."
+  },
+  {
+    "connection_id": "connection_walbrook_augustine_wartime", "from_id": "church_81162558a0dc9e44d7a3", "to_id": "church_a981b548f08f2ca3d02c",
+    "relation": "contrasting_wartime_outcomes", "theme": "fire_and_rebuilding", "evidence_kind": "descriptive_comparison",
+    "claim_ids": ["review_walbrook_dome_damage", "review_augustine_body_loss"], "explanation": "Walbrook's official page reports dome damage in 1941; St Augustine's listing reports body and spire destruction with tower stages retained.",
+    "caveat": "Different damage outcomes within the same year, not evidence of one raid or equal severity."
+  }
+]

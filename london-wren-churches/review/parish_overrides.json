@@ -1,0 +1,20 @@
+[
+	{
+		"united_with": "Church of St Alban, Wood Street",
+		"church_id": "church_1f7deb0b63ce51ace28e",
+		"rationale": "List links to an alternate article title for St Alban, Wood Street; same church as the seed entry.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"united_with": "Church of St Alban, Wood Street, London",
+		"church_id": "church_1f7deb0b63ce51ace28e",
+		"rationale": "List links to an alternate article title for St Alban, Wood Street; same church as the seed entry.",
+		"reviewed_at": "2026-10-08"
+	},
+	{
+		"united_with": "St Mary Aldermary, Watling Street",
+		"church_id": "church_e8eb6586c63f2ae7cf72",
+		"rationale": "Red link with street qualifier; St Mary Aldermary stands on Watling Street and is the seed entry of that name.",
+		"reviewed_at": "2026-10-08"
+	}
+]

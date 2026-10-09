@@ -1,0 +1,23 @@
+{"reviewed_at": "2026-10-08", "reasons": [
+	{"church_id": "church_d6c2fc1de75f4fb8266c", "kinds": ["partial_demolition"], "mechanism": "union_of_benefices",
+	 "evidence_claim_ids": ["claim_65bcdf4c75c5c86a04c1"],
+	 "rationale": "Article: the Union of Benefices Act 1860 permitted demolition of City churches; last service at St Mary Somerset 1867; body demolished 1871, tower kept."},
+	{"church_id": "church_5545087f42179c09af84", "kinds": ["partial_demolition"], "mechanism": "union_of_benefices",
+	 "evidence_claim_ids": ["claim_1e822ba838a8a6684e77"],
+	 "rationale": "Article: body demolished in 1887 under the Union of Benefices Act 1860; site sold for £22,400."},
+	{"church_id": "church_ce1ae257c8d26b67fe2c", "kinds": ["demolition"], "mechanism": "structural_safety",
+	 "evidence_claim_ids": ["claim_517aaf3b6b94f5ebbe62"],
+	 "rationale": "Article: earmarked for demolition after the First World War amid a falling residential population; demolished 1937 having been found unsafe (seed list says 1939)."},
+	{"church_id": "church_1e5b64e6ca54a70f8ee1", "kinds": ["demolition"], "mechanism": "war_destruction",
+	 "evidence_claim_ids": ["claim_e316b5de59a9a530623f"],
+	 "rationale": "Article: destroyed by German bombing on 29 December 1940 and not rebuilt. The seed's 1940 'demolition' year is the wartime loss."},
+	{"church_id": "church_54c90c875a6858af8235", "kinds": ["demolition"], "mechanism": "war_destruction",
+	 "evidence_claim_ids": ["claim_08e67df9c349eef6c794"],
+	 "rationale": "Article: destroyed by bombing in 1941. The seed's 1941 'demolition' year is the wartime loss."},
+	{"church_id": "church_28a06037fa6c9137e1a5", "kinds": ["demolition"], "mechanism": "war_ruins_cleared",
+	 "evidence_claim_ids": ["claim_1c066e08a6705b880436"],
+	 "rationale": "Article: badly damaged in a 1940 air raid; parish united with St Stephen Walbrook 1954; site sold 1960; ruins demolished 1961-62."},
+	{"church_id": "church_d9f7b5c9847781759701", "kinds": ["demolition"], "mechanism": "war_ruins_cleared",
+	 "evidence_claim_ids": ["claim_6657b85846843897ce34"],
+	 "rationale": "Article: burned out on 24 September 1940 apart from the tower; by 1949 not to be rebuilt; remains of the east wall cleared in 1953."}
+]}

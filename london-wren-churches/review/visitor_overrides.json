@@ -1,0 +1,11 @@
+[
+	{"name": "St Michael Cornhill", "church_id": "church_6cb9838ada79111efb92", "rationale": "Same church as seed entry St Michael's Cornhill; possessive spelling differs.", "reviewed_at": "2026-10-08"},
+	{"name": "St Peter Cornhill", "church_id": "church_6bda05d69e2f28b9468f", "rationale": "Same church as seed entry St Peter upon Cornhill.", "reviewed_at": "2026-10-08"},
+	{"name": "St Vedast", "church_id": "church_c93e3e0db62d3aef28e9", "rationale": "Listing short name for St Vedast Foster Lane; page location is Foster Lane.", "reviewed_at": "2026-10-08"},
+	{"name": "St Alban Wood Street", "church_id": "church_1f7deb0b63ce51ace28e", "rationale": "Same site as seed entry St Alban's, Wood Street (tower only survives).", "reviewed_at": "2026-10-08"},
+	{"name": "Christchurch Newgate otherwise known as Christchurch Greyfriars", "church_id": "church_0bd50dd9d5cd68cf153d", "rationale": "Listing title names Christchurch Greyfriars explicitly.", "reviewed_at": "2026-10-08"},
+	{"name": "St Augustine with St Faith", "church_id": "church_a981b548f08f2ca3d02c", "rationale": "St Augustine Watling Street was united with St Faith under St Paul's; tower-only listing is the same site.", "reviewed_at": "2026-10-08"},
+	{"name": "St Swithun London Stone", "church_id": "church_28a06037fa6c9137e1a5", "rationale": "Alternate spelling of St Swithin, London Stone; gardens-only listing is the former church site.", "reviewed_at": "2026-10-08"},
+	{"name": "St Peter Cheap", "parish_id": "parish_b643396335d851a5d9ed", "rationale": "St Peter Cheap is St Peter, Westcheap in the not-rebuilt list (Wood Street corner).", "reviewed_at": "2026-10-08"},
+	{"name": "St Olave Silver Street", "parish_id": "parish_ca84e2d54351d6710dec", "rationale": "Same lost parish as St Olave's, Silver Street in the not-rebuilt list; garden on the former site.", "reviewed_at": "2026-10-08"}
+]

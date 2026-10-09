@@ -1,0 +1,15 @@
+[
+  {
+    "walk_id": "walk_weekday_interiors_pilot", "title": "Wren interiors: a weekday pilot",
+    "theme": "interiors", "checked_at": "2026-10-08",
+    "description": "Start with St Stephen Walbrook, then St Mary Aldermary through its church-run Host Cafe. This is an editorial nearby-stop sequence, not an optimised, surveyed or accessibility-checked walking route. Abchurch is a future optional interior only after its closure status is checked.",
+    "stops": [
+      {"place_id": "place_96a956e4204562774cf9", "visit_id": "visit_walbrook_weekday", "access_type": "interior", "visit_minutes": 25, "duration_basis": "editorial_estimate", "claim_ids": ["review_walbrook_visitor_hours", "review_walbrook_visitor_restrictions"]},
+      {"place_id": "place_c1174c111f3156bcbc54", "visit_id": "visit_aldermary_host_cafe", "access_type": "interior", "visit_minutes": 20, "duration_basis": "editorial_estimate", "claim_ids": ["review_aldermary_cafe_hours", "review_aldermary_cafe_booking"]}
+    ],
+    "optional_stops": [
+      {"place_id": "place_d8a50b7c6f85c58b1d5d", "visit_id": "visit_abchurch_closure_notice", "access_type": "interior", "visit_minutes": null, "duration_basis": null, "claim_ids": ["review_abchurch_closure"]}
+    ],
+    "legs": []
+  }
+]
